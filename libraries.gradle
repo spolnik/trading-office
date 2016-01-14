@@ -7,6 +7,8 @@ ext {
             activemq_kahadb: 'org.apache.activemq:activemq-kahadb-store',
             spring: [
                 boot: 'org.springframework.boot:spring-boot-starter',
+                boot_data_jpa: 'org.springframework.boot:spring-boot-starter-data-jpa',
+                boot_jta_atomikos: 'org.springframework.boot:spring-boot-starter-jta-atomikos',
                 jms: 'org.springframework:spring-jms'
             ],
             test: [
@@ -14,7 +16,8 @@ ext {
                     assertj: 'org.assertj:assertj-core:1.7.1',
                     spock: 'org.spockframework:spock-core:1.0-groovy-2.4'
             ],
-            groovy: 'org.codehaus.groovy:groovy-all:2.4.1'
+            groovy: 'org.codehaus.groovy:groovy-all:2.4.1',
+            gigaspaces: 'com.gigaspaces:gs-openspaces:10.2.0-13800-RELEASE'
     )
 }
 

@@ -4,5 +4,6 @@ dependencies {
             libs.spring.jms,
             libs.activemq,
             libs.jaxen,
-            libs.jdom
+            libs.jdom,
+            libs.gigaspaces
 }

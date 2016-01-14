@@ -5,4 +5,5 @@ include 'e2e-test'
 include 'confirmation-sender'
 include 'trading-domain'
 include 'allocation-message-translator'
+include 'xap-service'
 

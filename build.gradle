@@ -15,8 +15,11 @@ allprojects {
 
 subprojects {
     repositories {
-        mavenLocal();
+        mavenLocal()
         mavenCentral()
+        maven {
+            url "http://maven-repository.openspaces.org"
+        }
     }
 
     apply plugin: 'java'
