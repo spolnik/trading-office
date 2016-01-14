@@ -1,7 +1,7 @@
 apply plugin: 'groovy'
 
 dependencies {
-    testCompile project(':front-office'),
+    testCompile project(':jms-service'),
             libs.groovy,
             libs.spring.boot,
             libs.spring.jms,

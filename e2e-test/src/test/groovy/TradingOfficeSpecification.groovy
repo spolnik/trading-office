@@ -1,4 +1,3 @@
-import com.trading.FrontOfficeWithJmsApplication
 import org.apache.activemq.ActiveMQConnectionFactory
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -14,15 +13,6 @@ import javax.jms.Session
 class TradingOfficeSpecification extends Specification {
 
     private static final Logger log = LoggerFactory.getLogger(TradingOfficeSpecification.class)
-
-//    def setup() {
-//        String[] args = new String[0];
-//        FrontOfficeWithJmsApplication.start(args)
-//    }
-//
-//    def cleanup() {
-//        FrontOfficeWithJmsApplication.stop()
-//    }
 
     def "For new trade we generate confirmation as pdf"() {
         given: "A new trade with FIXML representation"
