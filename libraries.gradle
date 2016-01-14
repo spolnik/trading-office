@@ -1,11 +1,8 @@
 ext {
     libs = libsMap(
-            slf4j_api: 'org.slf4j:slf4j-api:1.7.10',
-            log4j: 'log4j:log4j:1.2.17',
-            slf4j_log4j12: 'org.slf4j:slf4j-log4j12:1.7.10',
+            jaxen: 'jaxen:jaxen:1.1.6',
+            jdom: 'jdom:jdom:1.1',
             guava: 'com.google.guava:guava:19.0',
-            h2: 'com.h2database:h2',
-            hsqldb: 'org.hsqldb:hsqldb',
             activemq: 'org.apache.activemq:activemq-broker',
             activemq_kahadb: 'org.apache.activemq:activemq-kahadb-store',
             spring: [
