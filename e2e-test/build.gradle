@@ -1,8 +1,8 @@
 apply plugin: 'groovy'
-apply plugin: 'spring-boot'
 
 dependencies {
-    testCompile libs.groovy,
+    testCompile project(':front-office'),
+            libs.groovy,
             libs.spring.boot,
             libs.spring.jms,
             libs.activemq,
