@@ -1,0 +1,10 @@
+apply plugin: 'groovy'
+apply plugin: 'spring-boot'
+
+dependencies {
+    testCompile libs.groovy,
+            libs.spring.boot,
+            libs.spring.jms,
+            libs.activemq,
+            libs.test.spock
+}

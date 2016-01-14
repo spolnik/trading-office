@@ -1,0 +1,38 @@
+ext {
+    libs = libsMap(
+            slf4j_api: 'org.slf4j:slf4j-api:1.7.10',
+            log4j: 'log4j:log4j:1.2.17',
+            slf4j_log4j12: 'org.slf4j:slf4j-log4j12:1.7.10',
+            guava: 'com.google.guava:guava:19.0',
+            h2: 'com.h2database:h2',
+            hsqldb: 'org.hsqldb:hsqldb',
+            activemq: 'org.apache.activemq:activemq-broker',
+            activemq_kahadb: 'org.apache.activemq:activemq-kahadb-store',
+            spring: [
+                boot: 'org.springframework.boot:spring-boot-starter',
+                jms: 'org.springframework:spring-jms'
+            ],
+            test: [
+                    junit: 'junit:junit:4.11',
+                    assertj: 'org.assertj:assertj-core:1.7.1',
+                    spock: 'org.spockframework:spock-core:1.0-groovy-2.4'
+            ],
+            groovy: 'org.codehaus.groovy:groovy-all:2.4.1'
+    )
+}
+
+def libsMap(Map<String, ?> map) {
+    def processMap
+    processMap = { innerMap ->
+        innerMap.each {
+            if (it.value instanceof Map) {
+                innerMap[it.key] = processMap(it.value)
+            }
+        }
+        innerMap.asImmutable().withDefault {
+            throw new InvalidUserDataException(
+                    "No entry '$it' in dependency map (candidates: ${innerMap.keySet().sort().join(", ")})" )
+        }
+    }
+    processMap(map)
+}

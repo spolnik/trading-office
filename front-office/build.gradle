@@ -1,0 +1,8 @@
+apply plugin: 'spring-boot'
+
+dependencies {
+    compile libs.activemq,
+            libs.activemq_kahadb,
+            libs.spring.boot,
+            libs.spring.jms
+}
