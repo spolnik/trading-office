@@ -2,5 +2,6 @@ dependencies {
     compile libs.activemq,
             libs.activemq_kahadb,
             libs.spring.boot,
-            libs.spring.jms
+            libs.spring.jms,
+            libs.jms
 }

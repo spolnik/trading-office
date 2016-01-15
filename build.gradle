@@ -17,7 +17,9 @@ subprojects {
     repositories {
         mavenLocal()
         mavenCentral()
-        jcenter()
+        maven {
+            url "http://mvnrepository.com"
+        }
         maven {
             url "http://maven-repository.openspaces.org"
         }
