@@ -23,6 +23,12 @@ public class TradeMessageReceiver {
 
     private static final String gigaspaceUrl ="jini://*/*/tradingOffice";
 
+    private final GigaSpace gigaSpace;
+
+    public TradeMessageReceiver() {
+        gigaSpace = new GigaSpaceConfigurer(new UrlSpaceConfigurer(gigaspaceUrl)).gigaSpace();
+    }
+
     @Autowired
     private ConfigurableApplicationContext context;
 
@@ -30,9 +36,9 @@ public class TradeMessageReceiver {
     public void receiveMessage(String message) throws JDOMException, IOException, JaxenException {
         AllocationReport allocationReport = parser.parse(message);
         log.info("Received: " + allocationReport);
-        context.close();
 
-        GigaSpace gigaSpace = new GigaSpaceConfigurer(new UrlSpaceConfigurer(gigaspaceUrl)).gigaSpace();
-        gigaSpace.write(allocationReport);
+        LeaseContext<AllocationReport> saved = gigaSpace.write(allocationReport);
+
+        log.info("Object saved to space, UID: " + saved.getUID());
     }
 }

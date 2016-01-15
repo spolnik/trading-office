@@ -32,8 +32,11 @@ public class XapSpaceHostApp implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        GigaSpace gigaSpace = new GigaSpaceConfigurer(new UrlSpaceConfigurer(url)).gigaSpace();
+        UrlSpaceConfigurer configurer = new UrlSpaceConfigurer(url);
+        GigaSpace gigaSpace = new GigaSpaceConfigurer(configurer).gigaSpace();
         log.info("Joining thread, you can press Ctrl+C to shutdown application");
         Thread.currentThread().join();
+
+        configurer.close();
     }
 }

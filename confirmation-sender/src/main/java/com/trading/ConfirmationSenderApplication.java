@@ -3,6 +3,9 @@ package com.trading;
 import org.openspaces.core.GigaSpace;
 import org.openspaces.core.GigaSpaceConfigurer;
 import org.openspaces.core.space.UrlSpaceConfigurer;
+import org.openspaces.events.adapter.SpaceDataEvent;
+import org.openspaces.events.polling.SimplePollingContainerConfigurer;
+import org.openspaces.events.polling.SimplePollingEventListenerContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -34,10 +37,16 @@ public class ConfirmationSenderApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         GigaSpace gigaSpace = new GigaSpaceConfigurer(new UrlSpaceConfigurer(gigaspaceUrl)).gigaSpace();
 
-        AllocationReport allocationReport = gigaSpace.readById(AllocationReport.class, "1234567");
-        log.info("Retrieved from cache: " + allocationReport);
+        SimplePollingEventListenerContainer pollingListener = new SimplePollingContainerConfigurer(gigaSpace)
+                .template(new AllocationReport())
+                .eventListenerAnnotation(new AllocationReportListener())
+                .pollingContainer();
+
+        pollingListener.start();
 
         log.info("Joining thread, you can press Ctrl+C to shutdown application");
         Thread.currentThread().join();
+
+        pollingListener.stop();
     }
 }

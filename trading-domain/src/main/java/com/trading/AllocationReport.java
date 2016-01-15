@@ -2,15 +2,20 @@ package com.trading;
 
 import com.gigaspaces.annotation.pojo.SpaceClass;
 import com.gigaspaces.annotation.pojo.SpaceId;
-import com.gigaspaces.annotation.pojo.SpaceRouting;
+
+import java.io.Serializable;
 
 @SpaceClass
-public class AllocationReport {
+public class AllocationReport implements Serializable {
 
     private String allocationId;
     private String tradeType;
+    private String status;
 
-    @SpaceRouting
+    public AllocationReport() {
+        status = "new";
+    }
+
     @SpaceId(autoGenerate = false)
     public String getAllocationId() {
         return allocationId;
@@ -26,6 +31,14 @@ public class AllocationReport {
 
     public void setTradeType(String tradeType) {
         this.tradeType = tradeType;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
