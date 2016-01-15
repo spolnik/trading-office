@@ -1,4 +1,5 @@
 dependencies {
     compile libs.gigaspaces,
-            libs.jms
+            libs.spring.boot,
+            libs.spring.jms
 }
