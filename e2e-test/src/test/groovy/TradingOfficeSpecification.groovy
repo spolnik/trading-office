@@ -26,8 +26,9 @@ class TradingOfficeSpecification extends Specification {
         )
 
         then: "New confirmation is generated as PDF"
-        def confirmation = new File("Confirmation.pdf")
+        def confirmation = new File("../Confirmation.pdf")
         confirmation.size() > 0
+        confirmation.delete()
     }
 
     def messageCreator(fixmlAllocationMessage) {
