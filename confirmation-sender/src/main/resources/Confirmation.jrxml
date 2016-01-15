@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN"
+        "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport name="simple_template">
+    <title>
+        <band height="50">
+        </band>
+    </title>
+    <pageHeader>
+        <band height="50">
+        </band>
+    </pageHeader>
+    <columnHeader>
+        <band height="30">
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="100">
+        </band>
+    </detail>
+    <columnFooter>
+        <band height="30">
+        </band>
+    </columnFooter>
+    <pageFooter>
+        <band height="50">
+        </band>
+    </pageFooter>
+    <lastPageFooter>
+        <band height="50">
+        </band>
+    </lastPageFooter>
+    <summary>
+        <band height="50">
+        </band>
+    </summary>
+</jasperReport>

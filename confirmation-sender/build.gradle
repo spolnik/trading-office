@@ -1,5 +1,8 @@
 dependencies {
     compile libs.spring.boot,
             libs.gigaspaces,
-            project(':trading-domain')
+            project(':trading-domain'),
+            libs.jasperreports,
+            libs.itext,
+            libs.guava
 }
