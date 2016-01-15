@@ -16,7 +16,6 @@ allprojects {
 subprojects {
     repositories {
         mavenCentral()
-        maven { url "https://repository.jboss.org/nexus/content/groups/public" }
         maven { url "http://maven-repository.openspaces.org" }
         maven { url "http://repository.springsource.com/maven/bundles/external" }
     }
