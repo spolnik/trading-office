@@ -20,6 +20,9 @@ subprojects {
         maven {
             url "http://maven-repository.openspaces.org"
         }
+        maven {
+            url "http://maven.springframework.org/release"
+        }
     }
 
     apply plugin: 'java'
