@@ -15,17 +15,10 @@ allprojects {
 
 subprojects {
     repositories {
-        mavenLocal()
         mavenCentral()
-        maven {
-            url "https://repository.jboss.org/nexus/content/groups/public"
-        }
-        maven {
-            url "http://maven-repository.openspaces.org"
-        }
-        maven {
-            url "http://repository.springsource.com/maven/bundles/external"
-        }
+        maven { url "https://repository.jboss.org/nexus/content/groups/public" }
+        maven { url "http://maven-repository.openspaces.org" }
+        maven { url "http://repository.springsource.com/maven/bundles/external" }
     }
 
     apply plugin: 'java'
@@ -33,4 +26,9 @@ subprojects {
 
     sourceCompatibility = 1.8
     version = '1.0'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.7' +
+            ''
 }

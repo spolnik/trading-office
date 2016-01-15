@@ -2,6 +2,7 @@ ext {
     libs = libsMap(
             jaxen: 'jaxen:jaxen:1.1.6',
             jdom: 'jdom:jdom:1.1',
+            jms: 'javax.jms:jms:1.1',
             guava: 'com.google.guava:guava:19.0',
             activemq: 'org.apache.activemq:activemq-broker',
             activemq_kahadb: 'org.apache.activemq:activemq-kahadb-store',
