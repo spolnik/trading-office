@@ -7,7 +7,8 @@ ext {
             activemq_kahadb: 'org.apache.activemq:activemq-kahadb-store',
             spring: [
                 boot: 'org.springframework.boot:spring-boot-starter',
-                jms: 'org.springframework:spring-jms'
+                jms: 'org.springframework:spring-jms',
+                aopalliance: 'org.aopalliance:com.springsource.org.aopalliance:1.0.0'
             ],
             test: [
                     junit: 'junit:junit:4.11',
