@@ -18,7 +18,7 @@ subprojects {
         mavenLocal()
         mavenCentral()
         maven {
-            url "http://mvnrepository.com"
+            url "https://repository.jboss.org/nexus/content/groups/public"
         }
         maven {
             url "http://maven-repository.openspaces.org"
