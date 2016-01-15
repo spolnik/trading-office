@@ -1,4 +1,7 @@
 dependencies {
     compile libs.spring.boot,
-            libs.gigaspaces
+            libs.gigaspaces,
+            project(":trading-domain")
+
+    testCompile libs.test.assertj
 }

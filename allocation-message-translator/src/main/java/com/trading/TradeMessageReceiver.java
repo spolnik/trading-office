@@ -33,7 +33,6 @@ public class TradeMessageReceiver {
         context.close();
 
         GigaSpace gigaSpace = new GigaSpaceConfigurer(new UrlSpaceConfigurer(gigaspaceUrl)).gigaSpace();
-        LeaseContext<AllocationReport> saved = gigaSpace.write(allocationReport);
-        log.info("Saved: " + saved.getObject());
+        gigaSpace.write(allocationReport);
     }
 }

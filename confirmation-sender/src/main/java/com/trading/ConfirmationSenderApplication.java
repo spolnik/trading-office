@@ -34,11 +34,8 @@ public class ConfirmationSenderApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         GigaSpace gigaSpace = new GigaSpaceConfigurer(new UrlSpaceConfigurer(gigaspaceUrl)).gigaSpace();
 
-        AllocationReport allocationReport = new AllocationReport();
-        allocationReport.setAllocationId("1234567");
-
-        AllocationReport retrieved = gigaSpace.read(allocationReport);
-        log.info("Retrieved from cache: " + retrieved);
+        AllocationReport allocationReport = gigaSpace.readById(AllocationReport.class, "1234567");
+        log.info("Retrieved from cache: " + allocationReport);
 
         log.info("Joining thread, you can press Ctrl+C to shutdown application");
         Thread.currentThread().join();
