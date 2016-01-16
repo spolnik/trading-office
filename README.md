@@ -1,6 +1,7 @@
-[![Build Status](https://travis-ci.org/spolnik/trading-office.svg?branch=master)](https://travis-ci.org/spolnik/trading-office)
+[![Build Status](https://travis-ci.org/spolnik/trading-office.svg?branch=master)](https://travis-ci.org/spolnik/trading-office) [![Code Coverage](https://img.shields.io/codecov/c/github/spolnik/trading-office/master.svg)](https://codecov.io/github/spolnik/trading-office?branch=master)
 
-# Trading Office is set of applications simulating simple flow in post trade part of trade lifecycle 
+# Trading Office
+- set of applications simulating simple flow in post trade part of trade lifecycle
 - it's focused on generating confirmation based on received allocation report
  
 ## Xap Service

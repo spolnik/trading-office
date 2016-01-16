@@ -27,12 +27,22 @@ subprojects {
     }
 
     apply plugin: 'java'
+    apply plugin: 'jacoco'
 
     sourceCompatibility = 1.8
     version = '1.0'
+
+    jacocoTestReport {
+        reports {
+            xml.enabled = true
+            html.enabled = true
+        }
+    }
+
+    check.dependsOn jacocoTestReport
 }
 
-defaultTasks 'clean', 'build'
+defaultTasks 'clean', 'check'
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.10'
