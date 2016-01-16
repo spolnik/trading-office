@@ -7,18 +7,23 @@ import org.openspaces.core.GigaSpaceConfigurer;
 import org.openspaces.core.space.UrlSpaceConfigurer;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 
 public class ReceivedAllocationReportListenerIntegrationTest {
 
     private static final String ALLOCATION_REPORT_ID = "1234";
 
     private GigaSpace gigaSpace;
+    private ConfirmationSender confirmationSender;
 
     @Before
     public void setUp() throws Exception {
         gigaSpace = new GigaSpaceConfigurer(
                 new UrlSpaceConfigurer("/./test")
         ).gigaSpace();
+
+        confirmationSender = mock(ConfirmationSender.class);
     }
 
     @Test
@@ -35,7 +40,7 @@ public class ReceivedAllocationReportListenerIntegrationTest {
         AllocationReport allocationReportWithStatusNew = gigaSpace.takeById(AllocationReport.class, ALLOCATION_REPORT_ID);
         makeSureSpaceCountIs(0);
 
-        ReceivedAllocationReportListener receivedAllocationReportListener = new ReceivedAllocationReportListener();
+        ReceivedAllocationReportListener receivedAllocationReportListener = new ReceivedAllocationReportListener(confirmationSender);
         receivedAllocationReportListener.eventListener(allocationReportWithStatusNew, gigaSpace);
 
         AllocationReport allocationReportWithStatusSent = gigaSpace.takeById(AllocationReport.class, ALLOCATION_REPORT_ID);
@@ -44,6 +49,8 @@ public class ReceivedAllocationReportListenerIntegrationTest {
         assertThat(allocationReportWithStatusSent.getAllocationId()).isEqualTo(ALLOCATION_REPORT_ID);
         assertThat(allocationReportWithStatusSent.getTransactionType()).isEqualTo(TransactionType.NEW);
         assertThat(allocationReportWithStatusSent.getMessageStatus()).isEqualTo(MessageStatus.SENT);
+
+        verify(confirmationSender, times(1)).send(any(Confirmation.class));
     }
 
     private void makeSureSpaceCountIs(int expected) {

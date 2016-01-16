@@ -12,7 +12,6 @@ import org.openspaces.events.polling.Polling;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -28,8 +27,10 @@ public class ReceivedAllocationReportListener {
     private static final Logger LOG = LoggerFactory.getLogger(ReceivedAllocationReportListener.class);
 
     private final JasperReport jasperReport;
+    private final Sender<Confirmation> confirmationSender;
 
-    public ReceivedAllocationReportListener() throws JRException {
+    public ReceivedAllocationReportListener(Sender<Confirmation> confirmationSender) throws JRException {
+        this.confirmationSender = confirmationSender;
         URL jrxmlTemplate = Resources.getResource("Confirmation.jrxml");
 
         jasperReport = JasperCompileManager.compileReport(jrxmlTemplate.getFile());
@@ -54,7 +55,7 @@ public class ReceivedAllocationReportListener {
             updateStateOfAllocationAndSaveIntoGigaspaces(allocationReport, space);
 
             Confirmation confirmation = createConfirmationBasedOn(allocationReport, data);
-            send(confirmation);
+            confirmationSender.send(confirmation);
 
         } catch (JRException e) {
             LOG.error(e.getMessage(), e);
@@ -71,13 +72,6 @@ public class ReceivedAllocationReportListener {
         confirmation.setAllocationReport(allocationReport);
         confirmation.setContent(data);
         return confirmation;
-    }
-
-    private void send(Confirmation confirmation) {
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForObject("http://localhost:9000/api/confirmation", confirmation, Object.class);
-
-        LOG.info("Confirmation sent: " + confirmation);
     }
 
     private Map<String, Object> parameters(AllocationReport allocationReport) {
