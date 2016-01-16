@@ -2,3 +2,4 @@
 .gradle
 *.iml
 activemq-data
+*.pdf

@@ -1,6 +1,5 @@
 package com.trading;
 
-import com.j_spaces.core.LeaseContext;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,11 +40,9 @@ public class SpaceIntegrationTest {
         AllocationReport retrieved = gigaSpace.takeById(AllocationReport.class, ALLOCATION_REPORT_ID);
 
         assertThat(gigaSpace.count(new AllocationReport())).isEqualTo(0);
-        assertAllocationReport(retrieved);
-    }
 
-    private void assertAllocationReport(AllocationReport retrieved) {
         assertThat(retrieved.getAllocationId()).isEqualTo(ALLOCATION_REPORT_ID);
         assertThat(retrieved.getTradeType()).isEqualTo("BUY");
     }
+
 }

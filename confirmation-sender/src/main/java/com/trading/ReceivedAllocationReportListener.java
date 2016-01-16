@@ -2,6 +2,7 @@ package com.trading;
 
 import com.google.common.io.Resources;
 import net.sf.jasperreports.engine.*;
+import org.openspaces.core.GigaSpace;
 import org.openspaces.events.EventDriven;
 import org.openspaces.events.EventTemplate;
 import org.openspaces.events.TransactionalEvent;
@@ -25,13 +26,13 @@ import java.util.Map;
 @Polling
 @NotifyType(write = true, update = true)
 @TransactionalEvent
-public class AllocationReportListener {
+public class ReceivedAllocationReportListener {
 
-    private static final Logger log = LoggerFactory.getLogger(AllocationReportListener.class);
+    private static final Logger log = LoggerFactory.getLogger(ReceivedAllocationReportListener.class);
 
     private final JasperReport jasperReport;
 
-    public AllocationReportListener() throws JRException {
+    public ReceivedAllocationReportListener() throws JRException {
         URL jrxmlTemplate = Resources.getResource("Confirmation.jrxml");
 
         jasperReport = JasperCompileManager.compileReport(jrxmlTemplate.getFile());
@@ -40,14 +41,13 @@ public class AllocationReportListener {
     @EventTemplate
     AllocationReport unprocessedData() {
         AllocationReport template = new AllocationReport();
-        template.setStatus("new");
+        template.setStatus(MessageStatus.NEW);
         return template;
     }
 
     @SpaceDataEvent
-    public AllocationReport eventListener(AllocationReport allocationReport) throws IOException, JRException {
+    public void eventListener(AllocationReport allocationReport, GigaSpace space) throws IOException, JRException {
         log.info("Retrieved from cache: " + allocationReport);
-
 
         byte[] data = JasperRunManager.runReportToPdf(
                 jasperReport, parameters(allocationReport), new JREmptyDataSource()
@@ -56,7 +56,8 @@ public class AllocationReportListener {
         Path confirmationpath = Files.write(Paths.get("Confirmation.pdf"), data);
         log.info("Confirmation PDF saved: " + confirmationpath);
 
-        return null;
+        allocationReport.setStatus(MessageStatus.SENT);
+        space.write(allocationReport);
     }
 
     private Map<String, Object> parameters(AllocationReport allocationReport) {

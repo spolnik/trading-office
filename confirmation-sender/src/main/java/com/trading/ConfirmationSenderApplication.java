@@ -3,6 +3,8 @@ package com.trading;
 import org.openspaces.core.GigaSpace;
 import org.openspaces.core.GigaSpaceConfigurer;
 import org.openspaces.core.space.UrlSpaceConfigurer;
+import org.openspaces.events.notify.SimpleNotifyContainerConfigurer;
+import org.openspaces.events.notify.SimpleNotifyEventListenerContainer;
 import org.openspaces.events.polling.SimplePollingContainerConfigurer;
 import org.openspaces.events.polling.SimplePollingEventListenerContainer;
 import org.slf4j.Logger;
@@ -36,16 +38,16 @@ public class ConfirmationSenderApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         GigaSpace gigaSpace = new GigaSpaceConfigurer(new UrlSpaceConfigurer(gigaspaceUrl)).gigaSpace();
 
-        SimplePollingEventListenerContainer pollingListener = new SimplePollingContainerConfigurer(gigaSpace)
+        SimpleNotifyEventListenerContainer notifyListener = new SimpleNotifyContainerConfigurer(gigaSpace)
                 .template(new AllocationReport())
-                .eventListenerAnnotation(new AllocationReportListener())
-                .pollingContainer();
+                .eventListenerAnnotation(new ReceivedAllocationReportListener())
+                .notifyContainer();
 
-        pollingListener.start();
+        notifyListener.start();
 
         log.info("Joining thread, you can press Ctrl+C to shutdown application");
         Thread.currentThread().join();
 
-        pollingListener.stop();
+        notifyListener.stop();
     }
 }

@@ -10,10 +10,10 @@ public class AllocationReport implements Serializable {
 
     private String allocationId;
     private String tradeType;
-    private String status;
+    private MessageStatus status;
 
     public AllocationReport() {
-        status = "new";
+        status = MessageStatus.NEW;
     }
 
     @SpaceId(autoGenerate = false)
@@ -33,11 +33,11 @@ public class AllocationReport implements Serializable {
         this.tradeType = tradeType;
     }
 
-    public String getStatus() {
+    public MessageStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(MessageStatus status) {
         this.status = status;
     }
 
@@ -62,6 +62,7 @@ public class AllocationReport implements Serializable {
         return "AllocationReport{" +
                 "allocationId='" + allocationId + '\'' +
                 ", tradeType='" + tradeType + '\'' +
+                ", status=" + status +
                 '}';
     }
 }
