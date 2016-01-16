@@ -20,6 +20,7 @@ subprojects {
             url "http://repo1.maven.org/maven2"
             artifactUrls "https://repository.jboss.org/nexus/content/groups/public"
         }
+        jcenter()
         maven { url "http://maven-repository.openspaces.org" }
         maven { url "http://repository.springsource.com/maven/bundles/external" }
     }

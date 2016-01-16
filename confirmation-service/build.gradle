@@ -2,5 +2,10 @@ apply plugin: 'spring-boot'
 
 dependencies {
     compile libs.spring.boot_web,
-            libs.spring.boot_actuator
+            libs.spring.boot_actuator,
+            project(":trading-domain"),
+            libs.atomikos.jdbc
+
+    testCompile libs.test.junit,
+            libs.test.assertj
 }
