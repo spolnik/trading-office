@@ -1,3 +1,5 @@
+apply plugin: 'spring-boot'
+
 dependencies {
     compile project(":trading-domain"),
             libs.spring.boot,

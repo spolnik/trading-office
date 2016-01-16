@@ -1,3 +1,5 @@
+apply plugin: 'spring-boot'
+
 dependencies {
     compile libs.spring.boot,
             libs.gigaspaces,

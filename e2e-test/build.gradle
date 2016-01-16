@@ -1,4 +1,5 @@
 apply plugin: 'groovy'
+apply plugin: 'spring-boot'
 
 dependencies {
     testCompile project(':jms-service'),

@@ -18,7 +18,7 @@ ext {
             groovy: 'org.codehaus.groovy:groovy-all:2.4.1',
             gigaspaces: 'com.gigaspaces:gs-openspaces:10.2.0-13800-RELEASE',
             jasperreports: dependencies.create('net.sf.jasperreports:jasperreports:6.2.0') {
-                exclude group: 'org.olap4j', modlue: 'olap4j'
+                exclude group: 'org.olap4j', module: 'olap4j'
             },
             itext: 'com.lowagie:itext:2.1.7'
     )
