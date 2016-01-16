@@ -1,4 +1,3 @@
 dependencies {
-    compile libs.gigaspaces,
-            libs.jms
+    compile libs.gigaspaces
 }

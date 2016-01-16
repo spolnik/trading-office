@@ -2,7 +2,6 @@ ext {
     libs = libsMap(
             jaxen: 'jaxen:jaxen:1.1.6',
             jdom: 'jdom:jdom:1.1',
-            jms: 'javax.jms:jms-api:1.1-rev-1',
             guava: 'com.google.guava:guava:19.0',
             activemq: 'org.apache.activemq:activemq-broker',
             activemq_kahadb: 'org.apache.activemq:activemq-kahadb-store',
@@ -18,7 +17,9 @@ ext {
             ],
             groovy: 'org.codehaus.groovy:groovy-all:2.4.1',
             gigaspaces: 'com.gigaspaces:gs-openspaces:10.2.0-13800-RELEASE',
-            jasperreports: 'net.sf.jasperreports:jasperreports:6.2.0',
+            jasperreports: dependencies.create('net.sf.jasperreports:jasperreports:6.2.0') {
+                exclude modlue: 'olap4j'
+            },
             itext: 'com.lowagie:itext:2.1.7'
     )
 }
