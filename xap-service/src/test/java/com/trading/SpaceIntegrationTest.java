@@ -32,7 +32,7 @@ public class SpaceIntegrationTest {
 
         AllocationReport allocationReport = new AllocationReport();
         allocationReport.setAllocationId(ALLOCATION_REPORT_ID);
-        allocationReport.setTradeType("BUY");
+        allocationReport.setTransactionType(TransactionType.NEW);
 
         gigaSpace.write(allocationReport);
         assertThat(gigaSpace.count(new AllocationReport())).isEqualTo(1);
@@ -42,7 +42,6 @@ public class SpaceIntegrationTest {
         assertThat(gigaSpace.count(new AllocationReport())).isEqualTo(0);
 
         assertThat(retrieved.getAllocationId()).isEqualTo(ALLOCATION_REPORT_ID);
-        assertThat(retrieved.getTradeType()).isEqualTo("BUY");
+        assertThat(retrieved.getTransactionType()).isEqualTo(TransactionType.NEW);
     }
-
 }

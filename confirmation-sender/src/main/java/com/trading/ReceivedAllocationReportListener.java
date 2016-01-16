@@ -41,7 +41,7 @@ public class ReceivedAllocationReportListener {
     @EventTemplate
     AllocationReport unprocessedData() {
         AllocationReport template = new AllocationReport();
-        template.setStatus(MessageStatus.NEW);
+        template.setMessageStatus(MessageStatus.NEW);
         return template;
     }
 
@@ -56,14 +56,14 @@ public class ReceivedAllocationReportListener {
         Path confirmationpath = Files.write(Paths.get("Confirmation.pdf"), data);
         log.info("Confirmation PDF saved: " + confirmationpath);
 
-        allocationReport.setStatus(MessageStatus.SENT);
+        allocationReport.setMessageStatus(MessageStatus.SENT);
         space.write(allocationReport);
     }
 
     private Map<String, Object> parameters(AllocationReport allocationReport) {
         Map<String, Object> map = new HashMap<>();
         map.put("ALLOC_RPT_ID", allocationReport.getAllocationId());
-        map.put("TRANS_TYPE", allocationReport.getTradeType());
+        map.put("TRANS_TYPE", allocationReport.getTransactionType().toString());
         return map;
     }
 }

@@ -22,12 +22,12 @@ public class ReceivedAllocationReportListenerIntegrationTest {
     }
 
     @Test
-    public void can_save_and_retrieve_allocation_report_pojo() throws Exception {
+    public void retrieves_new_message_and_process_it_finally_saving_with_status_sent() throws Exception {
 
         AllocationReport allocationReport = new AllocationReport();
         allocationReport.setAllocationId(ALLOCATION_REPORT_ID);
-        allocationReport.setTradeType("BUY");
-        allocationReport.setStatus(MessageStatus.NEW);
+        allocationReport.setTransactionType(TransactionType.NEW);
+        allocationReport.setMessageStatus(MessageStatus.NEW);
 
         gigaSpace.write(allocationReport);
         makeSureSpaceCountIs(1);
@@ -42,8 +42,8 @@ public class ReceivedAllocationReportListenerIntegrationTest {
         makeSureSpaceCountIs(0);
 
         assertThat(allocationReportWithStatusSent.getAllocationId()).isEqualTo(ALLOCATION_REPORT_ID);
-        assertThat(allocationReportWithStatusSent.getTradeType()).isEqualTo("BUY");
-        assertThat(allocationReportWithStatusSent.getStatus()).isEqualTo(MessageStatus.SENT);
+        assertThat(allocationReportWithStatusSent.getTransactionType()).isEqualTo(TransactionType.NEW);
+        assertThat(allocationReportWithStatusSent.getMessageStatus()).isEqualTo(MessageStatus.SENT);
     }
 
     private void makeSureSpaceCountIs(int expected) {

@@ -9,11 +9,11 @@ import java.io.Serializable;
 public class AllocationReport implements Serializable {
 
     private String allocationId;
-    private String tradeType;
-    private MessageStatus status;
+    private TransactionType transactionType;
+    private MessageStatus messageStatus;
 
     public AllocationReport() {
-        status = MessageStatus.NEW;
+        messageStatus = MessageStatus.NEW;
     }
 
     @SpaceId(autoGenerate = false)
@@ -25,20 +25,20 @@ public class AllocationReport implements Serializable {
         this.allocationId = allocationId;
     }
 
-    public String getTradeType() {
-        return tradeType;
+    public TransactionType getTransactionType() {
+        return transactionType;
     }
 
-    public void setTradeType(String tradeType) {
-        this.tradeType = tradeType;
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
     }
 
-    public MessageStatus getStatus() {
-        return status;
+    public MessageStatus getMessageStatus() {
+        return messageStatus;
     }
 
-    public void setStatus(MessageStatus status) {
-        this.status = status;
+    public void setMessageStatus(MessageStatus messageStatus) {
+        this.messageStatus = messageStatus;
     }
 
     @Override
@@ -61,8 +61,8 @@ public class AllocationReport implements Serializable {
     public String toString() {
         return "AllocationReport{" +
                 "allocationId='" + allocationId + '\'' +
-                ", tradeType='" + tradeType + '\'' +
-                ", status=" + status +
+                ", transactionType='" + transactionType + '\'' +
+                ", messageStatus=" + messageStatus +
                 '}';
     }
 }

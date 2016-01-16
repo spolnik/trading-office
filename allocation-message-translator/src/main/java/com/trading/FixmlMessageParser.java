@@ -30,13 +30,25 @@ class FixmlMessageParser {
 
         AllocationReport allocationReport = new AllocationReport();
         allocationReport.setAllocationId(id.get().getValue());
-        allocationReport.setTradeType(transactionType.get().getValue().equals("0") ? "BUY" : "SELL");
+        allocationReport.setTransactionType(deriveTransactionType(transactionType));
 
         log.info("Parsed: " + allocationReport);
 
         return allocationReport;
     }
 
+    private TransactionType deriveTransactionType(Optional<Attribute> transactionType) {
+        String value = transactionType.get().getValue();
+
+        switch (value) {
+            case "0": return TransactionType.NEW;
+            case "1": return TransactionType.REPLACE;
+            case "2": return TransactionType.CANCEL;
+            default: return TransactionType.UNSUPPORTED;
+        }
+    }
+
+    @SuppressWarnings("all")
     private Optional<Attribute> getElement(Document allocationMessage, String path) throws JaxenException {
         XPath xpath = new JDOMXPath(path);
         return xpath.selectNodes(allocationMessage).stream().findFirst();
