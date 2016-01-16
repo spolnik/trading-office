@@ -7,6 +7,8 @@ ext {
             activemq_kahadb: 'org.apache.activemq:activemq-kahadb-store',
             spring: [
                 boot: 'org.springframework.boot:spring-boot-starter',
+                boot_actuator: 'org.springframework.boot:spring-boot-starter-actuator',
+                boot_web: 'org.springframework.boot:spring-boot-starter-web',
                 jms: 'org.springframework:spring-jms',
                 aopalliance: 'org.aopalliance:com.springsource.org.aopalliance:1.0.0'
             ],
@@ -16,7 +18,9 @@ ext {
                     spock: 'org.spockframework:spock-core:1.0-groovy-2.4'
             ],
             groovy: 'org.codehaus.groovy:groovy-all:2.4.1',
-            gigaspaces: 'com.gigaspaces:gs-openspaces:10.2.0-13800-RELEASE',
+            gigaspaces: dependencies.create('com.gigaspaces:gs-openspaces:10.2.1-14000-RELEASE') {
+                exclude group: 'org.ow2.jotm', module: 'jotm-core'
+            },
             jasperreports: dependencies.create('net.sf.jasperreports:jasperreports:6.2.0') {
                 exclude group: 'org.olap4j', module: 'olap4j'
             },

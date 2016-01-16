@@ -6,4 +6,5 @@ include 'confirmation-sender'
 include 'trading-domain'
 include 'allocation-message-translator'
 include 'xap-service'
+include 'confirmation-service'
 

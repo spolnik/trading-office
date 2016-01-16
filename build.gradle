@@ -15,6 +15,7 @@ allprojects {
 
 subprojects {
     repositories {
+        mavenLocal()
         maven {
             url "http://repo1.maven.org/maven2"
             artifactUrls "https://repository.jboss.org/nexus/content/groups/public"
@@ -32,5 +33,5 @@ subprojects {
 defaultTasks 'clean', 'build'
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.7'
+    gradleVersion = '2.10'
 }
