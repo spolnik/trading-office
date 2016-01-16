@@ -8,5 +8,6 @@ dependencies {
             libs.itext,
             libs.guava
 
-    testCompile libs.test.assertj
+    testCompile libs.test.assertj,
+            libs.test.mockito
 }

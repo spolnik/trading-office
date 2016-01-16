@@ -15,7 +15,8 @@ ext {
             test: [
                     junit: 'junit:junit:4.11',
                     assertj: 'org.assertj:assertj-core:1.7.1',
-                    spock: 'org.spockframework:spock-core:1.0-groovy-2.4'
+                    spock: 'org.spockframework:spock-core:1.0-groovy-2.4',
+                    mockito: 'org.mockito:mockito-core:2.0.38-beta'
             ],
             atomikos: [
                 jdbc: 'com.atomikos:transactions-jdbc:3.9.3'

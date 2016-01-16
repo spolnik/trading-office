@@ -38,7 +38,7 @@ public class ConfirmationSenderApplication implements CommandLineRunner {
 
         SimplePollingEventListenerContainer pollingListener = new SimplePollingContainerConfigurer(gigaSpace)
                 .template(new AllocationReport())
-                .eventListenerAnnotation(new ReceivedAllocationReportListener())
+                .eventListenerAnnotation(new ReceivedAllocationReportListener(confirmationSender()))
                 .pollingContainer();
 
         pollingListener.start();
@@ -47,5 +47,9 @@ public class ConfirmationSenderApplication implements CommandLineRunner {
         Thread.currentThread().join();
 
         pollingListener.stop();
+    }
+
+    private Sender<Confirmation> confirmationSender() {
+        return new ConfirmationSender();
     }
 }
