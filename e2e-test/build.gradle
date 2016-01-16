@@ -2,8 +2,7 @@ apply plugin: 'groovy'
 apply plugin: 'spring-boot'
 
 dependencies {
-    testCompile project(':jms-service'),
-            libs.groovy,
+    testCompile libs.groovy,
             libs.spring.boot,
             libs.spring.jms,
             libs.activemq,

@@ -46,18 +46,21 @@ public class ReceivedAllocationReportListener {
     }
 
     @SpaceDataEvent
-    public void eventListener(AllocationReport allocationReport, GigaSpace space) throws IOException, JRException {
+    public void eventListener(AllocationReport allocationReport, GigaSpace space) {
         log.info("Retrieved from cache: " + allocationReport);
 
-        byte[] data = JasperRunManager.runReportToPdf(
-                jasperReport, parameters(allocationReport), new JREmptyDataSource()
-        );
+        try {
+            byte[] data = JasperRunManager.runReportToPdf(
+                    jasperReport, parameters(allocationReport), new JREmptyDataSource()
+            );
+            Path confirmationpath = Files.write(Paths.get("Confirmation.pdf"), data);
+            log.info("Confirmation PDF saved: " + confirmationpath.toAbsolutePath().toString());
 
-        Path confirmationpath = Files.write(Paths.get("Confirmation.pdf"), data);
-        log.info("Confirmation PDF saved: " + confirmationpath);
-
-        allocationReport.setMessageStatus(MessageStatus.SENT);
-        space.write(allocationReport);
+            allocationReport.setMessageStatus(MessageStatus.SENT);
+            space.write(allocationReport);
+        } catch (JRException | IOException e) {
+            log.error(e.getMessage(), e);
+        }
     }
 
     private Map<String, Object> parameters(AllocationReport allocationReport) {
