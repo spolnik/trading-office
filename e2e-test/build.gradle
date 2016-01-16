@@ -2,8 +2,9 @@ apply plugin: 'groovy'
 apply plugin: 'spring-boot'
 
 dependencies {
-    testCompile libs.groovy,
-            libs.spring.boot,
+    testCompile project(":trading-domain"),
+            libs.groovy,
+            libs.spring.boot_web,
             libs.spring.jms,
             libs.activemq,
             libs.test.spock

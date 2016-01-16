@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ConfirmationRestServiceIntegrationTest {
 
     public static final String DUMMY_CONFIRMATION = "dummy confirmation";
-    public static final String DUMMY_ALLOCATION_ID = "12345";
+    public static final String DUMMY_ALLOCATION_ID = "dummy";
 
     @Before
     public void setUp() throws Exception {

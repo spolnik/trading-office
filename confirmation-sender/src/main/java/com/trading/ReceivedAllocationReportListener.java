@@ -12,6 +12,7 @@ import org.openspaces.events.polling.Polling;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.net.URL;
@@ -53,14 +54,34 @@ public class ReceivedAllocationReportListener {
             byte[] data = JasperRunManager.runReportToPdf(
                     jasperReport, parameters(allocationReport), new JREmptyDataSource()
             );
-            Path confirmationpath = Files.write(Paths.get("Confirmation.pdf"), data);
-            LOG.info("Confirmation PDF saved: " + confirmationpath.toAbsolutePath().toString());
 
-            allocationReport.setMessageStatus(MessageStatus.SENT);
-            space.write(allocationReport);
-        } catch (JRException | IOException e) {
+            updateStateOfAllocationAndSaveIntoGigaspaces(allocationReport, space);
+
+            Confirmation confirmation = createConfirmationBasedOn(allocationReport, data);
+            send(confirmation);
+
+        } catch (JRException e) {
             LOG.error(e.getMessage(), e);
         }
+    }
+
+    private void updateStateOfAllocationAndSaveIntoGigaspaces(AllocationReport allocationReport, GigaSpace space) {
+        allocationReport.setMessageStatus(MessageStatus.SENT);
+        space.write(allocationReport);
+    }
+
+    private Confirmation createConfirmationBasedOn(AllocationReport allocationReport, byte[] data) {
+        Confirmation confirmation = new Confirmation();
+        confirmation.setAllocationReport(allocationReport);
+        confirmation.setContent(data);
+        return confirmation;
+    }
+
+    private void send(Confirmation confirmation) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForObject("http://localhost:9000/api/confirmation", confirmation, Object.class);
+
+        LOG.info("Confirmation sent: " + confirmation);
     }
 
     private Map<String, Object> parameters(AllocationReport allocationReport) {

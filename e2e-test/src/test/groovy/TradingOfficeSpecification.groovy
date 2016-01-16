@@ -1,9 +1,11 @@
+import com.trading.Confirmation
 import org.apache.activemq.ActiveMQConnectionFactory
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.jms.connection.SingleConnectionFactory
 import org.springframework.jms.core.JmsTemplate
 import org.springframework.jms.core.MessageCreator
+import org.springframework.web.client.RestTemplate
 import spock.lang.Ignore
 import spock.lang.Specification
 
@@ -28,9 +30,14 @@ class TradingOfficeSpecification extends Specification {
         )
 
         then: "New confirmation is generated as PDF"
-        def confirmation = new File("../Confirmation.pdf")
-        confirmation.size() > 0
-        confirmation.delete()
+        def restTemplate = new RestTemplate()
+        def confirmation = restTemplate.getForObject(
+                "http://localhost:9000/api/confirmation?id=1234567",
+                Confirmation.class
+        );
+
+        confirmation.getContent().size() > 100
+        confirmation.id() == "1234567"
     }
 
     def messageCreator(fixmlAllocationMessage) {
