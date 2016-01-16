@@ -12,25 +12,24 @@ import org.springframework.jms.annotation.EnableJms;
 @EnableJms
 public class JmsHostApplication implements CommandLineRunner {
 
-    private static final BrokerService broker = new BrokerService();
+    private static final BrokerService BROKER_SERVICE = new BrokerService();
 
-    private static final Logger log = LoggerFactory.getLogger(JmsHostApplication.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JmsHostApplication.class);
 
     public static void main(String[] args) throws Exception {
 
-        broker.addConnector("tcp://localhost:9999");
-        broker.start();
+        BROKER_SERVICE.addConnector("tcp://localhost:9999");
+        BROKER_SERVICE.start();
 
         SpringApplication.run(
                 JmsHostApplication.class, args
         );
     }
 
-
     @Override
     public void run(String... args) throws Exception {
-        log.info("Joining thread, you can press Ctrl+C to shutdown application");
+        LOG.info("Joining thread, you can press Ctrl+C to shutdown application");
         Thread.currentThread().join();
-        broker.stop();
+        BROKER_SERVICE.stop();
     }
 }

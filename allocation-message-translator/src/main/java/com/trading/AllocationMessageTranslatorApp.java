@@ -19,7 +19,7 @@ import java.util.Map;
 @EnableJms
 public class AllocationMessageTranslatorApp implements CommandLineRunner {
 
-    private static final Logger log = LoggerFactory.getLogger(AllocationMessageTranslatorApp.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AllocationMessageTranslatorApp.class);
 
     @Bean
     ConnectionFactory connectionFactory() {
@@ -46,7 +46,7 @@ public class AllocationMessageTranslatorApp implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("Joining thread, you can press Ctrl+C to shutdown application");
+        LOG.info("Joining thread, you can press Ctrl+C to shutdown application");
         Thread.currentThread().join();
     }
 }

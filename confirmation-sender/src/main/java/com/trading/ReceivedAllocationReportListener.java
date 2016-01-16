@@ -28,7 +28,7 @@ import java.util.Map;
 @TransactionalEvent
 public class ReceivedAllocationReportListener {
 
-    private static final Logger log = LoggerFactory.getLogger(ReceivedAllocationReportListener.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ReceivedAllocationReportListener.class);
 
     private final JasperReport jasperReport;
 
@@ -47,19 +47,19 @@ public class ReceivedAllocationReportListener {
 
     @SpaceDataEvent
     public void eventListener(AllocationReport allocationReport, GigaSpace space) {
-        log.info("Retrieved from cache: " + allocationReport);
+        LOG.info("Retrieved from cache: " + allocationReport);
 
         try {
             byte[] data = JasperRunManager.runReportToPdf(
                     jasperReport, parameters(allocationReport), new JREmptyDataSource()
             );
             Path confirmationpath = Files.write(Paths.get("Confirmation.pdf"), data);
-            log.info("Confirmation PDF saved: " + confirmationpath.toAbsolutePath().toString());
+            LOG.info("Confirmation PDF saved: " + confirmationpath.toAbsolutePath().toString());
 
             allocationReport.setMessageStatus(MessageStatus.SENT);
             space.write(allocationReport);
         } catch (JRException | IOException e) {
-            log.error(e.getMessage(), e);
+            LOG.error(e.getMessage(), e);
         }
     }
 

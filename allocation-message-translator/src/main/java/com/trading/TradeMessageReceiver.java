@@ -21,12 +21,12 @@ public class TradeMessageReceiver {
     private static Logger log = LoggerFactory.getLogger(TradeMessageReceiver.class);
     private final FixmlMessageParser parser = new FixmlMessageParser();
 
-    private static final String gigaspaceUrl ="jini://*/*/tradingOffice";
+    private static final String GIGASPACES_URL ="jini://*/*/tradingOffice";
 
     private final GigaSpace gigaSpace;
 
     public TradeMessageReceiver() {
-        gigaSpace = new GigaSpaceConfigurer(new UrlSpaceConfigurer(gigaspaceUrl)).gigaSpace();
+        gigaSpace = new GigaSpaceConfigurer(new UrlSpaceConfigurer(GIGASPACES_URL)).gigaSpace();
     }
 
     @Autowired

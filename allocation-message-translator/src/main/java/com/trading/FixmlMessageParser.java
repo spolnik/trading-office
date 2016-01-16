@@ -16,7 +16,7 @@ import java.util.Optional;
 
 class FixmlMessageParser {
 
-    private static final Logger log = LoggerFactory.getLogger(FixmlMessageParser.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FixmlMessageParser.class);
 
     public AllocationReport parse(String message) throws JDOMException, IOException, JaxenException {
 
@@ -32,7 +32,7 @@ class FixmlMessageParser {
         allocationReport.setAllocationId(id.get().getValue());
         allocationReport.setTransactionType(deriveTransactionType(transactionType));
 
-        log.info("Parsed: " + allocationReport);
+        LOG.info("Parsed: " + allocationReport);
 
         return allocationReport;
     }

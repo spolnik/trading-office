@@ -1,6 +1,5 @@
 package com.trading;
 
-import org.openspaces.core.GigaSpace;
 import org.openspaces.core.GigaSpaceConfigurer;
 import org.openspaces.core.space.UrlSpaceConfigurer;
 import org.slf4j.Logger;
@@ -15,9 +14,9 @@ import java.util.Map;
 @SpringBootApplication
 public class XapSpaceHostApp implements CommandLineRunner {
 
-    private static final String url = "/./tradingOffice";
+    private static final String GIGASPACES_URL = "/./tradingOffice";
 
-    private static final Logger log = LoggerFactory.getLogger(XapSpaceHostApp.class);
+    private static final Logger LOG = LoggerFactory.getLogger(XapSpaceHostApp.class);
 
     public static void main(String[] args) {
         SpringApplication springApplication = new SpringApplication(XapSpaceHostApp.class);
@@ -32,9 +31,9 @@ public class XapSpaceHostApp implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        UrlSpaceConfigurer configurer = new UrlSpaceConfigurer(url);
+        UrlSpaceConfigurer configurer = new UrlSpaceConfigurer(GIGASPACES_URL);
         new GigaSpaceConfigurer(configurer).gigaSpace();
-        log.info("Joining thread, you can press Ctrl+C to shutdown application");
+        LOG.info("Joining thread, you can press Ctrl+C to shutdown application");
         Thread.currentThread().join();
 
         configurer.close();

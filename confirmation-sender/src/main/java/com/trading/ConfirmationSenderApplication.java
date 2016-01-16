@@ -17,9 +17,9 @@ import java.util.Map;
 @SpringBootApplication
 public class ConfirmationSenderApplication implements CommandLineRunner {
 
-    private static final String gigaspaceUrl ="jini://*/*/tradingOffice";
+    private static final String GIGASPACES_URL ="jini://*/*/tradingOffice";
 
-    private static final Logger log = LoggerFactory.getLogger(ConfirmationSenderApplication.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ConfirmationSenderApplication.class);
 
     public static void main(String[] args) {
         SpringApplication springApplication = new SpringApplication(ConfirmationSenderApplication.class);
@@ -34,7 +34,7 @@ public class ConfirmationSenderApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        GigaSpace gigaSpace = new GigaSpaceConfigurer(new UrlSpaceConfigurer(gigaspaceUrl)).gigaSpace();
+        GigaSpace gigaSpace = new GigaSpaceConfigurer(new UrlSpaceConfigurer(GIGASPACES_URL)).gigaSpace();
 
         SimplePollingEventListenerContainer pollingListener = new SimplePollingContainerConfigurer(gigaSpace)
                 .template(new AllocationReport())
@@ -43,7 +43,7 @@ public class ConfirmationSenderApplication implements CommandLineRunner {
 
         pollingListener.start();
 
-        log.info("Joining thread, you can press Ctrl+C to shutdown application");
+        LOG.info("Joining thread, you can press Ctrl+C to shutdown application");
         Thread.currentThread().join();
 
         pollingListener.stop();

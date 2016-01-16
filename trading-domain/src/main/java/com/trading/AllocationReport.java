@@ -43,26 +43,35 @@ public class AllocationReport implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         AllocationReport that = (AllocationReport) o;
 
-        return allocationId != null ? allocationId.equals(that.allocationId) : that.allocationId == null;
-
+        return allocationId != null
+                ? allocationId.equals(that.allocationId)
+                : that.allocationId == null;
     }
 
     @Override
     public int hashCode() {
-        return allocationId != null ? allocationId.hashCode() : 0;
+        return allocationId != null
+                ? allocationId.hashCode()
+                : 0;
     }
 
     @Override
     public String toString() {
-        return "AllocationReport{" +
-                "allocationId='" + allocationId + '\'' +
-                ", transactionType='" + transactionType + '\'' +
-                ", messageStatus=" + messageStatus +
-                '}';
+        return String.format(
+                "AllocationReport{allocationId='%s', transactionType='%s', messageStatus=%s}",
+                allocationId,
+                transactionType,
+                messageStatus
+        );
     }
 }

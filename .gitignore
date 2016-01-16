@@ -1,5 +1,6 @@
 .idea
 .gradle
 *.iml
-activemq-content
+activemq-data
+reports
 *.pdf

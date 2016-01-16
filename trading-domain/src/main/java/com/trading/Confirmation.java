@@ -36,8 +36,13 @@ public class Confirmation implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Confirmation that = (Confirmation) o;
 
@@ -56,9 +61,7 @@ public class Confirmation implements Serializable {
 
     @Override
     public String toString() {
-        return "Confirmation{" +
-                "allocationReport=" + allocationReport +
-                '}';
+        return String.format("Confirmation{allocationReport=%s}", allocationReport);
     }
 
     public String id() {

@@ -8,6 +8,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConfirmationRestServiceIntegrationTest {
 
+    public static final String DUMMY_CONFIRMATION = "dummy confirmation";
+    public static final String DUMMY_ALLOCATION_ID = "12345";
+
     @Before
     public void setUp() throws Exception {
         ConfirmationServiceApplication.main(new String[0]);
@@ -23,18 +26,20 @@ public class ConfirmationRestServiceIntegrationTest {
                 Confirmation.class
         );
 
-        assertThat(confirmation.id()).isEqualTo("12345");
+        assertThat(confirmation.id()).isEqualTo(DUMMY_ALLOCATION_ID);
+        assertThat(confirmation.getContent()).isEqualTo(DUMMY_CONFIRMATION.getBytes());
     }
 
     private Confirmation confirmation() {
         AllocationReport allocationReport = new AllocationReport();
-        allocationReport.setAllocationId("12345");
+
+        allocationReport.setAllocationId(DUMMY_ALLOCATION_ID);
         allocationReport.setTransactionType(TransactionType.NEW);
         allocationReport.setMessageStatus(MessageStatus.SENT);
 
         Confirmation confirmation = new Confirmation();
         confirmation.setAllocationReport(allocationReport);
-        confirmation.setContent("dummy confirmation".getBytes());
+        confirmation.setContent(DUMMY_CONFIRMATION.getBytes());
 
         return confirmation;
     }
