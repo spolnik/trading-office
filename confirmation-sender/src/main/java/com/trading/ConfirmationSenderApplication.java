@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +50,8 @@ public class ConfirmationSenderApplication implements CommandLineRunner {
         pollingListener.stop();
     }
 
-    private Sender<Confirmation> confirmationSender() {
+    @Bean
+    public Sender<Confirmation> confirmationSender() {
         return new ConfirmationSender();
     }
 }

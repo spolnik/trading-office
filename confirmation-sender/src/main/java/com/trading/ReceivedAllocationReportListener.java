@@ -11,6 +11,7 @@ import org.openspaces.events.notify.NotifyType;
 import org.openspaces.events.polling.Polling;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -29,6 +30,7 @@ public class ReceivedAllocationReportListener {
     private final JasperReport jasperReport;
     private final Sender<Confirmation> confirmationSender;
 
+    @Autowired
     public ReceivedAllocationReportListener(Sender<Confirmation> confirmationSender) throws JRException {
         this.confirmationSender = confirmationSender;
         URL jrxmlTemplate = Resources.getResource("Confirmation.jrxml");

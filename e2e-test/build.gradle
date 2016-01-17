@@ -7,5 +7,6 @@ dependencies {
             libs.spring.boot_web,
             libs.spring.jms,
             libs.activemq,
-            libs.test.spock
+            libs.test.spock,
+            libs.activemq_http
 }

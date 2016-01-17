@@ -32,7 +32,7 @@ public class TradeMessageReceiver {
     @Autowired
     private ConfigurableApplicationContext context;
 
-    @JmsListener(destination = "front-office-mailbox", containerFactory = "jmsContainerFactory")
+    @JmsListener(destination = "front.office.mailbox", containerFactory = "jmsContainerFactory")
     public void receiveMessage(String message) throws JDOMException, IOException, JaxenException {
         AllocationReport allocationReport = parser.parse(message);
         log.info("Received: " + allocationReport);
