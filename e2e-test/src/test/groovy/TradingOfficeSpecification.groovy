@@ -53,14 +53,14 @@ class TradingOfficeSpecification extends Specification {
     }
 
     def queue() {
-        "front-office-mailbox"
+        "front.office.mailbox"
     }
 
     def connectionFactory() {
 
 
         def activeMQConnectionFactory = new ActiveMQConnectionFactory()
-        activeMQConnectionFactory.setBrokerURL("https://activemq-nprogramming.rhcloud.com:15005")
+        activeMQConnectionFactory.setBrokerURL("http://activemq-nprogramming.rhcloud.com")
 //        activeMQConnectionFactory.setBrokerURL("tcp://localhost:9999")
 
         def factory = new SingleConnectionFactory()

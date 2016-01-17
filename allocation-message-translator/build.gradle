@@ -7,5 +7,6 @@ dependencies {
             libs.activemq,
             libs.jaxen,
             libs.jdom,
-            libs.gigaspaces
+            libs.gigaspaces,
+            libs.activemq_http
 }
