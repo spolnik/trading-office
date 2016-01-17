@@ -54,3 +54,7 @@ task wrapper(type: Wrapper) {
 heroku {
     appName = 'trading-office-jms-service'
 }
+
+task stage {
+    dependsOn ':jms-service:bootRepackage'
+}
