@@ -7,3 +7,27 @@ after_success:
   - codecov
 
 # coverity scan
+env:
+  global:
+    - secure: "xxxx"
+
+addons:
+  coverity_scan:
+
+    project:
+      name: spolnik/trading-office
+      version: 1.0
+      description: Trading Office
+
+    notification_email: jacek.spolnik@gmail.com
+
+    build_command_prepend: ""
+
+    build_command: "./gradlew build"
+
+    branch_pattern: coverity_scan
+
+branches:
+  only:
+    - master
+    - coverity-scan
