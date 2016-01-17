@@ -5,6 +5,7 @@ ext {
             guava: 'com.google.guava:guava:19.0',
             activemq: 'org.apache.activemq:activemq-broker',
             activemq_kahadb: 'org.apache.activemq:activemq-kahadb-store',
+            activemq_http: 'org.apache.activemq:activemq-http',
             spring: [
                 boot: 'org.springframework.boot:spring-boot-starter',
                 boot_actuator: 'org.springframework.boot:spring-boot-starter-actuator',
