@@ -6,3 +6,8 @@ dependencies {
             libs.spring.boot,
             libs.spring.jms
 }
+
+jar {
+    baseName = 'trading-office-jms-service'
+    version = '1.0.0'
+}
