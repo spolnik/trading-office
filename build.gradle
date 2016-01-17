@@ -40,6 +40,9 @@ subprojects {
     }
 
     check.dependsOn jacocoTestReport
+
+    compileJava.options.fork = true
+    compileJava.options.forkOptions.executable = 'javac'
 }
 
 defaultTasks 'clean', 'check'
