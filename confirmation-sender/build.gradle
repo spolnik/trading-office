@@ -1,13 +1,19 @@
 apply plugin: 'spring-boot'
 
 dependencies {
-    compile libs.spring.boot,
-            libs.gigaspaces,
+    compile libs.spring.boot_web,
             project(':trading-domain'),
             libs.jasperreports,
             libs.itext,
-            libs.guava
+            libs.guava,
+            libs.spring.jms,
+            libs.activemq,
+            libs.activemq_http,
+            libs.jackson,
+            libs.jackson_databind,
+            libs.jackson_annotations
 
     testCompile libs.test.assertj,
-            libs.test.mockito
+            libs.test.mockito,
+            libs.test.junit
 }

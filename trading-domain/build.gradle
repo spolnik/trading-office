@@ -1,3 +1,6 @@
 dependencies {
-    compile libs.gigaspaces
+    testCompile libs.jackson,
+            libs.jackson_databind,
+            libs.test.junit,
+            libs.test.assertj
 }

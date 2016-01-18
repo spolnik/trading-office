@@ -2,6 +2,9 @@ ext {
     libs = libsMap(
             jaxen: 'jaxen:jaxen:1.1.6',
             jdom: 'jdom:jdom:1.1',
+            jackson: 'com.fasterxml.jackson.core:jackson-core:2.7.0',
+            jackson_databind: 'com.fasterxml.jackson.core:jackson-databind:2.7.0',
+            jackson_annotations: 'com.fasterxml.jackson.core:jackson-annotations:2.7.0',
             guava: 'com.google.guava:guava:19.0',
             activemq: 'org.apache.activemq:activemq-broker',
             activemq_kahadb: 'org.apache.activemq:activemq-kahadb-store',
@@ -10,8 +13,7 @@ ext {
                 boot: 'org.springframework.boot:spring-boot-starter',
                 boot_actuator: 'org.springframework.boot:spring-boot-starter-actuator',
                 boot_web: 'org.springframework.boot:spring-boot-starter-web',
-                jms: 'org.springframework:spring-jms',
-                aopalliance: 'org.aopalliance:com.springsource.org.aopalliance:1.0.0'
+                jms: 'org.springframework:spring-jms'
             ],
             test: [
                     junit: 'junit:junit:4.11',
@@ -19,13 +21,7 @@ ext {
                     spock: 'org.spockframework:spock-core:1.0-groovy-2.4',
                     mockito: 'org.mockito:mockito-core:2.0.38-beta'
             ],
-            atomikos: [
-                jdbc: 'com.atomikos:transactions-jdbc:3.9.3'
-            ],
             groovy: 'org.codehaus.groovy:groovy-all:2.4.1',
-            gigaspaces: dependencies.create('com.gigaspaces:gs-openspaces:10.2.1-14000-RELEASE') {
-                exclude group: 'org.ow2.jotm', module: 'jotm-core'
-            },
             jasperreports: dependencies.create('net.sf.jasperreports:jasperreports:6.2.0') {
                 exclude group: 'org.olap4j', module: 'olap4j'
             },

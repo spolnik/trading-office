@@ -12,9 +12,9 @@ buildscript {
 allprojects {
     apply plugin: 'idea'
     apply plugin: 'checkstyle'
-}
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
 
-subprojects {
     repositories {
         mavenLocal()
         maven {
@@ -26,23 +26,20 @@ subprojects {
         maven { url "http://repository.springsource.com/maven/bundles/external" }
     }
 
-    apply plugin: 'java'
-    apply plugin: 'jacoco'
-
     sourceCompatibility = 1.8
     version = '1.0'
-
-    jacocoTestReport {
-        reports {
-            xml.enabled = true
-            html.enabled = true
-        }
-    }
-
-    check.dependsOn jacocoTestReport
 }
 
 defaultTasks 'clean', 'check'
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
+check.dependsOn jacocoTestReport
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.10'
