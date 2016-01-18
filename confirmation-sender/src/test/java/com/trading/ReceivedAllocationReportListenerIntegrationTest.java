@@ -1,29 +1,29 @@
 package com.trading;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
-import org.openspaces.core.GigaSpace;
-import org.openspaces.core.GigaSpaceConfigurer;
-import org.openspaces.core.space.UrlSpaceConfigurer;
+import org.mockito.ArgumentCaptor;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class ReceivedAllocationReportListenerIntegrationTest {
 
     private static final String ALLOCATION_REPORT_ID = "1234";
 
-    private GigaSpace gigaSpace;
+
     private ConfirmationSender confirmationSender;
+    private ArgumentCaptor<Confirmation> argument;
 
     @Before
     public void setUp() throws Exception {
-        gigaSpace = new GigaSpaceConfigurer(
-                new UrlSpaceConfigurer("/./test")
-        ).gigaSpace();
-
         confirmationSender = mock(ConfirmationSender.class);
+
+        argument = ArgumentCaptor.forClass(
+                Confirmation.class
+        );
     }
 
     @Test
@@ -34,26 +34,17 @@ public class ReceivedAllocationReportListenerIntegrationTest {
         allocationReport.setTransactionType(TransactionType.NEW);
         allocationReport.setMessageStatus(MessageStatus.NEW);
 
-        gigaSpace.write(allocationReport);
-        makeSureSpaceCountIs(1);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String allocationReportAsJson = objectMapper.writeValueAsString(allocationReport);
 
-        AllocationReport allocationReportWithStatusNew = gigaSpace.takeById(AllocationReport.class, ALLOCATION_REPORT_ID);
-        makeSureSpaceCountIs(0);
+        ReceivedAllocationReportMessageListener receivedAllocationReportMessageListener = new ReceivedAllocationReportMessageListener(confirmationSender);
+        receivedAllocationReportMessageListener.eventListener(allocationReportAsJson);
+        verify(confirmationSender).send(argument.capture());
 
-        ReceivedAllocationReportListener receivedAllocationReportListener = new ReceivedAllocationReportListener(confirmationSender);
-        receivedAllocationReportListener.eventListener(allocationReportWithStatusNew, gigaSpace);
-
-        AllocationReport allocationReportWithStatusSent = gigaSpace.takeById(AllocationReport.class, ALLOCATION_REPORT_ID);
-        makeSureSpaceCountIs(0);
+        AllocationReport allocationReportWithStatusSent = argument.getValue().getAllocationReport();
 
         assertThat(allocationReportWithStatusSent.getAllocationId()).isEqualTo(ALLOCATION_REPORT_ID);
         assertThat(allocationReportWithStatusSent.getTransactionType()).isEqualTo(TransactionType.NEW);
         assertThat(allocationReportWithStatusSent.getMessageStatus()).isEqualTo(MessageStatus.SENT);
-
-        verify(confirmationSender, times(1)).send(any(Confirmation.class));
-    }
-
-    private void makeSureSpaceCountIs(int expected) {
-        assertThat(gigaSpace.count(new AllocationReport())).isEqualTo(expected);
     }
 }

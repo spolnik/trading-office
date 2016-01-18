@@ -14,8 +14,6 @@ import org.springframework.jms.config.JmsListenerContainerFactory;
 import org.springframework.jms.config.SimpleJmsListenerContainerFactory;
 
 import javax.jms.ConnectionFactory;
-import java.util.HashMap;
-import java.util.Map;
 
 @SpringBootApplication
 @EnableJms
@@ -41,13 +39,7 @@ public class AllocationMessageTranslatorApp implements CommandLineRunner {
     }
 
     public static void main(String[] args) {
-        SpringApplication springApplication = new SpringApplication(AllocationMessageTranslatorApp.class);
-        springApplication.setWebEnvironment(false);
-
-        Map<String, Object> settings = new HashMap<>();
-        settings.put("spring.jta.enabled", false);
-        springApplication.setDefaultProperties(settings);
-        springApplication.run(args);
+        SpringApplication.run(AllocationMessageTranslatorApp.class, args);
     }
 
     @Override

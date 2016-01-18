@@ -1,11 +1,7 @@
 package com.trading;
 
-import com.gigaspaces.annotation.pojo.SpaceClass;
-import com.gigaspaces.annotation.pojo.SpaceId;
-
 import java.io.Serializable;
 
-@SpaceClass
 public class AllocationReport implements Serializable {
 
     private String allocationId;
@@ -16,7 +12,6 @@ public class AllocationReport implements Serializable {
         messageStatus = MessageStatus.NEW;
     }
 
-    @SpaceId(autoGenerate = false)
     public String getAllocationId() {
         return allocationId;
     }
