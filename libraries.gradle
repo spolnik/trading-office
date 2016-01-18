@@ -2,9 +2,9 @@ ext {
     libs = libsMap(
             jaxen: 'jaxen:jaxen:1.1.6',
             jdom: 'jdom:jdom:1.1',
-            jackson: 'com.fasterxml.jackson.core:jackson-core:2.7.0',
-            jackson_databind: 'com.fasterxml.jackson.core:jackson-databind:2.7.0',
-            jackson_annotations: 'com.fasterxml.jackson.core:jackson-annotations:2.7.0',
+            jackson: 'com.fasterxml.jackson.core:jackson-core:2.6.3',
+            jackson_databind: 'com.fasterxml.jackson.core:jackson-databind:2.6.3',
+            jackson_annotations: 'com.fasterxml.jackson.core:jackson-annotations:2.6.3',
             guava: 'com.google.guava:guava:19.0',
             activemq: 'org.apache.activemq:activemq-broker',
             activemq_kahadb: 'org.apache.activemq:activemq-kahadb-store',
