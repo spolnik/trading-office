@@ -6,12 +6,14 @@ import org.springframework.jms.connection.SingleConnectionFactory
 import org.springframework.jms.core.JmsTemplate
 import org.springframework.jms.core.MessageCreator
 import org.springframework.web.client.RestTemplate
+import spock.lang.Ignore
 import spock.lang.Specification
 
 import javax.jms.JMSException
 import javax.jms.Message
 import javax.jms.Session
 
+@Ignore
 class TradingOfficeSpecification extends Specification {
 
     private static final Logger log = LoggerFactory.getLogger(TradingOfficeSpecification.class)
