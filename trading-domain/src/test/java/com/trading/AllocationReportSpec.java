@@ -20,12 +20,9 @@ public class AllocationReportSpec {
                 allocationReportAsJson, AllocationReport.class
         );
 
-        assertThat(allocationReportCreatedFromJson.getAllocationId())
-                .isEqualTo("12345");
-        assertThat(allocationReportCreatedFromJson.getMessageStatus())
-                .isEqualTo(MessageStatus.NEW);
-        assertThat(allocationReportCreatedFromJson.getTransactionType())
-                .isEqualTo(TransactionType.NEW);
+        assertThat(allocationReportCreatedFromJson).isEqualToComparingFieldByField(
+                allocationReport()
+        );
     }
 
     private AllocationReport allocationReport() {
