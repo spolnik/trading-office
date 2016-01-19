@@ -36,9 +36,4 @@ public class ConfirmationSenderApplication {
 
         return factory;
     }
-
-    @Bean
-    public Sender<Confirmation> confirmationSender() {
-        return new ConfirmationSender();
-    }
 }
