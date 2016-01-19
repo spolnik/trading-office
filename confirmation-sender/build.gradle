@@ -17,3 +17,8 @@ dependencies {
             libs.test.mockito,
             libs.test.junit
 }
+
+jar {
+    baseName = 'trading-office-confirmation-sender'
+    version = '1.0.0'
+}
