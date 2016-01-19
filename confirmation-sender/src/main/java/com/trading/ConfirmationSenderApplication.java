@@ -18,13 +18,10 @@ import javax.jms.ConnectionFactory;
 @SpringBootApplication
 @EnableJms
 @PropertySource("classpath:app.properties")
-public class ConfirmationSenderApplication implements CommandLineRunner {
-
-    private static final Logger LOG = LoggerFactory.getLogger(ConfirmationSenderApplication.class);
+public class ConfirmationSenderApplication {
 
     public static void main(String[] args) {
-        SpringApplication springApplication = new SpringApplication(ConfirmationSenderApplication.class);
-        springApplication.run(args);
+        SpringApplication.run(ConfirmationSenderApplication.class, args);
     }
 
     @Value("${activemqUrl}")
@@ -41,14 +38,6 @@ public class ConfirmationSenderApplication implements CommandLineRunner {
         factory.setConnectionFactory(connectionFactory);
 
         return factory;
-    }
-
-    @Override
-    public void run(String... args) throws Exception {
-
-
-        LOG.info("Joining thread, you can press Ctrl+C to shutdown application");
-        Thread.currentThread().join();
     }
 
     @Bean

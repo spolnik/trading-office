@@ -18,9 +18,7 @@ import javax.jms.ConnectionFactory;
 @SpringBootApplication
 @EnableJms
 @PropertySource("classpath:app.properties")
-public class AllocationMessageTranslatorApp implements CommandLineRunner {
-
-    private static final Logger LOG = LoggerFactory.getLogger(AllocationMessageTranslatorApp.class);
+public class AllocationMessageTranslatorApp {
 
     @Value("${activemqUrl}")
     private String activemqUrl;
@@ -40,11 +38,5 @@ public class AllocationMessageTranslatorApp implements CommandLineRunner {
 
     public static void main(String[] args) {
         SpringApplication.run(AllocationMessageTranslatorApp.class, args);
-    }
-
-    @Override
-    public void run(String... args) throws Exception {
-        LOG.info("Joining thread, you can press Ctrl+C to shutdown application");
-        Thread.currentThread().join();
     }
 }
