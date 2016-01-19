@@ -5,7 +5,6 @@ dependencies {
             project(':trading-domain'),
             libs.jasperreports,
             libs.itext,
-            libs.guava,
             libs.spring.jms,
             libs.activemq,
             libs.activemq_http,

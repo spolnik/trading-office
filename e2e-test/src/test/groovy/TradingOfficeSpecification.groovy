@@ -6,14 +6,12 @@ import org.springframework.jms.connection.SingleConnectionFactory
 import org.springframework.jms.core.JmsTemplate
 import org.springframework.jms.core.MessageCreator
 import org.springframework.web.client.RestTemplate
-import spock.lang.Ignore
 import spock.lang.Specification
 
 import javax.jms.JMSException
 import javax.jms.Message
 import javax.jms.Session
 
-@Ignore
 class TradingOfficeSpecification extends Specification {
 
     private static final Logger log = LoggerFactory.getLogger(TradingOfficeSpecification.class)
@@ -32,7 +30,6 @@ class TradingOfficeSpecification extends Specification {
         then: "New confirmation is generated as PDF"
         def restTemplate = new RestTemplate()
         def confirmation = restTemplate.getForObject(
-//                "http://localhost:9000/api/confirmation?id=1234567",
                 "https://confirmation-service.herokuapp.com/api/confirmation?id=1234567",
                 Confirmation.class
         );
@@ -59,10 +56,8 @@ class TradingOfficeSpecification extends Specification {
 
     def connectionFactory() {
 
-
         def activeMQConnectionFactory = new ActiveMQConnectionFactory()
         activeMQConnectionFactory.setBrokerURL("http://activemq-nprogramming.rhcloud.com")
-//        activeMQConnectionFactory.setBrokerURL("tcp://localhost:9999")
 
         def factory = new SingleConnectionFactory()
         factory.setTargetConnectionFactory(activeMQConnectionFactory)
