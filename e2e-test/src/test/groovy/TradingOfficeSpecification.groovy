@@ -32,7 +32,8 @@ class TradingOfficeSpecification extends Specification {
         then: "New confirmation is generated as PDF"
         def restTemplate = new RestTemplate()
         def confirmation = restTemplate.getForObject(
-                "http://localhost:9000/api/confirmation?id=1234567",
+//                "http://localhost:9000/api/confirmation?id=1234567",
+                "https://confirmation-service.herokuapp.com/api/confirmation?id=1234567",
                 Confirmation.class
         );
 
