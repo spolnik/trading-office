@@ -1,7 +1,6 @@
 package com.trading;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.io.Resources;
 import net.sf.jasperreports.engine.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +10,7 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,9 +29,10 @@ public class ReceivedAllocationReportMessageListener {
     @Autowired
     public ReceivedAllocationReportMessageListener(Sender<Confirmation> confirmationSender) throws JRException {
         this.confirmationSender = confirmationSender;
-        URL jrxmlTemplate = Resources.getResource("Confirmation.jrxml");
+        InputStream resourceAsStream = ReceivedAllocationReportMessageListener.class
+                .getClassLoader().getResourceAsStream("Confirmation.jrxml");
 
-        jasperReport = JasperCompileManager.compileReport(jrxmlTemplate.getFile());
+        jasperReport = JasperCompileManager.compileReport(resourceAsStream);
         objectMapper = new ObjectMapper();
     }
 

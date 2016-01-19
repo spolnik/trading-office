@@ -1,13 +1,12 @@
 package com.trading;
 
-import com.google.common.io.Resources;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperRunManager;
 import org.junit.Test;
 
-import java.net.URL;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -19,9 +18,10 @@ public class PdfConfirmationGenerationIntegrationTest {
 
     @Test
     public void pdf_confirmation_should_be_easily_generated_from_jrxml_template() throws Exception {
-        URL jrxmlTemplate = Resources.getResource("Confirmation.jrxml");
+        InputStream resourceAsStream = PdfConfirmationGenerationIntegrationTest.class.getClassLoader().getResourceAsStream("Confirmation.jrxml");
 
-        JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlTemplate.getFile());
+        assert resourceAsStream != null;
+        JasperReport jasperReport = JasperCompileManager.compileReport(resourceAsStream);
 
         byte[] data = JasperRunManager.runReportToPdf(jasperReport, parameters(), new JREmptyDataSource());
 
