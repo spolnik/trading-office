@@ -45,16 +45,16 @@ subprojects {
     check.dependsOn jacocoTestReport
 }
 
-defaultTasks ':allocation-message-translator:clean', ':allocation-message-translator:bootRepackage'
+defaultTasks ':confirmation-service:clean', ':confirmation-service:bootRepackage'
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.10'
 }
 
 heroku {
-    appName = 'trading-office-allocation-message-translator'
+    appName = 'trading-office-confirmation-service'
 }
 
 task stage {
-    dependsOn ':allocation-message-translator:bootRepackage'
+    dependsOn ':confirmation-service:bootRepackage'
 }

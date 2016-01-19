@@ -8,3 +8,8 @@ dependencies {
     testCompile libs.test.junit,
             libs.test.assertj
 }
+
+jar {
+    baseName = 'trading-office-confirmation-service'
+    version = '1.0.0'
+}
