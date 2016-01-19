@@ -12,3 +12,8 @@ dependencies {
             libs.jackson_databind,
             libs.jackson_annotations
 }
+
+jar {
+    baseName = 'trading-office-allocation-message-translator'
+    version = '1.0.0'
+}
