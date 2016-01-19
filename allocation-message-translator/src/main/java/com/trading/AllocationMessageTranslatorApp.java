@@ -3,27 +3,31 @@ package com.trading;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.JmsListenerContainerFactory;
 import org.springframework.jms.config.SimpleJmsListenerContainerFactory;
 
 import javax.jms.ConnectionFactory;
-import java.util.HashMap;
-import java.util.Map;
 
 @SpringBootApplication
 @EnableJms
+@PropertySource("classpath:app.properties")
 public class AllocationMessageTranslatorApp implements CommandLineRunner {
 
     private static final Logger LOG = LoggerFactory.getLogger(AllocationMessageTranslatorApp.class);
 
+    @Value("${activemqUrl}")
+    private String activemqUrl;
+
     @Bean
     ConnectionFactory connectionFactory() {
-        return new ActiveMQConnectionFactory("tcp://localhost:9999");
+        return new ActiveMQConnectionFactory(activemqUrl);
     }
 
     @Bean
@@ -35,13 +39,7 @@ public class AllocationMessageTranslatorApp implements CommandLineRunner {
     }
 
     public static void main(String[] args) {
-        SpringApplication springApplication = new SpringApplication(AllocationMessageTranslatorApp.class);
-        springApplication.setWebEnvironment(false);
-
-        Map<String, Object> settings = new HashMap<>();
-        settings.put("spring.jta.enabled", false);
-        springApplication.setDefaultProperties(settings);
-        springApplication.run(args);
+        SpringApplication.run(AllocationMessageTranslatorApp.class, args);
     }
 
     @Override

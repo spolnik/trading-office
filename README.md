@@ -34,3 +34,8 @@
 ## E2E Test
 - end to end tests written in spock
 - for now it requires that all previous applications are running on the same machine (gradle bootRun)
+
+=========
+
+#Notes
+- to have access to OpenShift activemq web console - run rhc port-forward activemq (only if you have admin access)
