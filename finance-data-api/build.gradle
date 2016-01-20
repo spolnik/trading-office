@@ -1,6 +1,11 @@
 apply plugin: 'spring-boot'
 
 dependencies {
-    compile libs.spring.boot_web,
+    compile project(":trading-domain"),
+            libs.spring.boot_web,
             libs.finance_yahoo
+
+    testCompile libs.test.junit,
+            libs.test.mockito,
+            libs.test.assertj
 }
