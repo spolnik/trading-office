@@ -15,6 +15,8 @@ public class StockToInstrumentConverter implements Converter<Stock, Instrument> 
         instrument.setSymbol(stock.getSymbol());
         instrument.setName(stock.getName() + " Stocks");
         instrument.setCurrency(stock.getCurrency());
+        instrument.setExchange(stock.getStockExchange());
+        instrument.setPrice(stock.getQuote().getBid());
 
         return instrument;
     }
