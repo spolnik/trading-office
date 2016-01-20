@@ -7,4 +7,5 @@ include 'trading-domain'
 include 'allocation-message-translator'
 include 'confirmation-service'
 include 'finance-data-service'
+include 'instruments-service'
 
