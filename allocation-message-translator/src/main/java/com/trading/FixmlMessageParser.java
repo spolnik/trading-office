@@ -18,23 +18,63 @@ class FixmlMessageParser {
 
     private static final Logger LOG = LoggerFactory.getLogger(FixmlMessageParser.class);
 
-    public AllocationReport parse(String message) throws JDOMException, IOException, JaxenException {
+    private static final SAXBuilder SAX_BUILDER = new SAXBuilder();
 
-        SAXBuilder saxBuilder = new SAXBuilder();
+    private static final String TRANSACTION_TYPE_XPATH = "/FIXML/AllocRpt/@TransTyp";
+    private static final String ALLOCATION_ID_XPATH = "/FIXML/AllocRpt/@RptID";
+    private static final String INSTRUMENT_ID_XPATH = "/FIXML/AllocRpt/Instrmt/@ID";
+    private static final String INSTRUMENT_ID_SOURCE_XPATH = "/FIXML/AllocRpt/Instrmt/@Src";
+
+    public AllocationReport parse(String message) throws JDOMException, IOException, JaxenException {
 
         StringReader stringReader = new StringReader(message);
 
-        Document allocationMessage = saxBuilder.build(stringReader);
-        Optional<Attribute> id = getElement(allocationMessage, "/FIXML/AllocRpt/@RptID");
-        Optional<Attribute> transactionType = getElement(allocationMessage, "/FIXML/AllocRpt/@TransTyp");
-
+        Document allocationMessage = SAX_BUILDER.build(stringReader);
         AllocationReport allocationReport = new AllocationReport();
-        allocationReport.setAllocationId(id.get().getValue());
-        allocationReport.setTransactionType(deriveTransactionType(transactionType));
+
+        setId(allocationMessage, allocationReport);
+        setTransactionType(allocationMessage, allocationReport);
+        setSecurityId(allocationMessage, allocationReport);
+        setSecurityIdSource(allocationMessage, allocationReport);
 
         LOG.info("Parsed: " + allocationReport);
 
         return allocationReport;
+    }
+
+    private void setSecurityIdSource(Document allocationMessage, AllocationReport allocationReport) throws JaxenException {
+        Optional<Attribute> instrumentIdSource = getElement(allocationMessage, INSTRUMENT_ID_SOURCE_XPATH);
+        allocationReport.setSecurityIdSource(deriveSecurityIdSource(instrumentIdSource));
+    }
+
+    private void setSecurityId(Document allocationMessage, AllocationReport allocationReport) throws JaxenException {
+        Optional<Attribute> instrumentId = getElement(allocationMessage, INSTRUMENT_ID_XPATH);
+        allocationReport.setSecurityId(instrumentId.get().getValue());
+    }
+
+
+    private void setId(Document allocationMessage, AllocationReport allocationReport) throws JaxenException {
+        Optional<Attribute> id = getElement(allocationMessage, ALLOCATION_ID_XPATH);
+        allocationReport.setAllocationId(id.get().getValue());
+    }
+
+    private void setTransactionType(Document allocationMessage, AllocationReport allocationReport) throws JaxenException {
+        Optional<Attribute> transactionType = getElement(allocationMessage, TRANSACTION_TYPE_XPATH);
+        allocationReport.setTransactionType(deriveTransactionType(transactionType));
+    }
+
+    private SecurityIDSource deriveSecurityIdSource(Optional<Attribute> instrumentIdSource) {
+        String value = instrumentIdSource.get().getValue();
+
+        switch (value) {
+            case "1": return SecurityIDSource.CUSIP;
+            case "2": return SecurityIDSource.SEDOL;
+            case "3": return SecurityIDSource.QUIK;
+            case "4": return SecurityIDSource.ISIN;
+            case "5": return SecurityIDSource.RIC;
+        }
+
+        throw new UnsupportedOperationException("Instrument ID Source is unsupported: " + instrumentIdSource);
     }
 
     private TransactionType deriveTransactionType(Optional<Attribute> transactionType) {
@@ -44,8 +84,9 @@ class FixmlMessageParser {
             case "0": return TransactionType.NEW;
             case "1": return TransactionType.REPLACE;
             case "2": return TransactionType.CANCEL;
-            default: return TransactionType.UNSUPPORTED;
         }
+
+        throw new UnsupportedOperationException("Transaction type is unsupported: " + transactionType);
     }
 
     @SuppressWarnings("all")

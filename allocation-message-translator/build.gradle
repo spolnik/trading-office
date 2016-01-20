@@ -11,6 +11,9 @@ dependencies {
             libs.jackson,
             libs.jackson_databind,
             libs.jackson_annotations
+
+    testCompile libs.test.junit,
+            libs.test.assertj
 }
 
 jar {
