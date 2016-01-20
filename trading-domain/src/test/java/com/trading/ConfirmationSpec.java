@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConfirmationSpec {
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
     public void can_be_parsed_to_json_and_converted_back_to_object() throws Exception {
@@ -29,18 +29,17 @@ public class ConfirmationSpec {
         );
     }
 
-    private Confirmation confirmation() {
-        Confirmation confirmation = new Confirmation();
-        confirmation.setAllocationReport(allocationReport());
-        confirmation.setContent("dummy confirmation content".getBytes());
-        return confirmation;
+    @Test
+    public void has_id_derived_from_allocation_report() throws Exception {
+        assertThat(confirmation().id()).isEqualTo(
+                TestData.allocationReport().getAllocationId()
+        );
     }
 
-    private AllocationReport allocationReport() {
-        AllocationReport allocationReport = new AllocationReport();
-        allocationReport.setAllocationId("12345");
-        allocationReport.setMessageStatus(MessageStatus.NEW);
-        allocationReport.setTransactionType(TransactionType.NEW);
-        return allocationReport;
+    private Confirmation confirmation() {
+        Confirmation confirmation = new Confirmation();
+        confirmation.setAllocationReport(TestData.allocationReport());
+        confirmation.setContent("dummy confirmation content".getBytes());
+        return confirmation;
     }
 }

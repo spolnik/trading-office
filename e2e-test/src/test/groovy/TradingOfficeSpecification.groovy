@@ -6,12 +6,14 @@ import org.springframework.jms.connection.SingleConnectionFactory
 import org.springframework.jms.core.JmsTemplate
 import org.springframework.jms.core.MessageCreator
 import org.springframework.web.client.RestTemplate
+import spock.lang.Ignore
 import spock.lang.Specification
 
 import javax.jms.JMSException
 import javax.jms.Message
 import javax.jms.Session
 
+@Ignore
 class TradingOfficeSpecification extends Specification {
 
     private static final Logger log = LoggerFactory.getLogger(TradingOfficeSpecification.class)
@@ -36,6 +38,7 @@ class TradingOfficeSpecification extends Specification {
 
         confirmation.getContent().size() > 100
         confirmation.id() == "1234567"
+        confirmation.allocationReport.instrument.symbol == "AMZN"
     }
 
     def messageCreator(fixmlAllocationMessage) {
@@ -74,9 +77,7 @@ class TradingOfficeSpecification extends Specification {
             AvgPx="57.5054673" TrdDt="2009-06-03" RndPx="57.51" GrpQty="350" RemQty="150"
             InptDev="API">
         <Hdr SID="ICE" TID="GUF"/>
-        <Instrmt
-                CFI="FXXXXX"
-                SecTyp="FUT" Exch="IFEU" ID="B" MMY="200912"/>
+        <Instrmt ID="2000019" Src="2"/>
 
         <Pty R="22" ID="IFEU"/>
         <Pty R="21" ID="ICEU"/>

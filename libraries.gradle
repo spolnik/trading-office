@@ -1,5 +1,8 @@
 ext {
     libs = libsMap(
+            slf4j_api: 'org.slf4j:slf4j-api:1.7.10',
+            log4j: 'log4j:log4j:1.2.17',
+            slf4j_log4j12: 'org.slf4j:slf4j-log4j12:1.7.10',
             jaxen: 'jaxen:jaxen:1.1.6',
             jdom: 'jdom:jdom:1.1',
             jackson: 'com.fasterxml.jackson.core:jackson-core:2.6.3',
@@ -27,7 +30,8 @@ ext {
             jasperreports: dependencies.create('net.sf.jasperreports:jasperreports:6.2.0') {
                 exclude group: 'org.olap4j', module: 'olap4j'
             },
-            itext: 'com.lowagie:itext:2.1.7'
+            itext: 'com.lowagie:itext:2.1.7',
+            finance_yahoo: 'com.yahoofinance-api:YahooFinanceAPI:2.0.1'
     )
 }
 

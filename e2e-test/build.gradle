@@ -1,12 +1,15 @@
 apply plugin: 'groovy'
-apply plugin: 'spring-boot'
 
 dependencies {
     testCompile project(":trading-domain"),
             libs.groovy,
-            libs.spring.boot_web,
-            libs.spring.jms,
-            libs.activemq,
+            'org.springframework:spring-jms:4.2.4.RELEASE',
+            'org.springframework:spring-web:4.2.4.RELEASE',
             libs.test.spock,
-            libs.activemq_http
+            'org.apache.activemq:activemq-broker:5.12.1',
+            dependencies.create('org.apache.activemq:activemq-http:5.12.1') {
+                exclude module: 'jetty-all'
+            },
+            libs.slf4j_api,
+            'ch.qos.logback:logback-classic:1.1.3'
 }

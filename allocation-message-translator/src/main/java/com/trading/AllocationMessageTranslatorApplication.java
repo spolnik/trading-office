@@ -15,7 +15,7 @@ import javax.jms.ConnectionFactory;
 @SpringBootApplication
 @EnableJms
 @PropertySource("classpath:app.properties")
-public class AllocationMessageTranslatorApp {
+public class AllocationMessageTranslatorApplication {
 
     @Value("${activemqUrl}")
     private String activemqUrl;
@@ -34,6 +34,6 @@ public class AllocationMessageTranslatorApp {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(AllocationMessageTranslatorApp.class, args);
+        SpringApplication.run(AllocationMessageTranslatorApplication.class, args);
     }
 }
