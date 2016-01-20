@@ -9,3 +9,8 @@ dependencies {
             libs.test.mockito,
             libs.test.assertj
 }
+
+jar {
+    baseName = 'trading-office-finance-data-service'
+    version = '1.0.0'
+}
