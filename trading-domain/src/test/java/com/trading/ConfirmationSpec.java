@@ -29,6 +29,11 @@ public class ConfirmationSpec {
         );
     }
 
+    @Test
+    public void has_id_derived_from_allocation_report() throws Exception {
+        assertThat(confirmation().id()).isEqualTo(allocationReport().getAllocationId());
+    }
+
     private Confirmation confirmation() {
         Confirmation confirmation = new Confirmation();
         confirmation.setAllocationReport(allocationReport());
