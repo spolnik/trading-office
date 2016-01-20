@@ -25,7 +25,7 @@ public class InstrumentsController {
     }
 
     @RequestMapping("/instruments/sedol/{id}")
-    public InstrumentDetails getBySedol(@PathVariable String sedol) {
-        return instrumentsRepository.queryBySedol(sedol);
+    public InstrumentDetails getBySedol(@PathVariable String id) {
+        return instrumentsRepository.queryBySedol(id);
     }
 }

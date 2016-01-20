@@ -19,10 +19,10 @@ public class ConfirmationRestServiceIntegrationTest {
     @Test
     public void service_accepts_confirmation_and_then_allows_to_query_for_it() throws Exception {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForObject("http://localhost:9000/api/confirmation", confirmation(), Object.class);
+        restTemplate.postForObject("http://localhost:9003/api/confirmation", confirmation(), Object.class);
 
         Confirmation confirmation = restTemplate.getForObject(
-                "http://localhost:9000/api/confirmation?id=" + confirmation().id(),
+                "http://localhost:9003/api/confirmation?id=" + confirmation().id(),
                 Confirmation.class
         );
 
