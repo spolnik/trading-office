@@ -1,0 +1,6 @@
+apply plugin: 'spring-boot'
+
+dependencies {
+    compile libs.spring.boot_web,
+            libs.finance_yahoo
+}
