@@ -23,5 +23,7 @@ public class AllocationReportSpec {
         assertThat(allocationReportCreatedFromJson).isEqualToComparingFieldByField(
                 TestData.allocationReport()
         );
+
+        System.out.println(allocationReportCreatedFromJson);
     }
 }

@@ -27,6 +27,8 @@ public class ConfirmationSpec {
         assertThat(confirmationCreatedFromJson.getContent()).isEqualTo(
                 confirmation().getContent()
         );
+
+        System.out.println(confirmationCreatedFromJson);
     }
 
     @Test

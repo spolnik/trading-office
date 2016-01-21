@@ -16,11 +16,13 @@ public class InstrumentDetailsSpec {
                 instrumentDetails()
         );
 
-        InstrumentDetails instrumentDetails = objectMapper.readValue(
+        InstrumentDetails instrumentDetailsFromJson = objectMapper.readValue(
                 instrumentDetailsAsJson, InstrumentDetails.class
         );
 
-        assertThat(instrumentDetails).isEqualToComparingFieldByField(instrumentDetails());
+        assertThat(instrumentDetailsFromJson).isEqualToComparingFieldByField(instrumentDetails());
+
+        System.out.println(instrumentDetailsFromJson);
     }
 
     private InstrumentDetails instrumentDetails() {
