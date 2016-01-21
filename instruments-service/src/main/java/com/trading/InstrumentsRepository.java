@@ -57,8 +57,4 @@ public class InstrumentsRepository {
                 .findFirst()
                 .orElse(InstrumentDetails.empty());
     }
-
-    public List<InstrumentDetails> getAll() {
-        return Collections.unmodifiableList(instruments);
-    }
 }

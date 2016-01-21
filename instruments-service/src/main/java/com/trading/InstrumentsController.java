@@ -19,11 +19,6 @@ public class InstrumentsController {
         this.instrumentsRepository = instrumentsRepository;
     }
 
-    @RequestMapping("/instruments")
-    public List<InstrumentDetails> getAll() {
-        return instrumentsRepository.getAll();
-    }
-
     @RequestMapping("/instruments/sedol/{id}")
     public InstrumentDetails getBySedol(@PathVariable String id) {
         return instrumentsRepository.queryBySedol(id);
