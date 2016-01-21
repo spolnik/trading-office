@@ -30,3 +30,8 @@ branches:
   only:
     - master
     - coverity_scan
+    - heroku-allocation-message-translator
+    - heroku-confirmation-sender
+    - heroku-confirmation-service
+    - heroku-instruments-service
+    - heroku-finance-data-service
