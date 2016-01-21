@@ -1,26 +1,25 @@
 import com.trading.Confirmation
 import org.apache.activemq.ActiveMQConnectionFactory
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.jms.connection.SingleConnectionFactory
 import org.springframework.jms.core.JmsTemplate
 import org.springframework.jms.core.MessageCreator
 import org.springframework.web.client.RestTemplate
-import spock.lang.Ignore
 import spock.lang.Specification
 
 import javax.jms.JMSException
 import javax.jms.Message
 import javax.jms.Session
 
-@Ignore
 class TradingOfficeSpecification extends Specification {
 
-    private static final Logger log = LoggerFactory.getLogger(TradingOfficeSpecification.class)
+    def log = LoggerFactory.getLogger(TradingOfficeSpecification.class)
+
+    def allocationReportId = UUID.randomUUID().toString()
 
     def "For new trade we generate confirmation as pdf"() {
         given: "A new trade with FIXML representation"
-        def fixmlAllocationMessage = fixmlAllocationMessage()
+        def fixmlAllocationMessage = String.format(fixmlAllocationMessage(), allocationReportId)
 
         when: "We receive FIXML message describing allocation for a trade"
 
@@ -32,13 +31,12 @@ class TradingOfficeSpecification extends Specification {
         then: "New confirmation is generated as PDF"
         def restTemplate = new RestTemplate()
         def confirmation = restTemplate.getForObject(
-                "https://confirmation-service.herokuapp.com/api/confirmation?id=1234567",
+                "http://confirmation-service.herokuapp.com/api/confirmation?id=" + allocationReportId,
                 Confirmation.class
         );
 
         confirmation.getContent().size() > 100
-        confirmation.id() == "1234567"
-        confirmation.allocationReport.instrument.symbol == "AMZN"
+        confirmation.id() == allocationReportId
     }
 
     def messageCreator(fixmlAllocationMessage) {
@@ -70,7 +68,7 @@ class TradingOfficeSpecification extends Specification {
     def fixmlAllocationMessage() {
         """<FIXML>
     <AllocRpt
-            TransTyp="0" RptID="1234567" GrpID="1234567" AvgPxGrpID="AP101" Stat="3" BizDt="2009-06-03" RptTyp="2"
+            TransTyp="0" RptID="%s" GrpID="1234567" AvgPxGrpID="AP101" Stat="3" BizDt="2009-06-03" RptTyp="2"
             Qty="200" AvgPxInd="2"
             Side="1" TrdTyp="0"
             TrdSubTyp="5"
