@@ -3,10 +3,15 @@ import com.trading.Instrument;
 import com.trading.StockToInstrumentConverter;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.core.convert.converter.Converter;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class FinanceDataControllerSpec {
 
@@ -46,5 +51,20 @@ public class FinanceDataControllerSpec {
     @Test
     public void maps_bid_price_of_instrument() throws Exception {
         assertThat(instrument.getPrice()).isBetween(new BigDecimal(20), new BigDecimal(40));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void returns_empty_instrument_if_exception_is_raised() throws Exception {
+        Converter converter = mock(Converter.class);
+        when(converter.convert(any())).thenThrow(IOException.class);
+
+        FinanceDataController controller = new FinanceDataController(
+                converter
+        );
+
+        assertThat(controller.getInstrument("DUMMY")).isEqualToComparingFieldByField(
+                Instrument.empty()
+        );
     }
 }

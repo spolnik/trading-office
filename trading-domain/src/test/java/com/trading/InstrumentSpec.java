@@ -24,7 +24,7 @@ public class InstrumentSpec {
 
         assertThat(instrumentFromJson).isEqualToComparingFieldByField(instrument());
 
-        System.out.println();
+        System.out.println(instrumentFromJson);
     }
 
     private Instrument instrument() {
