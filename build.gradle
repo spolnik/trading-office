@@ -45,16 +45,8 @@ subprojects {
     check.dependsOn jacocoTestReport
 }
 
-defaultTasks ':confirmation-service:clean', ':confirmation-service:bootRepackage'
+defaultTasks 'clean', 'bootRepackage'
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.10'
-}
-
-heroku {
-    appName = 'trading-office-confirmation-service'
-}
-
-task stage {
-    dependsOn ':confirmation-service:bootRepackage'
 }

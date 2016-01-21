@@ -14,7 +14,8 @@ dependencies {
             libs.jackson_annotations
 
     testCompile libs.test.junit,
-            libs.test.assertj
+            libs.test.assertj,
+            libs.activemq_kahadb
 }
 
 jar {

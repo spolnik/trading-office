@@ -6,22 +6,17 @@ import org.apache.activemq.broker.BrokerService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.connection.SingleConnectionFactory;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.client.RestTemplate;
 
 import javax.jms.ConnectionFactory;
-
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-//@RunWith(SpringJUnit4ClassRunner.class)
 public class ConfirmationSenderApplicationIntegrationTest {
 
     private final RestTemplate restTemplate = new RestTemplate();
