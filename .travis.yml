@@ -3,6 +3,9 @@ jdk:
   - oraclejdk8
 before_install:
   - pip install --user codecov
+
+script: ./gradlew check --stacktrace
+
 after_success:
   - codecov
 
