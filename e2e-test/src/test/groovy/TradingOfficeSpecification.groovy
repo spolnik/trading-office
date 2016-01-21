@@ -10,12 +10,30 @@ import spock.lang.Specification
 import javax.jms.JMSException
 import javax.jms.Message
 import javax.jms.Session
+import java.util.concurrent.TimeUnit
 
 class TradingOfficeSpecification extends Specification {
 
     def log = LoggerFactory.getLogger(TradingOfficeSpecification.class)
 
     def allocationReportId = UUID.randomUUID().toString()
+
+    def restTemplate = new RestTemplate()
+
+    def setup() {
+
+        def allocationMessageTranslatorStatus = restTemplate.getForObject(
+                "http://allocation-message-translator.herokuapp.com/health", String.class
+        )
+
+        log.info(allocationMessageTranslatorStatus)
+
+        def confirmationSenderStatus = restTemplate.getForObject(
+                "http://confirmation-sender.herokuapp.com/health", String.class
+        )
+
+        log.info(confirmationSenderStatus)
+    }
 
     def "For new trade we generate confirmation as pdf"() {
         given: "A new trade with FIXML representation"
@@ -28,8 +46,10 @@ class TradingOfficeSpecification extends Specification {
                 queue(), messageCreator(fixmlAllocationMessage)
         )
 
+        TimeUnit.SECONDS.sleep(5)
+
         then: "New confirmation is generated as PDF"
-        def restTemplate = new RestTemplate()
+
         def confirmation = restTemplate.getForObject(
                 "http://confirmation-service.herokuapp.com/api/confirmation?id=" + allocationReportId,
                 Confirmation.class
