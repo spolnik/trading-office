@@ -1,6 +1,8 @@
 package com.trading;
 
-public class InstrumentDetails {
+import java.io.Serializable;
+
+public class InstrumentDetails implements Serializable {
 
     private String ticker;
     private String cusip;
