@@ -21,7 +21,7 @@ public class ReceivedAllocationReportMessageListener {
 
     private final JasperReport jasperReport;
     private final Sender<Confirmation> confirmationSender;
-    private final ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     private ConfigurableApplicationContext context;
@@ -33,7 +33,6 @@ public class ReceivedAllocationReportMessageListener {
                 .getClassLoader().getResourceAsStream("Confirmation.jrxml");
 
         jasperReport = JasperCompileManager.compileReport(resourceAsStream);
-        objectMapper = new ObjectMapper();
     }
 
     @JmsListener(destination = "incoming.allocation.report.queue", containerFactory = "jmsContainerFactory")
