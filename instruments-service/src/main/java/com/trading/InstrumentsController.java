@@ -5,8 +5,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api")
 public class InstrumentsController {
@@ -17,11 +15,6 @@ public class InstrumentsController {
     public InstrumentsController(InstrumentsRepository instrumentsRepository) {
 
         this.instrumentsRepository = instrumentsRepository;
-    }
-
-    @RequestMapping("/instruments")
-    public List<InstrumentDetails> getAll() {
-        return instrumentsRepository.getAll();
     }
 
     @RequestMapping("/instruments/sedol/{id}")
