@@ -9,10 +9,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.JmsListenerContainerFactory;
 import org.springframework.jms.config.SimpleJmsListenerContainerFactory;
-import org.springframework.jms.listener.SimpleMessageListenerContainer;
+import org.springframework.jms.connection.CachingConnectionFactory;
 
 import javax.jms.ConnectionFactory;
-import javax.jms.Session;
 
 @SpringBootApplication
 @EnableJms
@@ -24,14 +23,16 @@ public class AllocationMessageTranslatorApplication {
 
     @Bean
     ConnectionFactory connectionFactory() {
-        return new ActiveMQConnectionFactory(activemqUrl);
+
+        return new CachingConnectionFactory(
+                new ActiveMQConnectionFactory(activemqUrl)
+        );
     }
 
     @Bean
     JmsListenerContainerFactory<?> jmsContainerFactory(ConnectionFactory connectionFactory) {
         SimpleJmsListenerContainerFactory factory = new SimpleJmsListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
-        factory.setSessionAcknowledgeMode(Session.SESSION_TRANSACTED);
 
         return factory;
     }

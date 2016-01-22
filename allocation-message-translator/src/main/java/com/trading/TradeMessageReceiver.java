@@ -27,11 +27,13 @@ public class TradeMessageReceiver {
     @JmsListener(destination = "front.office.mailbox", containerFactory = "jmsContainerFactory")
     @SendTo("incoming.allocation.report.queue")
     public String processAllocationReport(String message) throws JDOMException, IOException, JaxenException {
+
         AllocationReport allocationReport = parser.parse(message);
         LOG.info("Received: " + allocationReport);
 
         String allocationReportAsJson = objectMapper.writeValueAsString(allocationReport);
         LOG.info("Sending: " + allocationReportAsJson);
+
         return allocationReportAsJson;
     }
 }
