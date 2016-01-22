@@ -8,11 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jms.connection.SingleConnectionFactory;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.util.FileSystemUtils;
 
 import javax.jms.ConnectionFactory;
-
-import java.io.File;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
