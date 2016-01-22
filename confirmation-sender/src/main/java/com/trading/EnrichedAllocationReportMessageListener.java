@@ -62,6 +62,14 @@ public class EnrichedAllocationReportMessageListener {
         Map<String, Object> map = new HashMap<>();
         map.put("ALLOC_RPT_ID", allocationReport.getAllocationId());
         map.put("TRANS_TYPE", allocationReport.getTransactionType().toString());
+        map.put("INST_ID_TYPE", allocationReport.getSecurityIdSource().toString());
+        map.put("INST_ID", allocationReport.getSecurityId());
+
+        Instrument instrument = allocationReport.getInstrument();
+        map.put("ALLOC_INSTR_NAME", instrument.getName());
+        map.put("CURRENCY", instrument.getCurrency());
+        map.put("EXCHANGE", instrument.getExchange());
+
         return map;
     }
 }
