@@ -4,7 +4,7 @@ jdk:
 before_install:
   - pip install --user codecov
 
-script: ./gradlew check --debug
+script: ./gradlew check -i
 
 after_success:
   - codecov
