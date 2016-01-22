@@ -37,8 +37,8 @@ public class ReceivedAllocationReportListenerIntegrationTest {
         ObjectMapper objectMapper = new ObjectMapper();
         String allocationReportAsJson = objectMapper.writeValueAsString(allocationReport);
 
-        ReceivedAllocationReportMessageListener receivedAllocationReportMessageListener = new ReceivedAllocationReportMessageListener(confirmationSender);
-        receivedAllocationReportMessageListener.eventListener(allocationReportAsJson);
+        EnrichedAllocationReportMessageListener enrichedAllocationReportMessageListener = new EnrichedAllocationReportMessageListener(confirmationSender);
+        enrichedAllocationReportMessageListener.eventListener(allocationReportAsJson);
         verify(confirmationSender).send(argument.capture());
 
         AllocationReport allocationReportWithStatusSent = argument.getValue().getAllocationReport();

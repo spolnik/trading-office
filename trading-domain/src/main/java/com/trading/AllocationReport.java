@@ -9,6 +9,7 @@ public class AllocationReport implements Serializable {
     private MessageStatus messageStatus;
     private String securityId;
     private SecurityIDSource securityIdSource;
+    private Instrument instrument;
 
     public AllocationReport() {
         messageStatus = MessageStatus.NEW;
@@ -54,11 +55,19 @@ public class AllocationReport implements Serializable {
         this.securityIdSource = securityIdSource;
     }
 
+    public Instrument getInstrument() {
+        return instrument;
+    }
+
+    public void setInstrument(Instrument instrument) {
+        this.instrument = instrument;
+    }
+
     @Override
     public String toString() {
         return String.format(
-                "AllocationReport{allocationId='%s', transactionType=%s, messageStatus=%s, securityId='%s', securityIdSource=%s}",
-                allocationId, transactionType, messageStatus, securityId, securityIdSource
+                "AllocationReport{allocationId='%s', transactionType=%s, messageStatus=%s, securityId='%s', securityIdSource=%s, instrument=%s}",
+                allocationId, transactionType, messageStatus, securityId, securityIdSource, instrument
         );
     }
 }

@@ -63,7 +63,7 @@ public class ConfirmationSenderApplicationIntegrationTest {
     }
 
     private String queue() {
-        return "incoming.allocation.report.queue";
+        return "outgoing.allocation.report.queue";
     }
 
     private ConnectionFactory connectionFactory() {

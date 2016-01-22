@@ -5,7 +5,6 @@ import net.sf.jasperreports.engine.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
@@ -15,27 +14,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class ReceivedAllocationReportMessageListener {
+public class EnrichedAllocationReportMessageListener {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ReceivedAllocationReportMessageListener.class);
+    private static final Logger LOG = LoggerFactory.getLogger(EnrichedAllocationReportMessageListener.class);
 
     private final JasperReport jasperReport;
     private final Sender<Confirmation> confirmationSender;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
-    private ConfigurableApplicationContext context;
-
-    @Autowired
-    public ReceivedAllocationReportMessageListener(Sender<Confirmation> confirmationSender) throws JRException {
+    public EnrichedAllocationReportMessageListener(Sender<Confirmation> confirmationSender) throws JRException {
         this.confirmationSender = confirmationSender;
-        InputStream resourceAsStream = ReceivedAllocationReportMessageListener.class
+        InputStream resourceAsStream = EnrichedAllocationReportMessageListener.class
                 .getClassLoader().getResourceAsStream("Confirmation.jrxml");
 
         jasperReport = JasperCompileManager.compileReport(resourceAsStream);
     }
 
-    @JmsListener(destination = "incoming.allocation.report.queue", containerFactory = "jmsContainerFactory")
+    @JmsListener(destination = "outgoing.allocation.report.queue", containerFactory = "jmsContainerFactory")
     public void eventListener(String message) throws IOException {
         AllocationReport allocationReport = objectMapper.readValue(message, AllocationReport.class);
         LOG.info("Received: " + allocationReport);
