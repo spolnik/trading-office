@@ -43,6 +43,12 @@ subprojects {
     }
 
     check.dependsOn jacocoTestReport
+
+    test {
+        testLogging {
+            exceptionFormat = 'full'
+        }
+    }
 }
 
 defaultTasks 'clean', 'bootRepackage'
