@@ -22,7 +22,9 @@ public class AllocationMessageTranslatorApplication {
 
     @Bean
     ConnectionFactory connectionFactory() {
-        return new ActiveMQConnectionFactory(activemqUrl);
+        ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory(activemqUrl);
+        activeMQConnectionFactory.setTransactedIndividualAck(true);
+        return activeMQConnectionFactory;
     }
 
     @Bean

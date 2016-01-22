@@ -24,17 +24,15 @@ public class AllocationMessageTranslatorApplicationIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        FileSystemUtils.deleteRecursively(new File("activemq-data"));
-
         brokerService = new BrokerService();
         brokerService.addConnector("tcp://localhost:9999");
+        brokerService.setPersistent(false);
         brokerService.start();
     }
 
     @After
     public void tearDown() throws Exception {
         brokerService.stop();
-        FileSystemUtils.deleteRecursively(new File("activemq-data"));
     }
 
     @Test
@@ -67,12 +65,8 @@ public class AllocationMessageTranslatorApplicationIntegrationTest {
     }
 
     private ConnectionFactory connectionFactory() {
-
-        ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory();
-        activeMQConnectionFactory.setBrokerURL("tcp://localhost:9999");
-
-        SingleConnectionFactory factory = new SingleConnectionFactory();
-        factory.setTargetConnectionFactory(activeMQConnectionFactory);
-        return factory;
+        return new SingleConnectionFactory(
+                new ActiveMQConnectionFactory("tcp://localhost:9999")
+        );
     }
 }
