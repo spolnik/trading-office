@@ -48,7 +48,7 @@ public class ConfirmationSenderApplicationIntegrationTest {
                 session -> session.createTextMessage(allocationReportAsJson)
         );
 
-        TimeUnit.SECONDS.sleep(5);
+        TimeUnit.SECONDS.sleep(10);
 
         Confirmation confirmation = restTemplate.getForObject(
                 "http://confirmation-service.herokuapp.com/api/confirmation?id="
