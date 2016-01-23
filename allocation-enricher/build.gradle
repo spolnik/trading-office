@@ -15,3 +15,8 @@ dependencies {
             libs.test.assertj,
             libs.activemq_kahadb
 }
+
+jar {
+    baseName = 'trading-office-allocation-enricher'
+    version = '1.0.0'
+}
