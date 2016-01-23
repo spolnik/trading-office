@@ -21,18 +21,14 @@ class TradingOfficeSpecification extends Specification {
     def restTemplate = new RestTemplate()
 
     def setup() {
+        healthCheck("http://allocation-message-translator.herokuapp.com/health")
+        healthCheck("http://allocation-enricher.herokuapp.com/health")
+        healthCheck("http://confirmation-sender.herokuapp.com/health")
+    }
 
-        def allocationMessageTranslatorStatus = restTemplate.getForObject(
-                "http://allocation-message-translator.herokuapp.com/health", String.class
-        )
-
-        log.info(allocationMessageTranslatorStatus)
-
-        def confirmationSenderStatus = restTemplate.getForObject(
-                "http://confirmation-sender.herokuapp.com/health", String.class
-        )
-
-        log.info(confirmationSenderStatus)
+    def healthCheck(String url) {
+        def status = restTemplate.getForObject(url, String.class)
+        log.info(status)
     }
 
     def "For new trade we generate confirmation as pdf"() {
@@ -46,7 +42,7 @@ class TradingOfficeSpecification extends Specification {
                 queue(), messageCreator(fixmlAllocationMessage)
         )
 
-        TimeUnit.SECONDS.sleep(5)
+        TimeUnit.SECONDS.sleep(10)
 
         then: "New confirmation is generated as PDF"
 
