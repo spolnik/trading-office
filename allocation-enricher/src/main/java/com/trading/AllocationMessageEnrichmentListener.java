@@ -55,7 +55,7 @@ public class AllocationMessageEnrichmentListener {
     }
 
     private Instrument getInstrument(String ticker) {
-        String url = String.format("%s/%s", instrumentServiceUrl, ticker);
+        String url = String.format("%s/api/instrument/%s", financeDataServiceUrl, ticker);
         LOG.info("Getting instrument from: " + url);
 
         return restTemplate.getForObject(url, Instrument.class);
@@ -67,7 +67,7 @@ public class AllocationMessageEnrichmentListener {
             throw new UnsupportedOperationException("Only SEDOL security id is supported");
         }
 
-        String url = String.format("%s/sedol/%s", financeDataServiceUrl, securityId);
+        String url = String.format("%s/api/instruments/sedol/%s", instrumentServiceUrl, securityId);
         LOG.info("Getting instrument details from: " + url);
 
         return restTemplate.getForObject(url, InstrumentDetails.class);
