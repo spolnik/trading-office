@@ -39,3 +39,4 @@ branches:
     - heroku-confirmation-service
     - heroku-instruments-service
     - heroku-finance-data-service
+    - heroku-allocation-enricher
