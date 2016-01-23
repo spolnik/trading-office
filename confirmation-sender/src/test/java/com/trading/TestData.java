@@ -1,13 +1,11 @@
 package com.trading;
 
-import java.util.UUID;
-
 public class TestData {
 
-    static AllocationReport allocationReport() {
+    static AllocationReport allocationReport(String allocationId) {
         AllocationReport allocationReport = new AllocationReport();
 
-        allocationReport.setAllocationId(UUID.randomUUID().toString());
+        allocationReport.setAllocationId(allocationId);
         allocationReport.setMessageStatus(MessageStatus.NEW);
         allocationReport.setTransactionType(TransactionType.NEW);
         allocationReport.setSecurityId("2000019");

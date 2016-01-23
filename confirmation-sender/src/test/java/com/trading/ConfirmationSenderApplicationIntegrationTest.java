@@ -11,6 +11,7 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.web.client.RestTemplate;
 
 import javax.jms.ConnectionFactory;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +20,10 @@ public class ConfirmationSenderApplicationIntegrationTest {
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
+
     private BrokerService brokerService;
+
+    private static final String DUMMY_ALLOCATION_ID = UUID.randomUUID().toString();
 
     @Before
     public void setUp() throws Exception {
@@ -38,7 +42,7 @@ public class ConfirmationSenderApplicationIntegrationTest {
     public void consumes_incoming_message_and_send_confirmation() throws Exception {
         ConfirmationSenderApplication.main(new String[0]);
 
-        AllocationReport allocationReport = TestData.allocationReport();
+        AllocationReport allocationReport = TestData.allocationReport(DUMMY_ALLOCATION_ID);
 
         String allocationReportAsJson = objectMapper.writeValueAsString(allocationReport);
 
