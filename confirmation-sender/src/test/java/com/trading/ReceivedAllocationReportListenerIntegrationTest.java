@@ -11,9 +11,6 @@ import static org.mockito.Mockito.verify;
 
 public class ReceivedAllocationReportListenerIntegrationTest {
 
-    private static final String ALLOCATION_REPORT_ID = "1234";
-
-
     private ConfirmationSender confirmationSender;
     private ArgumentCaptor<Confirmation> argument;
 
@@ -29,13 +26,8 @@ public class ReceivedAllocationReportListenerIntegrationTest {
     @Test
     public void retrieves_new_message_and_process_it_finally_saving_with_status_sent() throws Exception {
 
-        AllocationReport allocationReport = new AllocationReport();
-        allocationReport.setAllocationId(ALLOCATION_REPORT_ID);
-        allocationReport.setTransactionType(TransactionType.NEW);
-        allocationReport.setMessageStatus(MessageStatus.NEW);
-
         ObjectMapper objectMapper = new ObjectMapper();
-        String allocationReportAsJson = objectMapper.writeValueAsString(allocationReport);
+        String allocationReportAsJson = objectMapper.writeValueAsString(TestData.allocationReport());
 
         EnrichedAllocationReportMessageListener enrichedAllocationReportMessageListener = new EnrichedAllocationReportMessageListener(confirmationSender);
         enrichedAllocationReportMessageListener.eventListener(allocationReportAsJson);
@@ -43,8 +35,6 @@ public class ReceivedAllocationReportListenerIntegrationTest {
 
         AllocationReport allocationReportWithStatusSent = argument.getValue().getAllocationReport();
 
-        assertThat(allocationReportWithStatusSent.getAllocationId()).isEqualTo(ALLOCATION_REPORT_ID);
-        assertThat(allocationReportWithStatusSent.getTransactionType()).isEqualTo(TransactionType.NEW);
-        assertThat(allocationReportWithStatusSent.getMessageStatus()).isEqualTo(MessageStatus.SENT);
+        assertThat(allocationReportWithStatusSent).isEqualTo(TestData.allocationReport());
     }
 }
