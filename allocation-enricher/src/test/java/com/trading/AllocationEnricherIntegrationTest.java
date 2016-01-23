@@ -14,7 +14,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AllocationMessageTranslatorApplicationIntegrationTest {
+public class AllocationEnricherIntegrationTest {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     private BrokerService brokerService;
@@ -34,31 +34,35 @@ public class AllocationMessageTranslatorApplicationIntegrationTest {
 
     @Test
     public void consumes_incoming_message_and_sent_transformed_message_back_to_jms_server() throws Exception {
-        AllocationMessageTranslatorApplication.main(new String[0]);
+        AllocationEnricherApplication.main(new String[0]);
 
         String allocationReportId = UUID.randomUUID().toString();
+
+        AllocationReport allocationReportToEnrich = TestData.allocationReport();
+        allocationReportToEnrich.setAllocationId(allocationReportId);
+
+        String allocationReportAsJson = objectMapper.writeValueAsString(allocationReportToEnrich);
 
         JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory());
         jmsTemplate.send(
                 incomingQueue(),
-                session -> session.createTextMessage(String.format(TestData.FIXML_ALLOCATION_REPORT_MESSAGE, allocationReportId))
+                session -> session.createTextMessage(allocationReportAsJson)
         );
 
         String message = (String) jmsTemplate.receiveAndConvert(destinationQueue());
 
-        AllocationReport allocationReport = objectMapper.readValue(message, AllocationReport.class);
+        AllocationReport enrichedAllocationReport = objectMapper.readValue(message, AllocationReport.class);
+        Instrument instrument = enrichedAllocationReport.getInstrument();
 
-        AllocationReport expected = TestData.allocationReport();
-        expected.setAllocationId(allocationReportId);
-        assertThat(allocationReport).isEqualToComparingFieldByField(expected);
+        assertThat(instrument).isEqualToIgnoringGivenFields(TestData.instrument(), "price");
     }
 
     private String destinationQueue() {
-        return "incoming.allocation.report.queue";
+        return "outgoing.allocation.report.queue";
     }
 
     private String incomingQueue() {
-        return "front.office.mailbox";
+        return "incoming.allocation.report.queue";
     }
 
     private ConnectionFactory connectionFactory() {
