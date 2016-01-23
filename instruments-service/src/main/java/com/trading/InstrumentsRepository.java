@@ -6,9 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,29 +22,31 @@ public class InstrumentsRepository {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public InstrumentsRepository() {
-        URL url = instrumentsDataFileUrl();
-        loadInstruments(url);
+        try (InputStream inputStream = instrumentsDataFileStream()) {
+            loadInstruments(inputStream);
+        } catch (IOException e) {
+            LOG.error(e.getMessage(), e);
+        }
     }
 
-    private URL instrumentsDataFileUrl() {
+    private InputStream instrumentsDataFileStream() {
 
-        return InstrumentsRepository.class.getClassLoader().getResource(
+        return InstrumentsRepository.class.getClassLoader().getResourceAsStream(
                 "instruments.json"
         );
     }
 
-    private void loadInstruments(URL instrumentsJson) {
+    private void loadInstruments(InputStream inputStream) {
         try {
-            File file = new File(instrumentsJson.getPath());
-            readInstruments(file).forEach(this.instruments::add);
+            readInstruments(inputStream).forEach(this.instruments::add);
         } catch (Exception e) {
             LOG.error("Error reading/parsing instrument file.", e);
         }
     }
 
-    private List<InstrumentDetails> readInstruments(File file) throws IOException {
+    private List<InstrumentDetails> readInstruments(InputStream inputStream) throws IOException {
         return objectMapper.readValue(
-                file, new TypeReference<List<InstrumentDetails>>() {
+                inputStream, new TypeReference<List<InstrumentDetails>>() {
                 });
     }
 
