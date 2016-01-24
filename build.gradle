@@ -63,6 +63,7 @@ subprojects {
     project.integrationTest {
         group = 'verification'
         testLogging {
+            exceptionFormat = 'full'
             events "passed", "skipped", "failed", "standardOut", "standardError"
         }
         outputs.upToDateWhen { false }
