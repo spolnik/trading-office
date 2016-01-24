@@ -1,5 +1,5 @@
-import com.trading.FinanceDataApplication;
-import com.trading.Instrument;
+package com.trading;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
