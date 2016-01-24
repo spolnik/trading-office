@@ -50,8 +50,8 @@ public class AllocationEnricherIntegrationTest {
         String allocationReportId = UUID.randomUUID().toString();
 
         return objectMapper.writeValueAsString(
-                    allocationReportToEnrich(allocationReportId)
-            );
+                allocationReportToEnrich(allocationReportId)
+        );
     }
 
     private AllocationReport fromJson(String message) throws java.io.IOException {
