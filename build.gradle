@@ -72,6 +72,11 @@ subprojects {
     tasks.withType(Test) {
         reports.html.destination = file("${reporting.baseDir}/${name}")
     }
+
+    task jacocoIntegrationTestReport(type: JacocoReport) {
+        sourceSets sourceSets.main
+        executionData integrationTest
+    }
 }
 
 defaultTasks 'clean', 'bootRepackage'
