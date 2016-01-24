@@ -1,4 +1,5 @@
-import com.trading.Confirmation
+package com.trading
+
 import org.apache.activemq.ActiveMQConnectionFactory
 import org.slf4j.LoggerFactory
 import org.springframework.jms.connection.SingleConnectionFactory
