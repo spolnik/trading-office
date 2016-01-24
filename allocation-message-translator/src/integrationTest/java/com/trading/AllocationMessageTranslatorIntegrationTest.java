@@ -14,7 +14,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AllocationMessageTranslatorApplicationIntegrationTest {
+public class AllocationMessageTranslatorIntegrationTest {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     private BrokerService brokerService;
