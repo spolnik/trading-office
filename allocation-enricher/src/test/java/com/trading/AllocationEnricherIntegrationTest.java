@@ -1,5 +1,6 @@
 package com.trading;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.broker.BrokerService;
@@ -34,27 +35,45 @@ public class AllocationEnricherIntegrationTest {
 
     @Test
     public void consumes_incoming_message_and_sent_transformed_message_back_to_jms_server() throws Exception {
+
         AllocationEnricherApplication.main(new String[0]);
 
+        String message = sendAndReceive(allocationReportAsJson());
+
+        AllocationReport enrichedAllocationReport = fromJson(message);
+        Instrument instrument = enrichedAllocationReport.getInstrument();
+
+        assertThat(instrument).isEqualToIgnoringGivenFields(TestData.instrument(), "price");
+    }
+
+    private String allocationReportAsJson() throws JsonProcessingException {
         String allocationReportId = UUID.randomUUID().toString();
 
-        AllocationReport allocationReportToEnrich = TestData.allocationReport();
-        allocationReportToEnrich.setAllocationId(allocationReportId);
+        return objectMapper.writeValueAsString(
+                    allocationReportToEnrich(allocationReportId)
+            );
+    }
 
-        String allocationReportAsJson = objectMapper.writeValueAsString(allocationReportToEnrich);
+    private AllocationReport fromJson(String message) throws java.io.IOException {
+        return objectMapper.readValue(message, AllocationReport.class);
+    }
+
+    private String sendAndReceive(String allocationReportAsJson) {
 
         JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory());
+
         jmsTemplate.send(
                 incomingQueue(),
                 session -> session.createTextMessage(allocationReportAsJson)
         );
 
-        String message = (String) jmsTemplate.receiveAndConvert(destinationQueue());
+        return (String) jmsTemplate.receiveAndConvert(destinationQueue());
+    }
 
-        AllocationReport enrichedAllocationReport = objectMapper.readValue(message, AllocationReport.class);
-        Instrument instrument = enrichedAllocationReport.getInstrument();
-
-        assertThat(instrument).isEqualToIgnoringGivenFields(TestData.instrument(), "price");
+    private AllocationReport allocationReportToEnrich(String allocationReportId) {
+        AllocationReport allocationReportToEnrich = TestData.allocationReport();
+        allocationReportToEnrich.setAllocationId(allocationReportId);
+        return allocationReportToEnrich;
     }
 
     private String destinationQueue() {
