@@ -16,3 +16,18 @@ dependencies {
             libs.jackson_databind,
             libs.jackson_annotations
 }
+
+testSets {
+    e2eTest
+}
+
+e2eTest.mustRunAfter integrationTest
+
+project.e2eTest {
+    group = 'verification'
+    testLogging {
+        exceptionFormat = 'full'
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
+    outputs.upToDateWhen { false }
+}

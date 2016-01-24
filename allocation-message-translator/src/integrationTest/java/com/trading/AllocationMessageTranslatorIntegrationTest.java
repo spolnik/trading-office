@@ -1,6 +1,5 @@
 package com.trading;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.broker.BrokerService;
@@ -15,7 +14,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AllocationEnricherIntegrationTest {
+public class AllocationMessageTranslatorIntegrationTest {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     private BrokerService brokerService;
@@ -35,53 +34,31 @@ public class AllocationEnricherIntegrationTest {
 
     @Test
     public void consumes_incoming_message_and_sent_transformed_message_back_to_jms_server() throws Exception {
+        AllocationMessageTranslatorApplication.main(new String[0]);
 
-        AllocationEnricherApplication.main(new String[0]);
-
-        String message = sendAndReceive(allocationReportAsJson());
-
-        AllocationReport enrichedAllocationReport = fromJson(message);
-        Instrument instrument = enrichedAllocationReport.getInstrument();
-
-        assertThat(instrument).isEqualToIgnoringGivenFields(TestData.instrument(), "price");
-    }
-
-    private String allocationReportAsJson() throws JsonProcessingException {
         String allocationReportId = UUID.randomUUID().toString();
 
-        return objectMapper.writeValueAsString(
-                    allocationReportToEnrich(allocationReportId)
-            );
-    }
-
-    private AllocationReport fromJson(String message) throws java.io.IOException {
-        return objectMapper.readValue(message, AllocationReport.class);
-    }
-
-    private String sendAndReceive(String allocationReportAsJson) {
-
         JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory());
-
         jmsTemplate.send(
                 incomingQueue(),
-                session -> session.createTextMessage(allocationReportAsJson)
+                session -> session.createTextMessage(String.format(TestData.FIXML_ALLOCATION_REPORT_MESSAGE, allocationReportId))
         );
 
-        return (String) jmsTemplate.receiveAndConvert(destinationQueue());
-    }
+        String message = (String) jmsTemplate.receiveAndConvert(destinationQueue());
 
-    private AllocationReport allocationReportToEnrich(String allocationReportId) {
-        AllocationReport allocationReportToEnrich = TestData.allocationReport();
-        allocationReportToEnrich.setAllocationId(allocationReportId);
-        return allocationReportToEnrich;
+        AllocationReport allocationReport = objectMapper.readValue(message, AllocationReport.class);
+
+        AllocationReport expected = TestData.allocationReport();
+        expected.setAllocationId(allocationReportId);
+        assertThat(allocationReport).isEqualToComparingFieldByField(expected);
     }
 
     private String destinationQueue() {
-        return "outgoing.allocation.report.queue";
+        return "incoming.allocation.report.queue";
     }
 
     private String incomingQueue() {
-        return "incoming.allocation.report.queue";
+        return "front.office.mailbox";
     }
 
     private ConnectionFactory connectionFactory() {

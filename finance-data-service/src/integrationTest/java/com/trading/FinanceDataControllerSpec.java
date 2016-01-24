@@ -1,6 +1,5 @@
-import com.trading.FinanceDataController;
-import com.trading.Instrument;
-import com.trading.StockToInstrumentConverter;
+package com.trading;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.core.convert.converter.Converter;
