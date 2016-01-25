@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequestMapping("/api")
 public class ConfirmationController {
 
-    private final static Logger LOG = LoggerFactory.getLogger(ConfirmationController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ConfirmationController.class);
 
     private final Map<String, Confirmation> confirmations = new ConcurrentHashMap<>();
 
@@ -27,7 +27,7 @@ public class ConfirmationController {
     }
 
     @RequestMapping(value = "confirmation", method = RequestMethod.POST)
-    public ResponseEntity<?> addConfirmation(@RequestBody Confirmation confirmation) {
+    public ResponseEntity addConfirmation(@RequestBody Confirmation confirmation) {
 
         savePdfConfirmation(confirmation);
 
@@ -51,7 +51,7 @@ public class ConfirmationController {
         }
     }
 
-    private Path buildConfirmationFilePath(@RequestBody Confirmation confirmation) {
+    private static Path buildConfirmationFilePath(@RequestBody Confirmation confirmation) {
         return Paths.get("confirmations/Confirmation-" + confirmation.id() + ".pdf");
     }
 }

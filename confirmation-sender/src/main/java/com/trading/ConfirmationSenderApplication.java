@@ -17,12 +17,12 @@ import javax.jms.ConnectionFactory;
 @PropertySource("classpath:app.properties")
 public class ConfirmationSenderApplication {
 
+    @Value("${activemqUrl}")
+    private String activemqUrl;
+
     public static void main(String[] args) {
         SpringApplication.run(ConfirmationSenderApplication.class, args);
     }
-
-    @Value("${activemqUrl}")
-    private String activemqUrl;
 
     @Bean
     ConnectionFactory connectionFactory() {
@@ -30,7 +30,7 @@ public class ConfirmationSenderApplication {
     }
 
     @Bean
-    JmsListenerContainerFactory<?> jmsContainerFactory(ConnectionFactory connectionFactory) {
+    JmsListenerContainerFactory jmsContainerFactory(ConnectionFactory connectionFactory) {
         SimpleJmsListenerContainerFactory factory = new SimpleJmsListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
 

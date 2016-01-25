@@ -18,7 +18,8 @@ ext {
                 boot: 'org.springframework.boot:spring-boot-starter',
                 boot_actuator: 'org.springframework.boot:spring-boot-starter-actuator',
                 boot_web: 'org.springframework.boot:spring-boot-starter-web',
-                jms: 'org.springframework:spring-jms'
+                jms: 'org.springframework:spring-jms',
+                test: 'org.springframework:spring-test'
             ],
             test: [
                     junit: 'junit:junit:4.11',
