@@ -72,11 +72,7 @@ class FixmlMessageParser {
         String value = instrumentIdSource.get().getValue();
 
         switch (value) {
-            case "1": return SecurityIDSource.CUSIP;
             case "2": return SecurityIDSource.SEDOL;
-            case "3": return SecurityIDSource.QUIK;
-            case "4": return SecurityIDSource.ISIN;
-            case "5": return SecurityIDSource.RIC;
         }
 
         throw new UnsupportedOperationException("Instrument ID Source is unsupported: " + instrumentIdSource);
@@ -87,8 +83,6 @@ class FixmlMessageParser {
 
         switch (value) {
             case "0": return TransactionType.NEW;
-            case "1": return TransactionType.REPLACE;
-            case "2": return TransactionType.CANCEL;
         }
 
         throw new UnsupportedOperationException("Transaction type is unsupported: " + transactionType);
