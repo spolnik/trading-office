@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/spolnik/trading-office.svg?branch=master)](https://travis-ci.org/spolnik/trading-office) [![Code Coverage](https://img.shields.io/codecov/c/github/spolnik/trading-office/master.svg)](https://codecov.io/github/spolnik/trading-office?branch=master) [![Coverity](https://img.shields.io/coverity/scan/7604.svg)](https://scan.coverity.com/projects/spolnik-trading-office)
 
-[![Sonar Coverage](https://img.shields.io/sonar/https/sonar-nprogramming.rhcloud.com/trading-office/coverage.svg)](https://sonar-nprogramming.rhcloud.com/dashboard/index/1)
+[![Sonar Coverage](https://img.shields.io/sonar/https/sonar-nprogramming.rhcloud.com/trading-office/coverage.svg)](https://sonar-nprogramming.rhcloud.com/dashboard/index/1) [![Sonar Tech Debt](https://img.shields.io/sonar/https/sonar-nprogramming.rhcloud.com/trading-office/tech_debt.svg)](https://sonar-nprogramming.rhcloud.com/dashboard/index/1)
 
 # Trading Office
 - set of applications simulating simple flow in post trade part of trade lifecycle
