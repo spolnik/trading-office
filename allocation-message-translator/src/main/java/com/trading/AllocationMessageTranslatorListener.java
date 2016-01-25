@@ -18,7 +18,7 @@ public class AllocationMessageTranslatorListener {
 
     @JmsListener(destination = "front.office.mailbox", containerFactory = "jmsContainerFactory")
     @SendTo("incoming.allocation.report.queue")
-    public String processAllocationReport(String message) throws JsonProcessingException {
+    public String processAllocationReport(String message) throws FixmlParserException {
 
         LOG.info("Received: " + message);
 
@@ -28,13 +28,18 @@ public class AllocationMessageTranslatorListener {
         return toJson(allocationReport);
     }
 
-    private String toJson(AllocationReport allocationReport) throws JsonProcessingException {
-        String allocationReportAsJson = objectMapper.writeValueAsString(allocationReport);
-        LOG.info("Sending: " + allocationReportAsJson);
-        return allocationReportAsJson;
+    private String toJson(AllocationReport allocationReport) throws FixmlParserException {
+        try {
+            String allocationReportAsJson = objectMapper.writeValueAsString(allocationReport);
+            LOG.info("Sending: " + allocationReportAsJson);
+            return allocationReportAsJson;
+        } catch (JsonProcessingException ex) {
+            throw new FixmlParserException(ex);
+        }
+
     }
 
-    private AllocationReport parse(String message) {
+    private AllocationReport parse(String message) throws FixmlParserException {
         AllocationReport allocationReport = parser.parse(message);
         LOG.info("Parsed to: " + allocationReport);
         return allocationReport;
@@ -46,7 +51,7 @@ public class AllocationMessageTranslatorListener {
         onlySedolSecurityIdSupported(allocationReport);
     }
 
-    private void onlySedolSecurityIdSupported(AllocationReport allocationReport) {
+    private static void onlySedolSecurityIdSupported(AllocationReport allocationReport) {
         if (allocationReport.getSecurityIdSource() != SecurityIDSource.SEDOL) {
             throw new UnsupportedOperationException(
                     "Only SEDOL Security ID source is supported, Message Security ID source: "
@@ -55,7 +60,7 @@ public class AllocationMessageTranslatorListener {
         }
     }
 
-    private void hasToBeNewTransaction(AllocationReport allocationReport) {
+    private static void hasToBeNewTransaction(AllocationReport allocationReport) {
         if (allocationReport.getTransactionType() != TransactionType.NEW) {
             throw new UnsupportedOperationException(
                     "Only NEW transactions can be consumed by Allocation Message Translator, Transaction Type: "

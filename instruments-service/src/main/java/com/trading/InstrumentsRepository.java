@@ -53,7 +53,7 @@ public class InstrumentsRepository {
     public InstrumentDetails queryBySedol(String sedol) {
 
         return instruments.stream()
-                .filter(x -> sedol.toLowerCase().equals(x.getSedol().toLowerCase()))
+                .filter(x -> sedol.equalsIgnoreCase(x.getSedol()))
                 .findFirst()
                 .orElse(InstrumentDetails.empty());
     }

@@ -25,7 +25,7 @@ class FixmlMessageParser {
     private static final String INSTRUMENT_ID_XPATH = "/FIXML/AllocRpt/Instrmt/@ID";
     private static final String INSTRUMENT_ID_SOURCE_XPATH = "/FIXML/AllocRpt/Instrmt/@Src";
 
-    public AllocationReport parse(String message) {
+    public AllocationReport parse(String message) throws FixmlParserException {
 
         StringReader stringReader = new StringReader(message);
 
@@ -43,7 +43,7 @@ class FixmlMessageParser {
             return allocationReport;
         } catch (JDOMException | IOException | JaxenException e) {
             LOG.error(e.getMessage(), e);
-            throw new RuntimeException(e);
+            throw new FixmlParserException(e);
         }
     }
 
@@ -68,24 +68,28 @@ class FixmlMessageParser {
         allocationReport.setTransactionType(deriveTransactionType(transactionType));
     }
 
-    private SecurityIDSource deriveSecurityIdSource(Optional<Attribute> instrumentIdSource) {
+    private static SecurityIDSource deriveSecurityIdSource(Optional<Attribute> instrumentIdSource) {
         String value = instrumentIdSource.get().getValue();
 
-        switch (value) {
-            case "2": return SecurityIDSource.SEDOL;
+        if ("2".equals(value)) {
+            return SecurityIDSource.SEDOL;
         }
 
-        throw new UnsupportedOperationException("Instrument ID Source is unsupported: " + instrumentIdSource);
+        throw new UnsupportedOperationException(
+                "Instrument ID Source is unsupported: " + instrumentIdSource
+        );
     }
 
-    private TransactionType deriveTransactionType(Optional<Attribute> transactionType) {
+    private static TransactionType deriveTransactionType(Optional<Attribute> transactionType) {
         String value = transactionType.get().getValue();
 
-        switch (value) {
-            case "0": return TransactionType.NEW;
+        if ("0".equals(value)) {
+            return TransactionType.NEW;
         }
 
-        throw new UnsupportedOperationException("Transaction type is unsupported: " + transactionType);
+        throw new UnsupportedOperationException(
+                "Transaction type is unsupported: " + transactionType
+        );
     }
 
     @SuppressWarnings("all")
