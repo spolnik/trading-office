@@ -30,7 +30,7 @@ public class AllocationMessageTranslatorApplication {
     }
 
     @Bean
-    JmsListenerContainerFactory<?> jmsContainerFactory(ConnectionFactory connectionFactory) {
+    JmsListenerContainerFactory jmsContainerFactory(ConnectionFactory connectionFactory) {
         SimpleJmsListenerContainerFactory factory = new SimpleJmsListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
 

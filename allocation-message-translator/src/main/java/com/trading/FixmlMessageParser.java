@@ -25,21 +25,26 @@ class FixmlMessageParser {
     private static final String INSTRUMENT_ID_XPATH = "/FIXML/AllocRpt/Instrmt/@ID";
     private static final String INSTRUMENT_ID_SOURCE_XPATH = "/FIXML/AllocRpt/Instrmt/@Src";
 
-    public AllocationReport parse(String message) throws JDOMException, IOException, JaxenException {
+    public AllocationReport parse(String message) {
 
         StringReader stringReader = new StringReader(message);
 
-        Document allocationMessage = SAX_BUILDER.build(stringReader);
-        AllocationReport allocationReport = new AllocationReport();
+        try {
+            Document allocationMessage = SAX_BUILDER.build(stringReader);
+            AllocationReport allocationReport = new AllocationReport();
 
-        setId(allocationMessage, allocationReport);
-        setTransactionType(allocationMessage, allocationReport);
-        setSecurityId(allocationMessage, allocationReport);
-        setSecurityIdSource(allocationMessage, allocationReport);
+            setId(allocationMessage, allocationReport);
+            setTransactionType(allocationMessage, allocationReport);
+            setSecurityId(allocationMessage, allocationReport);
+            setSecurityIdSource(allocationMessage, allocationReport);
 
-        LOG.info("Parsed: " + allocationReport);
+            LOG.info("Parsed: " + allocationReport);
 
-        return allocationReport;
+            return allocationReport;
+        } catch (JDOMException | IOException | JaxenException e) {
+            LOG.error(e.getMessage(), e);
+            throw new RuntimeException(e);
+        }
     }
 
     private void setSecurityIdSource(Document allocationMessage, AllocationReport allocationReport) throws JaxenException {

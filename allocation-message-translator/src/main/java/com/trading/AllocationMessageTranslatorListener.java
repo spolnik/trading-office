@@ -2,15 +2,11 @@ package com.trading;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.jaxen.JaxenException;
-import org.jdom.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
 
 @Component
 public class AllocationMessageTranslatorListener {
@@ -22,7 +18,7 @@ public class AllocationMessageTranslatorListener {
 
     @JmsListener(destination = "front.office.mailbox", containerFactory = "jmsContainerFactory")
     @SendTo("incoming.allocation.report.queue")
-    public String processAllocationReport(String message) throws JDOMException, IOException, JaxenException {
+    public String processAllocationReport(String message) throws JsonProcessingException {
 
         LOG.info("Received: " + message);
 
@@ -38,7 +34,7 @@ public class AllocationMessageTranslatorListener {
         return allocationReportAsJson;
     }
 
-    private AllocationReport parse(String message) throws JDOMException, IOException, JaxenException {
+    private AllocationReport parse(String message) {
         AllocationReport allocationReport = parser.parse(message);
         LOG.info("Parsed to: " + allocationReport);
         return allocationReport;
