@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jms.connection.SingleConnectionFactory;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.web.client.RestTemplate;
 
 import javax.jms.ConnectionFactory;
 import java.util.UUID;
@@ -18,7 +17,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConfirmationSenderApplicationIntegrationTest {
 
-    private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     private BrokerService brokerService;
@@ -52,13 +50,9 @@ public class ConfirmationSenderApplicationIntegrationTest {
                 session -> session.createTextMessage(allocationReportAsJson)
         );
 
-        TimeUnit.SECONDS.sleep(10);
+        TimeUnit.SECONDS.sleep(5);
 
-        Confirmation confirmation = restTemplate.getForObject(
-                "http://confirmation-service.herokuapp.com/api/confirmation?id="
-                        + allocationReport.getAllocationId(),
-                Confirmation.class
-        );
+        Confirmation confirmation = FakeConfirmationSender.getConfirmation();
 
         allocationReport.setMessageStatus(MessageStatus.SENT);
 
