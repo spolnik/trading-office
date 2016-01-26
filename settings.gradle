@@ -1,6 +1,5 @@
 rootProject.name = 'trading-office'
 
-include 'jms-service'
 include 'e2e-test'
 include 'confirmation-sender'
 include 'trading-domain'

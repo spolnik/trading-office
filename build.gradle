@@ -10,7 +10,6 @@ buildscript {
 
 plugins {
     id "org.sonarqube" version "1.2"
-    id 'org.unbroken-dome.test-sets' version '1.2.0'
 }
 
 apply from: "$rootDir/libraries.gradle"
@@ -34,7 +33,6 @@ subprojects {
     }
 
     apply plugin: 'java'
-    apply plugin: 'org.unbroken-dome.test-sets'
     apply plugin: 'idea'
     apply plugin: 'checkstyle'
 
@@ -49,30 +47,6 @@ subprojects {
             exceptionFormat = 'full'
             events "passed", "skipped", "failed", "standardOut", "standardError"
         }
-    }
-
-    testSets {
-        integrationTest
-    }
-
-    check.dependsOn integrationTest
-    integrationTest.mustRunAfter test
-
-    project.integrationTest {
-        group = 'verification'
-        testLogging {
-            exceptionFormat = 'full'
-            events "passed", "skipped", "failed", "standardOut", "standardError"
-        }
-    }
-
-    tasks.withType(Test) {
-        reports.html.destination = file("${reporting.baseDir}/${name}")
-    }
-
-    task jacocoIntegrationTestReport(type: JacocoReport) {
-        sourceSets sourceSets.main
-        executionData integrationTest
     }
 }
 
