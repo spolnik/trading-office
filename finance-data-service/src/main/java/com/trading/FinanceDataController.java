@@ -16,7 +16,7 @@ import java.io.IOException;
 @RequestMapping("/api")
 public class FinanceDataController {
 
-    private final static Logger LOG = LoggerFactory.getLogger(FinanceDataController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FinanceDataController.class);
 
     private final Converter<Stock, Instrument> stockToInstrumentConverter;
 

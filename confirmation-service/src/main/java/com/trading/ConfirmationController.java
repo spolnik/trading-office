@@ -39,7 +39,7 @@ public class ConfirmationController {
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
-    private void savePdfConfirmation(@RequestBody Confirmation confirmation) {
+    private static void savePdfConfirmation(@RequestBody Confirmation confirmation) {
         try {
             Path confirmationPath = Files.write(
                     buildConfirmationFilePath(confirmation),

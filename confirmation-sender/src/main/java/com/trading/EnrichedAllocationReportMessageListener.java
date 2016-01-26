@@ -51,14 +51,16 @@ public class EnrichedAllocationReportMessageListener {
         }
     }
 
-    private Confirmation createConfirmationBasedOn(AllocationReport allocationReport, byte[] data) {
+    private static Confirmation createConfirmationBasedOn(AllocationReport allocationReport, byte[] data) {
         Confirmation confirmation = new Confirmation();
+
         confirmation.setAllocationReport(allocationReport);
         confirmation.setContent(data);
+
         return confirmation;
     }
 
-    private Map<String, Object> parameters(AllocationReport allocationReport) {
+    private static Map<String, Object> parameters(AllocationReport allocationReport) {
         Map<String, Object> map = new HashMap<>();
         map.put("ALLOC_RPT_ID", allocationReport.getAllocationId());
         map.put("TRANS_TYPE", allocationReport.getTransactionType().toString());

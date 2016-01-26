@@ -45,7 +45,7 @@ public class AllocationMessageTranslatorListener {
         return allocationReport;
     }
 
-    private void checkIfSupported(AllocationReport allocationReport) {
+    private static void checkIfSupported(AllocationReport allocationReport) {
 
         hasToBeNewTransaction(allocationReport);
         onlySedolSecurityIdSupported(allocationReport);

@@ -36,12 +36,11 @@ public class InstrumentsRepository {
         );
     }
 
-    private void loadInstruments(InputStream inputStream) {
-        try {
-            readInstruments(inputStream).forEach(this.instruments::add);
-        } catch (Exception e) {
-            LOG.error("Error reading/parsing instrument file.", e);
-        }
+    private void loadInstruments(InputStream inputStream) throws IOException {
+
+        readInstruments(inputStream).forEach(
+                this.instruments::add
+        );
     }
 
     private List<InstrumentDetails> readInstruments(InputStream inputStream) throws IOException {
