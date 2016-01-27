@@ -29,8 +29,3 @@ addons:
     build_command: "./gradlew build"
 
     branch_pattern: coverity_scan
-
-branches:
-  only:
-    - master
-    - coverity_scan
