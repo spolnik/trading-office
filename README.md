@@ -5,14 +5,6 @@
 # Trading Office
 - set of applications simulating simple flow in post trade part of trade lifecycle
 - it's focused on generating confirmation based on received allocation report
- 
-## Xap Service
-- spring boot application
-- it hosts gigaspaces
-
-## Jms Service
-- spring boot application
-- it hosts jms (ActiveMQ)
 
 ## Allocation Message Translator
 - spring boot application
