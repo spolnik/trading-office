@@ -42,7 +42,6 @@ public class ReceivedAllocationReportListenerIntegrationTest {
         AllocationReport allocationReportWithStatusSent = argument.getValue().getAllocationReport();
 
         AllocationReport expected = TestData.allocationReport(DUMMY_ALLOCATION_ID);
-        expected.setMessageStatus(MessageStatus.SENT);
 
         assertThat(allocationReportWithStatusSent).isEqualToComparingFieldByField(expected);
     }

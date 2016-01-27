@@ -29,7 +29,7 @@ class TradingOfficeSpecification extends Specification {
 
     def healthCheck(String url) {
         def status = restTemplate.getForObject(url, String.class)
-        log.info(status)
+        log.info(url + ": " + status)
     }
 
     def "For new trade we generate confirmation as pdf"() {

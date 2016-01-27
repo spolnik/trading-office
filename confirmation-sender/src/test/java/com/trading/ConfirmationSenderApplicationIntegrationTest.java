@@ -54,8 +54,6 @@ public class ConfirmationSenderApplicationIntegrationTest {
 
         Confirmation confirmation = FakeConfirmationSender.getConfirmation();
 
-        allocationReport.setMessageStatus(MessageStatus.SENT);
-
         assertThat(confirmation.getAllocationReport())
                 .isEqualToComparingFieldByField(allocationReport);
     }

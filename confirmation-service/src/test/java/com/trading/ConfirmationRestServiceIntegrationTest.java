@@ -35,7 +35,6 @@ public class ConfirmationRestServiceIntegrationTest {
 
         allocationReport.setAllocationId(DUMMY_ALLOCATION_ID);
         allocationReport.setTransactionType(TransactionType.NEW);
-        allocationReport.setMessageStatus(MessageStatus.SENT);
 
         Confirmation confirmation = new Confirmation();
         confirmation.setAllocationReport(allocationReport);

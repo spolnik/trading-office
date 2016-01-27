@@ -6,14 +6,9 @@ public class AllocationReport implements Serializable {
 
     private String allocationId;
     private TransactionType transactionType;
-    private MessageStatus messageStatus;
     private String securityId;
     private SecurityIDSource securityIdSource;
     private Instrument instrument;
-
-    public AllocationReport() {
-        messageStatus = MessageStatus.NEW;
-    }
 
     public String getAllocationId() {
         return allocationId;
@@ -29,14 +24,6 @@ public class AllocationReport implements Serializable {
 
     public void setTransactionType(TransactionType transactionType) {
         this.transactionType = transactionType;
-    }
-
-    public MessageStatus getMessageStatus() {
-        return messageStatus;
-    }
-
-    public void setMessageStatus(MessageStatus messageStatus) {
-        this.messageStatus = messageStatus;
     }
 
     public String getSecurityId() {
@@ -66,8 +53,8 @@ public class AllocationReport implements Serializable {
     @Override
     public String toString() {
         return String.format(
-                "AllocationReport{allocationId='%s', transactionType=%s, messageStatus=%s, securityId='%s', securityIdSource=%s, instrument=%s}",
-                allocationId, transactionType, messageStatus, securityId, securityIdSource, instrument
+                "AllocationReport{allocationId='%s', transactionType=%s, securityId='%s', securityIdSource=%s, instrument=%s}",
+                allocationId, transactionType, securityId, securityIdSource, instrument
         );
     }
 }

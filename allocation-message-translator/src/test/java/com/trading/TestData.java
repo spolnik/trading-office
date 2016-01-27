@@ -7,7 +7,6 @@ public class TestData {
         AllocationReport allocationReport = new AllocationReport();
 
         allocationReport.setAllocationId("1234567");
-        allocationReport.setMessageStatus(MessageStatus.NEW);
         allocationReport.setTransactionType(TransactionType.NEW);
         allocationReport.setSecurityId("2000019");
         allocationReport.setSecurityIdSource(SecurityIDSource.SEDOL);

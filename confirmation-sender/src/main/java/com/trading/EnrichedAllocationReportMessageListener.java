@@ -41,8 +41,6 @@ public class EnrichedAllocationReportMessageListener {
                     jasperReport, parameters(allocationReport), new JREmptyDataSource()
             );
 
-            allocationReport.setMessageStatus(MessageStatus.SENT);
-
             Confirmation confirmation = createConfirmationBasedOn(allocationReport, data);
             confirmationSender.send(confirmation);
 
