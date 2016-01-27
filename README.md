@@ -8,26 +8,54 @@
 
 ## Allocation Message Translator
 - spring boot application
-- it subscribes to jms looking for new allocation report messages
+- subscribes to jms looking for new allocation report messages (fixml)
 - after receiving message it parses it to AllocationReport POJO
-- finally, it saves the POJO into gigaspaces
+- finally, it sends the POJO as json into ActiveMQ
+- deployment to heroku
+
+## Allocation Enricher
+- spring boot application
+- subscribes to jms looking for tranlated allocation report messages (json)
+- after receiving message, it enriches it with instrument data (using Intrument Service, and Finance Data Service)
+- finally, it sends enriched allocation as json into ActiveMQ
+- deployment to heroku
+
+## Instrument Service
+- spring boot web application
+- exposes REST endpoints for instrument data
+- works in readonly mode
+- data consumed from instruments.json file
+- deployment to heroku
+
+## Finance Data Service
+- spring boot web application
+- exposes REST endpoint for financial data (using Yahoo Finance Api)
+- based on a given symbol, downloads instrument data with actual price
+- works in readonly mode
+- deployment to heroku
 
 ## Confirmation Sender
 - spring boot application
-- it listens on gigaspaces notifications
-- once the AllocationReport is received it generates PDF using JasperReports template
-- finally, it sends the Confirmation POJO with assigned PDF (as byte[]) to confirmation service (REST Service)
+- subscribes to jms looking for enriched allocation report messages (json)
+- after receiving message, it generates PDF confirmation using JasperReports template
+- finally, it sends the Confirmation POJO with attached PDF (as byte[]) to confirmation service (REST Service)
+- deployment to heroku
 
 ## Confirmation Service
 - spring boot web application (rest service)
-- it exposes api to save and get saved confirmations
+- exposes REST endpoint api to store and retrieve confirmations
+- data stored as files
+- deployment to heroku
 
 ## Trading Domain
 - library, containing all domain specific entities
 
 ## E2E Test
 - end to end tests written in spock
-- for now it requires that all previous applications are running on the same machine (gradle bootRun)
+- it runs against deployed applications (Heroku, all above + OpenShift, ActiveMq)
+
+## ActiveMQ
+- OpenShift hosted ActiveMQ 5.13
 
 =========
 
