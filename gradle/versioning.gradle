@@ -1,7 +1,5 @@
 version = new ProjectVersion(
-        '1.0',
-        System.env.TRAVIS_BRANCH,
-        System.env.TRAVIS_BUILD_NUMBER
+        '1', '0', System.env.TRAVIS_BUILD_NUMBER
 )
 
 println "Version number: " + version
@@ -10,24 +8,26 @@ println "Version number: " + version
  * Define the version (depends on branch and build number)
  */
 class ProjectVersion {
-    String version
+    String major
+    String minor
     String build
-    String branch
 
-    ProjectVersion(String version, String branch, String build) {
-        this.version = version
-        this.branch = branch
+    ProjectVersion(String major, String minor, String build) {
+        this.major = major
+        this.minor = minor
         this.build = build
     }
 
     @Override
     String toString() {
-        String fullVersion = "$version"
+        String fullVersion = "$major.$minor"
 
-        if (build && (branch.equals("master") || branch.startsWith("heroku"))) {
+        if (build) {
             fullVersion += ".$build"
         } else {
             fullVersion += "-SNAPSHOT"
         }
+
+        fullVersion
     }
 }
