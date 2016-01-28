@@ -12,6 +12,7 @@ plugins {
     id "org.sonarqube" version "1.2"
 }
 
+apply from: "$rootDir/gradle/versioning.gradle"
 apply from: "$rootDir/libraries.gradle"
 
 sonarqube {
@@ -40,7 +41,6 @@ subprojects {
 
 
     sourceCompatibility = 1.8
-    version = '1.0'
 
     test {
         testLogging {
