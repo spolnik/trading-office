@@ -40,4 +40,9 @@ public class FixmlMessageParserSpec {
     public void parses_instrument_id_source() throws Exception {
         assertThat(allocationReport.getSecurityIdSource()).isEqualTo(SecurityIDSource.SEDOL);
     }
+
+    @Test
+    public void parses_transaction_side() throws Exception {
+        assertThat(allocationReport.getTradeSide()).isEqualTo(TradeSide.BUY);
+    }
 }

@@ -24,6 +24,7 @@ class FixmlMessageParser {
     private static final String ALLOCATION_ID_XPATH = "/FIXML/AllocRpt/@RptID";
     private static final String INSTRUMENT_ID_XPATH = "/FIXML/AllocRpt/Instrmt/@ID";
     private static final String INSTRUMENT_ID_SOURCE_XPATH = "/FIXML/AllocRpt/Instrmt/@Src";
+    private static final String TRADE_SIDE_XPATH = "/FIXML/AllocRpt/@Side";
 
     public AllocationReport parse(String message) throws FixmlParserException {
 
@@ -37,6 +38,7 @@ class FixmlMessageParser {
             setTransactionType(allocationMessage, allocationReport);
             setSecurityId(allocationMessage, allocationReport);
             setSecurityIdSource(allocationMessage, allocationReport);
+            setTradeSide(allocationMessage, allocationReport);
 
             LOG.info("Parsed: " + allocationReport);
 
@@ -45,6 +47,11 @@ class FixmlMessageParser {
             LOG.error(e.getMessage(), e);
             throw new FixmlParserException(e);
         }
+    }
+
+    private void setTradeSide(Document allocationMessage, AllocationReport allocationReport) throws JaxenException {
+        Optional<Attribute> side = getElement(allocationMessage, TRADE_SIDE_XPATH);
+        allocationReport.setTradeSide(deriveTradeSide(side.get().getValue()));
     }
 
     private void setSecurityIdSource(Document allocationMessage, AllocationReport allocationReport) throws JaxenException {
@@ -57,15 +64,26 @@ class FixmlMessageParser {
         allocationReport.setSecurityId(instrumentId.get().getValue());
     }
 
-
     private void setId(Document allocationMessage, AllocationReport allocationReport) throws JaxenException {
         Optional<Attribute> id = getElement(allocationMessage, ALLOCATION_ID_XPATH);
         allocationReport.setAllocationId(id.get().getValue());
     }
 
+
     private void setTransactionType(Document allocationMessage, AllocationReport allocationReport) throws JaxenException {
         Optional<Attribute> transactionType = getElement(allocationMessage, TRANSACTION_TYPE_XPATH);
         allocationReport.setTransactionType(deriveTransactionType(transactionType));
+    }
+
+    private TradeSide deriveTradeSide(String side) {
+        switch (side) {
+            case "1": return TradeSide.BUY;
+            case "2": return TradeSide.SELL;
+        }
+
+        throw new UnsupportedOperationException(
+                "Trade Side is unsupported: " + side
+        );
     }
 
     private static SecurityIDSource deriveSecurityIdSource(Optional<Attribute> instrumentIdSource) {

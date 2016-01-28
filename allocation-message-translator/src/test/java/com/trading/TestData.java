@@ -10,6 +10,7 @@ public class TestData {
         allocationReport.setTransactionType(TransactionType.NEW);
         allocationReport.setSecurityId("2000019");
         allocationReport.setSecurityIdSource(SecurityIDSource.SEDOL);
+        allocationReport.setTradeSide(TradeSide.BUY);
 
         return allocationReport;
     }
