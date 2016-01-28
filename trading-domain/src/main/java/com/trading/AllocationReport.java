@@ -1,5 +1,7 @@
 package com.trading;
 
+import com.google.common.base.MoreObjects;
+
 import java.io.Serializable;
 
 public class AllocationReport implements Serializable {
@@ -9,6 +11,7 @@ public class AllocationReport implements Serializable {
     private String securityId;
     private SecurityIDSource securityIdSource;
     private Instrument instrument;
+    private TradeSide tradeSide;
 
     public String getAllocationId() {
         return allocationId;
@@ -50,11 +53,23 @@ public class AllocationReport implements Serializable {
         this.instrument = instrument;
     }
 
+    public TradeSide getTradeSide() {
+        return tradeSide;
+    }
+
+    public void setTradeSide(TradeSide tradeSide) {
+        this.tradeSide = tradeSide;
+    }
+
     @Override
     public String toString() {
-        return String.format(
-                "AllocationReport{allocationId='%s', transactionType=%s, securityId='%s', securityIdSource=%s, instrument=%s}",
-                allocationId, transactionType, securityId, securityIdSource, instrument
-        );
+        return MoreObjects.toStringHelper(this)
+                .add("allocationId", allocationId)
+                .add("transactionType", transactionType)
+                .add("securityId", securityId)
+                .add("securityIdSource", securityIdSource)
+                .add("instrument", instrument)
+                .add("tradeSide", tradeSide)
+                .toString();
     }
 }

@@ -39,6 +39,7 @@ class TradingOfficeSpecification extends Specification {
         when: "We receive FIXML message describing allocation for a trade"
 
         def jmsTemplate = new JmsTemplate(connectionFactory())
+
         jmsTemplate.send(
                 queue(), messageCreator(fixmlAllocationMessage)
         )
