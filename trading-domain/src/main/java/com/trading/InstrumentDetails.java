@@ -8,6 +8,7 @@ public class InstrumentDetails implements Serializable {
     private String cusip;
     private String sedol;
     private String name;
+    private String securityType;
     private String ric;
 
     public String getTicker() {
@@ -42,20 +43,20 @@ public class InstrumentDetails implements Serializable {
         this.name = name;
     }
 
+    public String getSecurityType() {
+        return securityType;
+    }
+
+    public void setSecurityType(String securityType) {
+        this.securityType = securityType;
+    }
+
     public String getRic() {
         return ric;
     }
 
     public void setRic(String ric) {
         this.ric = ric;
-    }
-
-    @Override
-    public String toString() {
-        return String.format(
-                "InstrumentDetails{ticker='%s', cusip='%s', sedol='%s', name='%s', ric='%s'}",
-                ticker, cusip, sedol, name, ric
-        );
     }
 
     public static InstrumentDetails empty() {

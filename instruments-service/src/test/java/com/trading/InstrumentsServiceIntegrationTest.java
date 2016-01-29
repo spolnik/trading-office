@@ -21,10 +21,8 @@ public class InstrumentsServiceIntegrationTest {
                 InstrumentDetails.class
         );
 
-        assertThat(instrumentDetails.getTicker()).isEqualTo("AMZN");
-        assertThat(instrumentDetails.getSedol()).isEqualTo("2000019");
-        assertThat(instrumentDetails.getCusip()).isEqualTo("023135106");
-        assertThat(instrumentDetails.getName()).isEqualTo("AMAZON.COM INC");
-        assertThat(instrumentDetails.getRic()).isEqualTo("AMZN.OQ");
+        assertThat(instrumentDetails).isEqualToComparingFieldByField(
+                TestData.instrumentDetails()
+        );
     }
 }
