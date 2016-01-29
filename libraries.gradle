@@ -32,7 +32,8 @@ ext {
                 exclude group: 'org.olap4j', module: 'olap4j'
             },
             itext: 'com.lowagie:itext:2.1.7',
-            finance_yahoo: 'com.yahoofinance-api:YahooFinanceAPI:2.0.1'
+            finance_yahoo: 'com.yahoofinance-api:YahooFinanceAPI:2.0.1',
+            okhttp: 'com.squareup.okhttp3:okhttp:3.0.1'
     )
 }
 

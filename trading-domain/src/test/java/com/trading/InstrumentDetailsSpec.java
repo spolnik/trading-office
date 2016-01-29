@@ -29,11 +29,9 @@ public class InstrumentDetailsSpec {
 
         InstrumentDetails instrumentDetails = new InstrumentDetails();
 
-        instrumentDetails.setCusip("DUMMY_CUSIP");
         instrumentDetails.setName("DUMMY_NAME");
-        instrumentDetails.setRic("DUMMY_RIC");
-        instrumentDetails.setSedol("DUMMY_SEDOL");
         instrumentDetails.setTicker("DUMMY_SYMBOL");
+        instrumentDetails.setSecurityType("Common Stock");
 
         return instrumentDetails;
     }
