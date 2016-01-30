@@ -8,6 +8,7 @@ before_install:
 
 after_success:
   - codecov
+  - ./gradlew sonarqube
 
 # coverity scan
 env:
