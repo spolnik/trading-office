@@ -86,11 +86,11 @@ class TradingOfficeSpecification extends Specification {
     def fixmlAllocationMessage() {
         """<FIXML>
     <AllocRpt
-            TransTyp="0" RptID="%s" GrpID="1234567" AvgPxGrpID="AP101" Stat="3" BizDt="2009-06-03" RptTyp="2"
+            TransTyp="0" RptID="%s" GrpID="1234567" AvgPxGrpID="AP101" Stat="3" BizDt="2016-06-03" RptTyp="2"
             Qty="200" AvgPxInd="2"
             Side="1" TrdTyp="0"
             TrdSubTyp="5"
-            AvgPx="57.5054673" TrdDt="2009-06-03" RndPx="57.51" GrpQty="350" RemQty="150"
+            AvgPx="57.5054673" TrdDt="2016-06-03" RndPx="57.51" GrpQty="350" RemQty="150"
             InptDev="API">
         <Hdr SID="ICE" TID="GUF"/>
         <Instrmt ID="2000019" Src="2"/>

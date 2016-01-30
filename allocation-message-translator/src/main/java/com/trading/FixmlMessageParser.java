@@ -14,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.StringReader;
 import java.math.BigDecimal;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 class FixmlMessageParser {
@@ -30,6 +32,7 @@ class FixmlMessageParser {
     private static final String QUANTITY_XPATH = "/FIXML/AllocRpt/@Qty";
     private static final String ALLOCATION_STATUS_XPATH = "/FIXML/AllocRpt/@Stat";
     private static final String PRICE_XPATH = "/FIXML/AllocRpt/@AvgPx";
+    private static final String TRADE_DATE_XPATH = "/FIXML/AllocRpt/@TrdDt";
 
     public AllocationReport parse(String message) throws FixmlParserException {
 
@@ -47,6 +50,7 @@ class FixmlMessageParser {
             setQuantity(fixmlMessage, allocationReport);
             setStatus(fixmlMessage, allocationReport);
             setPrice(fixmlMessage, allocationReport);
+            setTradeDate(fixmlMessage, allocationReport);
 
             LOG.info("Parsed: " + allocationReport);
 
@@ -55,6 +59,21 @@ class FixmlMessageParser {
             LOG.error(e.getMessage(), e);
             throw new FixmlParserException(e);
         }
+    }
+
+    private void setTradeDate(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+        Optional<Attribute> tradeDate = getElement(fixmlMessage, TRADE_DATE_XPATH);
+        allocationReport.setTradeDate(deriveTradeDate(tradeDate));
+    }
+
+    private ZonedDateTime deriveTradeDate(Optional<Attribute> tradeDate) {
+        String value = tradeDate.get().getValue();
+
+        LocalDate localDate = LocalDate.parse(
+                value, DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        );
+
+        return localDate.atStartOfDay(ZoneId.of("GMT"));
     }
 
     private void setPrice(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
