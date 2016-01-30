@@ -15,9 +15,16 @@ plugins {
 apply from: "$rootDir/gradle/versioning.gradle"
 apply from: "$rootDir/libraries.gradle"
 
+def sonarLogin = hasProperty('sonarLogin') ? sonarLogin : System.getenv('SONAR_LOGIN')
+def sonarPassword = hasProperty('sonarPassword') ? sonarPassword : System.getenv('SONAR_PASSWORD')
+def sonarHostUrl = hasProperty('sonarHostUrl') ? sonarHostUrl : System.getenv('SONAR_HOST_URL')
+
 sonarqube {
     properties {
         property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.host.url", sonarHostUrl
+        property "sonar.login", sonarLogin
+        property "sonar.password", sonarPassword
     }
 }
 
