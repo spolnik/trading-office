@@ -31,6 +31,6 @@ addons:
     branch_pattern: coverity_scan
 
 branches:
-  except:
+  only:
     - master
     - /^heroku-.*$/
