@@ -3,6 +3,7 @@ package com.trading;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -54,5 +55,10 @@ public class FixmlMessageParserSpec {
     @Test
     public void parses_allocation_status() throws Exception {
         assertThat(allocationReport.getStatus()).isEqualTo(AllocationStatus.RECEIVED);
+    }
+
+    @Test
+    public void parses_price() throws Exception {
+        assertThat(allocationReport.getPrice()).isEqualTo(BigDecimal.valueOf(57.5054673));
     }
 }

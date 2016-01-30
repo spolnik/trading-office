@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.math.BigDecimal;
 import java.util.Optional;
 
 class FixmlMessageParser {
@@ -28,6 +29,7 @@ class FixmlMessageParser {
     private static final String TRADE_SIDE_XPATH = "/FIXML/AllocRpt/@Side";
     private static final String QUANTITY_XPATH = "/FIXML/AllocRpt/@Qty";
     private static final String ALLOCATION_STATUS_XPATH = "/FIXML/AllocRpt/@Stat";
+    private static final String PRICE_XPATH = "/FIXML/AllocRpt/@AvgPx";
 
     public AllocationReport parse(String message) throws FixmlParserException {
 
@@ -44,6 +46,7 @@ class FixmlMessageParser {
             setTradeSide(fixmlMessage, allocationReport);
             setQuantity(fixmlMessage, allocationReport);
             setStatus(fixmlMessage, allocationReport);
+            setPrice(fixmlMessage, allocationReport);
 
             LOG.info("Parsed: " + allocationReport);
 
@@ -52,6 +55,11 @@ class FixmlMessageParser {
             LOG.error(e.getMessage(), e);
             throw new FixmlParserException(e);
         }
+    }
+
+    private void setPrice(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+        Optional<Attribute> price = getElement(fixmlMessage, PRICE_XPATH);
+        allocationReport.setPrice(new BigDecimal(price.get().getValue()));
     }
 
     private void setStatus(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
