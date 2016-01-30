@@ -61,12 +61,12 @@ class FixmlMessageParser {
         }
     }
 
-    private void setTradeDate(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+    private static void setTradeDate(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
         Optional<Attribute> tradeDate = getElement(fixmlMessage, TRADE_DATE_XPATH);
         allocationReport.setTradeDate(deriveTradeDate(tradeDate));
     }
 
-    private ZonedDateTime deriveTradeDate(Optional<Attribute> tradeDate) {
+    private static ZonedDateTime deriveTradeDate(Optional<Attribute> tradeDate) {
         String value = tradeDate.get().getValue();
 
         LocalDate localDate = LocalDate.parse(
@@ -76,12 +76,12 @@ class FixmlMessageParser {
         return localDate.atStartOfDay(ZoneId.of("GMT"));
     }
 
-    private void setPrice(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+    private static void setPrice(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
         Optional<Attribute> price = getElement(fixmlMessage, PRICE_XPATH);
         allocationReport.setPrice(new BigDecimal(price.get().getValue()));
     }
 
-    private void setStatus(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+    private static void setStatus(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
         Optional<Attribute> status = getElement(fixmlMessage, ALLOCATION_STATUS_XPATH);
         allocationReport.setStatus(deriveAllocationStatus(status));
     }
@@ -131,7 +131,7 @@ class FixmlMessageParser {
         }
     }
 
-    private AllocationStatus deriveAllocationStatus(Optional<Attribute> status) {
+    private static AllocationStatus deriveAllocationStatus(Optional<Attribute> status) {
         String value = status.get().getValue();
 
         switch (value) {
