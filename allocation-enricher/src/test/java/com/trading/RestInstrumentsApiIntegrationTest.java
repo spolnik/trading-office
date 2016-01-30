@@ -39,10 +39,8 @@ public class RestInstrumentsApiIntegrationTest {
         InstrumentDetails instrumentDetails = new InstrumentDetails();
 
         instrumentDetails.setTicker("AMZN");
-        instrumentDetails.setCusip("023135106");
-        instrumentDetails.setSedol("2000019");
         instrumentDetails.setName("AMAZON.COM INC");
-        instrumentDetails.setRic("AMZN.OQ");
+        instrumentDetails.setSecurityType("Common Stock");
 
         return instrumentDetails;
     }
