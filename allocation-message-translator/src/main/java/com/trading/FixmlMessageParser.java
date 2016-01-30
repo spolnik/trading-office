@@ -27,6 +27,7 @@ class FixmlMessageParser {
     private static final String INSTRUMENT_ID_SOURCE_XPATH = "/FIXML/AllocRpt/Instrmt/@Src";
     private static final String TRADE_SIDE_XPATH = "/FIXML/AllocRpt/@Side";
     private static final String QUANTITY_XPATH = "/FIXML/AllocRpt/@Qty";
+    private static final String ALLOCATION_STATUS_XPATH = "/FIXML/AllocRpt/@Stat";
 
     public AllocationReport parse(String message) throws FixmlParserException {
 
@@ -42,6 +43,7 @@ class FixmlMessageParser {
             setSecurityIdSource(fixmlMessage, allocationReport);
             setTradeSide(fixmlMessage, allocationReport);
             setQuantity(fixmlMessage, allocationReport);
+            setStatus(fixmlMessage, allocationReport);
 
             LOG.info("Parsed: " + allocationReport);
 
@@ -52,6 +54,11 @@ class FixmlMessageParser {
         }
     }
 
+    private void setStatus(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+        Optional<Attribute> status = getElement(fixmlMessage, ALLOCATION_STATUS_XPATH);
+        allocationReport.setStatus(deriveAllocationStatus(status));
+    }
+
     private static void setQuantity(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException, DataConversionException {
         Optional<Attribute> quantity = getElement(fixmlMessage, QUANTITY_XPATH);
         allocationReport.setQuantity(quantity.get().getIntValue());
@@ -59,7 +66,7 @@ class FixmlMessageParser {
 
     private static void setTradeSide(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
         Optional<Attribute> side = getElement(fixmlMessage, TRADE_SIDE_XPATH);
-        allocationReport.setTradeSide(deriveTradeSide(side.get().getValue()));
+        allocationReport.setTradeSide(deriveTradeSide(side));
     }
 
     private static void setSecurityIdSource(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
@@ -77,19 +84,39 @@ class FixmlMessageParser {
         allocationReport.setAllocationId(id.get().getValue());
     }
 
-
     private static void setTransactionType(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
         Optional<Attribute> transactionType = getElement(fixmlMessage, TRANSACTION_TYPE_XPATH);
         allocationReport.setTransactionType(deriveTransactionType(transactionType));
     }
 
-    private static TradeSide deriveTradeSide(String side) {
-        switch (side) {
-            case "1": return TradeSide.BUY;
-            case "2": return TradeSide.SELL;
+    private static TradeSide deriveTradeSide(Optional<Attribute> side) {
+        String value = side.get().getValue();
+
+        switch (value) {
+            case "1":
+                return TradeSide.BUY;
+            case "2":
+                return TradeSide.SELL;
             default:
                 throw new UnsupportedOperationException(
-                        "Trade Side is unsupported: " + side
+                        "Trade Side is unsupported: " + value
+                );
+        }
+    }
+
+    private AllocationStatus deriveAllocationStatus(Optional<Attribute> status) {
+        String value = status.get().getValue();
+
+        switch (value) {
+            case "0":
+                return AllocationStatus.ACCEPTED;
+            case "3":
+                return AllocationStatus.RECEIVED;
+            case "6":
+                return AllocationStatus.ALLOCATION_PENDING;
+            default:
+                throw new UnsupportedOperationException(
+                        "Allocation Status is unsupported: " + value
                 );
         }
     }
@@ -102,7 +129,7 @@ class FixmlMessageParser {
         }
 
         throw new UnsupportedOperationException(
-                "Instrument ID Source is unsupported: " + instrumentIdSource
+                "Instrument ID Source is unsupported: " + value
         );
     }
 
@@ -114,7 +141,7 @@ class FixmlMessageParser {
         }
 
         throw new UnsupportedOperationException(
-                "Transaction type is unsupported: " + transactionType
+                "Transaction type is unsupported: " + value
         );
     }
 

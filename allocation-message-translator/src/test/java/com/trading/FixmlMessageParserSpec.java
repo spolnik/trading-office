@@ -50,4 +50,9 @@ public class FixmlMessageParserSpec {
     public void parses_quantity() throws Exception {
         assertThat(allocationReport.getQuantity()).isEqualTo(200);
     }
+
+    @Test
+    public void parses_allocation_status() throws Exception {
+        assertThat(allocationReport.getStatus()).isEqualTo(AllocationStatus.RECEIVED);
+    }
 }
