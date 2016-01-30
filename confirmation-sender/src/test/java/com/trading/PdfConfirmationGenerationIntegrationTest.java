@@ -7,9 +7,14 @@ import net.sf.jasperreports.engine.JasperRunManager;
 import org.junit.Test;
 
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,6 +44,15 @@ public class PdfConfirmationGenerationIntegrationTest {
         map.put("ALLOC_INSTR_NAME", "AMAZON STOCKS");
         map.put("CURRENCY", "USD");
         map.put("EXCHANGE", "NASDAQ");
+
+        map.put("QUANTITY", "10");
+        map.put("PRICE", "1234.56");
+        map.put("SIDE", TradeSide.SELL.toString());
+
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MMM d yyyy", Locale.US);
+        ZonedDateTime tradeDate = ZonedDateTime.of(2016, 6, 3, 0, 0, 0, 0, ZoneId.of("GMT"));
+
+        map.put("TRADE_DATE", tradeDate.format(format));
 
         return map;
     }

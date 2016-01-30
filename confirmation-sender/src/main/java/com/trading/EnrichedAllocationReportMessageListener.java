@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.trading.DomainObjectMapper.objectMapper;
@@ -18,6 +20,9 @@ import static com.trading.DomainObjectMapper.objectMapper;
 public class EnrichedAllocationReportMessageListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(EnrichedAllocationReportMessageListener.class);
+
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter
+            .ofPattern("MMM d yyyy", Locale.US);
 
     private final JasperReport jasperReport;
     private final Sender<Confirmation> confirmationSender;
@@ -69,6 +74,11 @@ public class EnrichedAllocationReportMessageListener {
         map.put("ALLOC_INSTR_NAME", instrument.getName());
         map.put("CURRENCY", instrument.getCurrency());
         map.put("EXCHANGE", instrument.getExchange());
+
+        map.put("QUANTITY", Integer.toString(allocationReport.getQuantity()));
+        map.put("PRICE", allocationReport.getPrice().toString());
+        map.put("SIDE", allocationReport.getTradeSide().toString());
+        map.put("TRADE_DATE", allocationReport.getTradeDate().format(DATE_TIME_FORMATTER));
 
         return map;
     }

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="simple_template" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="30" bottomMargin="30" uuid="345488da-20a0-448c-9b88-9cb25ddf2fa7">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="98"/>
 	<parameter name="ALLOC_RPT_ID" class="java.lang.String"/>
 	<parameter name="TRANS_TYPE" class="java.lang.String"/>
 	<parameter name="ALLOC_INSTR_NAME" class="java.lang.String"/>
@@ -10,6 +10,10 @@
 	<parameter name="EXCHANGE" class="java.lang.String"/>
 	<parameter name="INST_ID_TYPE" class="java.lang.String"/>
 	<parameter name="INST_ID" class="java.lang.String"/>
+	<parameter name="PRICE" class="java.lang.String"/>
+	<parameter name="QUANTITY" class="java.lang.String"/>
+	<parameter name="SIDE" class="java.lang.String"/>
+	<parameter name="TRADE_DATE" class="java.lang.String"/>
 	<title>
 		<band height="50" splitType="Stretch">
 			<staticText>
@@ -110,7 +114,7 @@
 				<text><![CDATA[SECURITY ID:]]></text>
 			</staticText>
 		</band>
-		<band height="63">
+		<band height="94">
 			<textField>
 				<reportElement x="149" y="0" width="265" height="20" uuid="1060c5ec-a9c5-47c9-9191-6704d0eef4c1"/>
 				<textElement textAlignment="Center">
@@ -123,14 +127,14 @@
 				<textElement>
 					<font size="12"/>
 				</textElement>
-				<text><![CDATA[Currency:]]></text>
+				<text><![CDATA[Price:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="115" y="30" width="100" height="20" uuid="92791f73-f26f-431b-a14a-7c4ef9a08ac7"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{CURRENCY}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{PRICE}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="281" y="30" width="113" height="20" uuid="a086ca90-bd4b-4691-92a5-e97bdb949343"/>
@@ -140,11 +144,67 @@
 				<text><![CDATA[Exchange:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="394" y="30" width="100" height="20" uuid="d1a9252d-8f2b-45f1-b1b0-ba50032d9412"/>
+				<reportElement x="394" y="30" width="116" height="20" uuid="d1a9252d-8f2b-45f1-b1b0-ba50032d9412"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{EXCHANGE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="50" width="100" height="20" uuid="612d1739-3171-404d-80ca-aa319dbdead0"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Quantity:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="70" width="100" height="20" uuid="66a260ee-b990-492f-ac4e-32d78dc81735"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Currency:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="115" y="50" width="100" height="20" uuid="bb1450db-f9a8-4db6-aa84-c797bb153af3"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{QUANTITY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="115" y="70" width="100" height="20" uuid="2ff8980b-8ae1-4df4-a5cb-92d15fe4b75d"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CURRENCY}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="281" y="50" width="113" height="20" uuid="b30b29c9-ec1e-49d3-8173-b70f320382bb"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Side:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="394" y="50" width="116" height="20" uuid="5a9c84ca-df79-4dba-85ce-41f9374ecae1"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{SIDE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="281" y="70" width="113" height="20" uuid="88f3ec20-b65a-4628-9c6c-c3ce22644ccc"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Trade Date:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="394" y="70" width="116" height="20" uuid="6e4a55d4-48a5-4bb3-b286-218bdb234822"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TRADE_DATE}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
