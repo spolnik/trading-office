@@ -4,6 +4,7 @@ import org.jaxen.JaxenException;
 import org.jaxen.XPath;
 import org.jaxen.jdom.JDOMXPath;
 import org.jdom.Attribute;
+import org.jdom.DataConversionException;
 import org.jdom.Document;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
@@ -25,20 +26,22 @@ class FixmlMessageParser {
     private static final String INSTRUMENT_ID_XPATH = "/FIXML/AllocRpt/Instrmt/@ID";
     private static final String INSTRUMENT_ID_SOURCE_XPATH = "/FIXML/AllocRpt/Instrmt/@Src";
     private static final String TRADE_SIDE_XPATH = "/FIXML/AllocRpt/@Side";
+    private static final String QUANTITY_XPATH = "/FIXML/AllocRpt/@Qty";
 
     public AllocationReport parse(String message) throws FixmlParserException {
 
         StringReader stringReader = new StringReader(message);
 
         try {
-            Document allocationMessage = SAX_BUILDER.build(stringReader);
+            Document fixmlMessage = SAX_BUILDER.build(stringReader);
             AllocationReport allocationReport = new AllocationReport();
 
-            setId(allocationMessage, allocationReport);
-            setTransactionType(allocationMessage, allocationReport);
-            setSecurityId(allocationMessage, allocationReport);
-            setSecurityIdSource(allocationMessage, allocationReport);
-            setTradeSide(allocationMessage, allocationReport);
+            setId(fixmlMessage, allocationReport);
+            setTransactionType(fixmlMessage, allocationReport);
+            setSecurityId(fixmlMessage, allocationReport);
+            setSecurityIdSource(fixmlMessage, allocationReport);
+            setTradeSide(fixmlMessage, allocationReport);
+            setQuantity(fixmlMessage, allocationReport);
 
             LOG.info("Parsed: " + allocationReport);
 
@@ -49,29 +52,34 @@ class FixmlMessageParser {
         }
     }
 
-    private static void setTradeSide(Document allocationMessage, AllocationReport allocationReport) throws JaxenException {
-        Optional<Attribute> side = getElement(allocationMessage, TRADE_SIDE_XPATH);
+    private static void setQuantity(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException, DataConversionException {
+        Optional<Attribute> quantity = getElement(fixmlMessage, QUANTITY_XPATH);
+        allocationReport.setQuantity(quantity.get().getIntValue());
+    }
+
+    private static void setTradeSide(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+        Optional<Attribute> side = getElement(fixmlMessage, TRADE_SIDE_XPATH);
         allocationReport.setTradeSide(deriveTradeSide(side.get().getValue()));
     }
 
-    private static void setSecurityIdSource(Document allocationMessage, AllocationReport allocationReport) throws JaxenException {
-        Optional<Attribute> instrumentIdSource = getElement(allocationMessage, INSTRUMENT_ID_SOURCE_XPATH);
+    private static void setSecurityIdSource(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+        Optional<Attribute> instrumentIdSource = getElement(fixmlMessage, INSTRUMENT_ID_SOURCE_XPATH);
         allocationReport.setSecurityIdSource(deriveSecurityIdSource(instrumentIdSource));
     }
 
-    private static void setSecurityId(Document allocationMessage, AllocationReport allocationReport) throws JaxenException {
-        Optional<Attribute> instrumentId = getElement(allocationMessage, INSTRUMENT_ID_XPATH);
+    private static void setSecurityId(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+        Optional<Attribute> instrumentId = getElement(fixmlMessage, INSTRUMENT_ID_XPATH);
         allocationReport.setSecurityId(instrumentId.get().getValue());
     }
 
-    private static void setId(Document allocationMessage, AllocationReport allocationReport) throws JaxenException {
-        Optional<Attribute> id = getElement(allocationMessage, ALLOCATION_ID_XPATH);
+    private static void setId(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+        Optional<Attribute> id = getElement(fixmlMessage, ALLOCATION_ID_XPATH);
         allocationReport.setAllocationId(id.get().getValue());
     }
 
 
-    private static void setTransactionType(Document allocationMessage, AllocationReport allocationReport) throws JaxenException {
-        Optional<Attribute> transactionType = getElement(allocationMessage, TRANSACTION_TYPE_XPATH);
+    private static void setTransactionType(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+        Optional<Attribute> transactionType = getElement(fixmlMessage, TRANSACTION_TYPE_XPATH);
         allocationReport.setTransactionType(deriveTransactionType(transactionType));
     }
 

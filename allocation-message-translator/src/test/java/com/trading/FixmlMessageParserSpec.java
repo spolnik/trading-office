@@ -45,4 +45,9 @@ public class FixmlMessageParserSpec {
     public void parses_transaction_side() throws Exception {
         assertThat(allocationReport.getTradeSide()).isEqualTo(TradeSide.BUY);
     }
+
+    @Test
+    public void parses_quantity() throws Exception {
+        assertThat(allocationReport.getQuantity()).isEqualTo(200);
+    }
 }

@@ -11,6 +11,7 @@ public class TestData {
         allocationReport.setSecurityId("2000019");
         allocationReport.setSecurityIdSource(SecurityIDSource.SEDOL);
         allocationReport.setTradeSide(TradeSide.BUY);
+        allocationReport.setQuantity(200);
 
         return allocationReport;
     }
