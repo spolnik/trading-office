@@ -11,7 +11,9 @@ class DomainObjectMapper {
     private static final DomainObjectMapper DOMAIN_OBJECT_MAPPER_INSTANCE = new DomainObjectMapper();
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    private DomainObjectMapper() {}
+    private DomainObjectMapper() {
+        // empty
+    }
 
     static {
         OBJECT_MAPPER.registerModule(new JavaTimeModule());

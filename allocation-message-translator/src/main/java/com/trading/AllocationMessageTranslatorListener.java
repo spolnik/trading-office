@@ -28,7 +28,7 @@ public class AllocationMessageTranslatorListener {
         return toJson(allocationReport);
     }
 
-    private String toJson(AllocationReport allocationReport) throws FixmlParserException {
+    private static String toJson(AllocationReport allocationReport) throws FixmlParserException {
         try {
             String allocationReportAsJson = objectMapper().toJson(allocationReport);
             LOG.info("Sending: " + allocationReportAsJson);

@@ -31,13 +31,13 @@ public class AllocationMessageEnrichmentListener {
         return toJson(enrich(fromJson(message)));
     }
 
-    private String toJson(AllocationReport allocationReport) throws JsonProcessingException {
+    private static String toJson(AllocationReport allocationReport) throws JsonProcessingException {
         String allocationReportAsJson = objectMapper().toJson(allocationReport);
         LOG.info("Sending: " + allocationReportAsJson);
         return allocationReportAsJson;
     }
 
-    private AllocationReport fromJson(String message) throws IOException {
+    private static AllocationReport fromJson(String message) throws IOException {
         AllocationReport allocationReport = objectMapper().toAllocationReport(message);
         LOG.info("Received: " + allocationReport);
         return allocationReport;
