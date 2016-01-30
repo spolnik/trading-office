@@ -1,12 +1,12 @@
 package com.trading;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
 import java.util.UUID;
 
+import static com.trading.DomainObjectMapper.objectMapper;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -30,8 +30,7 @@ public class ReceivedAllocationReportListenerIntegrationTest {
     @Test
     public void retrieves_new_message_and_process_it_finally_saving_with_status_sent() throws Exception {
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        String allocationReportAsJson = objectMapper.writeValueAsString(
+        String allocationReportAsJson = objectMapper().toJson(
                 TestData.allocationReport(DUMMY_ALLOCATION_ID)
         );
 

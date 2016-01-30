@@ -1,12 +1,13 @@
 package com.trading;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
+
+import static com.trading.DomainObjectMapper.objectMapper;
 
 @Component
 public class AllocationMessageTranslatorListener {
@@ -14,7 +15,6 @@ public class AllocationMessageTranslatorListener {
     private static final Logger LOG = LoggerFactory.getLogger(AllocationMessageTranslatorListener.class);
 
     private final FixmlMessageParser parser = new FixmlMessageParser();
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @JmsListener(destination = "front.office.mailbox", containerFactory = "jmsContainerFactory")
     @SendTo("incoming.allocation.report.queue")
@@ -30,7 +30,7 @@ public class AllocationMessageTranslatorListener {
 
     private String toJson(AllocationReport allocationReport) throws FixmlParserException {
         try {
-            String allocationReportAsJson = objectMapper.writeValueAsString(allocationReport);
+            String allocationReportAsJson = objectMapper().toJson(allocationReport);
             LOG.info("Sending: " + allocationReportAsJson);
             return allocationReportAsJson;
         } catch (JsonProcessingException ex) {

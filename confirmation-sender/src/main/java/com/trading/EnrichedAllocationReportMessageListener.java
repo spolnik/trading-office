@@ -1,6 +1,5 @@
 package com.trading;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.jasperreports.engine.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +12,8 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.trading.DomainObjectMapper.objectMapper;
+
 @Component
 public class EnrichedAllocationReportMessageListener {
 
@@ -20,7 +21,6 @@ public class EnrichedAllocationReportMessageListener {
 
     private final JasperReport jasperReport;
     private final Sender<Confirmation> confirmationSender;
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     public EnrichedAllocationReportMessageListener(Sender<Confirmation> confirmationSender) throws JRException {
@@ -33,7 +33,7 @@ public class EnrichedAllocationReportMessageListener {
 
     @JmsListener(destination = "outgoing.allocation.report.queue", containerFactory = "jmsContainerFactory")
     public void eventListener(String message) throws IOException {
-        AllocationReport allocationReport = objectMapper.readValue(message, AllocationReport.class);
+        AllocationReport allocationReport = objectMapper().toAllocationReport(message);
         LOG.info("Received: " + allocationReport);
 
         try {

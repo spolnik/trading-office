@@ -1,23 +1,19 @@
 package com.trading;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 
+import static com.trading.DomainObjectMapper.objectMapper;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConfirmationSpec {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
     @Test
     public void can_be_parsed_to_json_and_converted_back_to_object() throws Exception {
 
-        String confirmationAsString = objectMapper.writeValueAsString(
-                confirmation()
-        );
+        String confirmationAsString = objectMapper().toJson(confirmation());
 
-        Confirmation confirmationCreatedFromJson = objectMapper.readValue(
-                confirmationAsString, Confirmation.class
+        Confirmation confirmationCreatedFromJson = objectMapper().toConfirmation(
+                confirmationAsString
         );
 
         assertThat(confirmationCreatedFromJson.getAllocationReport()).isEqualToComparingFieldByField(

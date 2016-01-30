@@ -1,5 +1,8 @@
 package com.trading;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 class TestData {
 
     static AllocationReport allocationReport() {
@@ -11,6 +14,9 @@ class TestData {
         allocationReport.setSecurityIdSource(SecurityIDSource.SEDOL);
         allocationReport.setInstrument(instrument());
         allocationReport.setTradeSide(TradeSide.BUY);
+
+        ZonedDateTime tradeDate = ZonedDateTime.of(2016, 1, 10, 10, 10, 10, 0, ZoneId.of("GMT"));
+        allocationReport.setTradeDate(tradeDate);
 
         return allocationReport;
     }

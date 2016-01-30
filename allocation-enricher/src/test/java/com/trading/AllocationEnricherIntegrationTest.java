@@ -1,7 +1,6 @@
 package com.trading;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.broker.BrokerService;
 import org.junit.After;
@@ -13,11 +12,11 @@ import org.springframework.jms.core.JmsTemplate;
 import javax.jms.ConnectionFactory;
 import java.util.UUID;
 
+import static com.trading.DomainObjectMapper.objectMapper;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AllocationEnricherIntegrationTest {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private BrokerService brokerService;
 
     @Before
@@ -49,13 +48,13 @@ public class AllocationEnricherIntegrationTest {
     private String allocationReportAsJson() throws JsonProcessingException {
         String allocationReportId = UUID.randomUUID().toString();
 
-        return objectMapper.writeValueAsString(
+        return objectMapper().toJson(
                 allocationReportToEnrich(allocationReportId)
         );
     }
 
     private AllocationReport fromJson(String message) throws java.io.IOException {
-        return objectMapper.readValue(message, AllocationReport.class);
+        return objectMapper().toAllocationReport(message);
     }
 
     private String sendAndReceive(String allocationReportAsJson) {

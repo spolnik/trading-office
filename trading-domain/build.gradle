@@ -1,8 +1,9 @@
 dependencies {
-    compile libs.guava
-
-    testCompile libs.jackson,
+    compile libs.guava,
+            libs.jackson,
             libs.jackson_databind,
-            libs.test.junit,
+            libs.jackson_datatype_jsr310
+
+    testCompile libs.test.junit,
             libs.test.assertj
 }

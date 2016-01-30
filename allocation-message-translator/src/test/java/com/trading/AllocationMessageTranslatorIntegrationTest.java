@@ -1,6 +1,5 @@
 package com.trading;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.broker.BrokerService;
 import org.junit.After;
@@ -12,11 +11,11 @@ import org.springframework.jms.core.JmsTemplate;
 import javax.jms.ConnectionFactory;
 import java.util.UUID;
 
+import static com.trading.DomainObjectMapper.objectMapper;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AllocationMessageTranslatorIntegrationTest {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private BrokerService brokerService;
 
     @Before
@@ -46,7 +45,7 @@ public class AllocationMessageTranslatorIntegrationTest {
 
         String message = (String) jmsTemplate.receiveAndConvert(destinationQueue());
 
-        AllocationReport allocationReport = objectMapper.readValue(message, AllocationReport.class);
+        AllocationReport allocationReport = objectMapper().toAllocationReport(message);
 
         AllocationReport expected = TestData.allocationReport();
         expected.setAllocationId(allocationReportId);
