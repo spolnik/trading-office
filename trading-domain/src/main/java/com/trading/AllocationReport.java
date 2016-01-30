@@ -3,6 +3,7 @@ package com.trading;
 import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 public class AllocationReport implements Serializable {
@@ -14,6 +15,9 @@ public class AllocationReport implements Serializable {
     private Instrument instrument;
     private TradeSide tradeSide;
     private ZonedDateTime tradeDate;
+    private int quantity;
+    private AllocationStatus status;
+    private BigDecimal price;
 
     public String getAllocationId() {
         return allocationId;
@@ -71,6 +75,30 @@ public class AllocationReport implements Serializable {
         this.tradeDate = tradeDate;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public AllocationStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AllocationStatus status) {
+        this.status = status;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -81,6 +109,9 @@ public class AllocationReport implements Serializable {
                 .add("instrument", instrument)
                 .add("tradeSide", tradeSide)
                 .add("tradeDate", tradeDate)
+                .add("quantity", quantity)
+                .add("status", status)
+                .add("price", price)
                 .toString();
     }
 }
