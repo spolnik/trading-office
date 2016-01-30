@@ -29,3 +29,8 @@ addons:
     build_command: "./gradlew build"
 
     branch_pattern: coverity_scan
+
+branches:
+  except:
+    - master
+    - /^heroku-.*$/
