@@ -1,7 +1,6 @@
 package com.trading;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +10,13 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+import static com.trading.DomainObjectMapper.objectMapper;
+
 @Component
 public class AllocationMessageEnrichmentListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(AllocationMessageEnrichmentListener.class);
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private final InstrumentsApi instrumentsApi;
 
     @Autowired
@@ -32,13 +32,13 @@ public class AllocationMessageEnrichmentListener {
     }
 
     private String toJson(AllocationReport allocationReport) throws JsonProcessingException {
-        String allocationReportAsJson = objectMapper.writeValueAsString(allocationReport);
+        String allocationReportAsJson = objectMapper().toJson(allocationReport);
         LOG.info("Sending: " + allocationReportAsJson);
         return allocationReportAsJson;
     }
 
     private AllocationReport fromJson(String message) throws IOException {
-        AllocationReport allocationReport = objectMapper.readValue(message, AllocationReport.class);
+        AllocationReport allocationReport = objectMapper().toAllocationReport(message);
         LOG.info("Received: " + allocationReport);
         return allocationReport;
     }

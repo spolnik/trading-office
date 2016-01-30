@@ -3,6 +3,7 @@ package com.trading;
 import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 
 public class AllocationReport implements Serializable {
 
@@ -12,6 +13,7 @@ public class AllocationReport implements Serializable {
     private SecurityIDSource securityIdSource;
     private Instrument instrument;
     private TradeSide tradeSide;
+    private ZonedDateTime tradeDate;
 
     public String getAllocationId() {
         return allocationId;
@@ -61,6 +63,14 @@ public class AllocationReport implements Serializable {
         this.tradeSide = tradeSide;
     }
 
+    public ZonedDateTime getTradeDate() {
+        return tradeDate;
+    }
+
+    public void setTradeDate(ZonedDateTime tradeDate) {
+        this.tradeDate = tradeDate;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -70,6 +80,7 @@ public class AllocationReport implements Serializable {
                 .add("securityIdSource", securityIdSource)
                 .add("instrument", instrument)
                 .add("tradeSide", tradeSide)
+                .add("tradeDate", tradeDate)
                 .toString();
     }
 }

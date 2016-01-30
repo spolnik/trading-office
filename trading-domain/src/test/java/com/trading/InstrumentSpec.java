@@ -1,26 +1,20 @@
 package com.trading;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 
 import java.math.BigDecimal;
 
+import static com.trading.DomainObjectMapper.objectMapper;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class InstrumentSpec {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
     @Test
     public void can_be_parsed_to_json_and_converted_back_to_object() throws Exception {
 
-        String instrumentAsJson = objectMapper.writeValueAsString(
-                instrument()
-        );
+        String instrumentAsJson = objectMapper().toJson(instrument());
 
-        Instrument instrumentFromJson = objectMapper.readValue(
-                instrumentAsJson, Instrument.class
-        );
+        Instrument instrumentFromJson = objectMapper().toInstrument(instrumentAsJson);
 
         assertThat(instrumentFromJson).isEqualToComparingFieldByField(instrument());
 
