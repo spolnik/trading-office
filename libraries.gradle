@@ -1,8 +1,8 @@
 ext {
     libs = libsMap(
-            slf4j_api: 'org.slf4j:slf4j-api:1.7.10',
+            slf4j_api: 'org.slf4j:slf4j-api:1.7.14',
             log4j: 'log4j:log4j:1.2.17',
-            slf4j_log4j12: 'org.slf4j:slf4j-log4j12:1.7.10',
+            slf4j_log4j12: 'org.slf4j:slf4j-log4j12:1.7.14',
             jaxen: 'jaxen:jaxen:1.1.6',
             jdom: 'jdom:jdom:1.1',
             jackson: 'com.fasterxml.jackson.core:jackson-core:2.6.3',
