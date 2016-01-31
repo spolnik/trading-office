@@ -37,7 +37,6 @@ subprojects {
 
     apply plugin: 'java'
     apply plugin: 'idea'
-    apply plugin: 'checkstyle'
 
     apply from: "$rootDir/gradle/jacoco.gradle"
 
