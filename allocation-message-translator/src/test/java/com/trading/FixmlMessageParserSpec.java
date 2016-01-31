@@ -24,6 +24,11 @@ public class FixmlMessageParserSpec {
         allocationReport = parser.parse(String.format(FIXML_ALLOCATION_REPORT_MESSAGE, ALLOCATION_REPORT_ID));
     }
 
+    @Test(expected = FixmlParserException.class)
+    public void throws_exception_if_incorrect_json_format() throws Exception {
+        new FixmlMessageParser().parse("BROKEN");
+    }
+
     @Test
     public void parses_allocation_id() throws Exception {
         assertThat(allocationReport.getAllocationId()).isEqualTo(ALLOCATION_REPORT_ID);
