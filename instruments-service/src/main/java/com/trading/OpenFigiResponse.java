@@ -35,16 +35,12 @@ public class OpenFigiResponse implements Serializable {
         this.securityType = securityType;
     }
 
-    public static InstrumentDetails empty() {
-        return new InstrumentDetails();
-    }
-
     public InstrumentDetails toInstrumentDetails() {
         InstrumentDetails instrumentDetails = new InstrumentDetails();
 
-        instrumentDetails.setName(name);
-        instrumentDetails.setTicker(ticker);
-        instrumentDetails.setSecurityType(securityType);
+        instrumentDetails.setName(getName());
+        instrumentDetails.setTicker(getTicker());
+        instrumentDetails.setSecurityType(getSecurityType());
 
         return instrumentDetails;
     }
