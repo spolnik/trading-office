@@ -6,8 +6,8 @@ dependencies {
             'org.springframework:spring-jms:4.2.4.RELEASE',
             'org.springframework:spring-web:4.2.4.RELEASE',
             'org.spockframework:spock-core:1.0-groovy-2.4',
-            'org.apache.activemq:activemq-broker:5.12.1',
-            dependencies.create('org.apache.activemq:activemq-http:5.12.1') {
+            'org.apache.activemq:activemq-broker:5.13.0',
+            dependencies.create('org.apache.activemq:activemq-http:5.13.0') {
                 exclude module: 'jetty-all'
             },
             libs.slf4j_api,
