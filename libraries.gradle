@@ -23,12 +23,10 @@ ext {
                 test: 'org.springframework:spring-test'
             ],
             test: [
-                    junit: 'junit:junit:4.11',
-                    assertj: 'org.assertj:assertj-core:1.7.1',
-                    spock: 'org.spockframework:spock-core:1.0-groovy-2.4',
-                    mockito: 'org.mockito:mockito-core:2.0.38-beta'
+                    junit: 'junit:junit:4.12',
+                    assertj: 'org.assertj:assertj-core:3.3.0',
+                    mockito: 'org.mockito:mockito-core:2.0.41-beta'
             ],
-            groovy: 'org.codehaus.groovy:groovy-all:2.4.1',
             jasperreports: dependencies.create('net.sf.jasperreports:jasperreports:6.2.0') {
                 exclude group: 'org.olap4j', module: 'olap4j'
             },
