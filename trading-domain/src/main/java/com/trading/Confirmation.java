@@ -17,6 +17,15 @@ public class Confirmation implements Serializable {
         EMPTY_CONFIRMATION.setAllocationReport(allocationReport);
     }
 
+    public Confirmation() {
+        // empty
+    }
+
+    public Confirmation(AllocationReport allocationReport, byte[] content) {
+        this.allocationReport = allocationReport;
+        this.content = content;
+    }
+
     public AllocationReport getAllocationReport() {
         return allocationReport;
     }

@@ -37,7 +37,7 @@ public class EnrichedAllocationReportMessageListener {
     }
 
     @JmsListener(destination = "outgoing.allocation.report.queue", containerFactory = "jmsContainerFactory")
-    public void eventListener(String message) throws IOException {
+    public void processEnrichedAllocationReport(String message) throws IOException {
         AllocationReport allocationReport = objectMapper().toAllocationReport(message);
         LOG.info("Received: " + allocationReport);
 
@@ -46,21 +46,11 @@ public class EnrichedAllocationReportMessageListener {
                     jasperReport, parameters(allocationReport), new JREmptyDataSource()
             );
 
-            Confirmation confirmation = createConfirmationBasedOn(allocationReport, data);
-            confirmationSender.send(confirmation);
+            confirmationSender.send(new Confirmation(allocationReport, data));
 
         } catch (JRException e) {
             LOG.error(e.getMessage(), e);
         }
-    }
-
-    private static Confirmation createConfirmationBasedOn(AllocationReport allocationReport, byte[] data) {
-        Confirmation confirmation = new Confirmation();
-
-        confirmation.setAllocationReport(allocationReport);
-        confirmation.setContent(data);
-
-        return confirmation;
     }
 
     private static Map<String, Object> parameters(AllocationReport allocationReport) {

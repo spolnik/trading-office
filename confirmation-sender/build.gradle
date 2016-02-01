@@ -11,7 +11,8 @@ dependencies {
             libs.activemq_http,
             libs.jackson,
             libs.jackson_databind,
-            libs.jackson_annotations
+            libs.jackson_annotations,
+            libs.swift
 
     testCompile libs.test.assertj,
             libs.test.mockito,
