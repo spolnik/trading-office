@@ -32,7 +32,12 @@ ext {
             },
             itext: 'com.lowagie:itext:2.1.7',
             finance_yahoo: 'com.yahoofinance-api:YahooFinanceAPI:2.0.1',
-            okhttp: 'com.squareup.okhttp3:okhttp:3.0.1'
+            okhttp: 'com.squareup.okhttp3:okhttp:3.0.1',
+            swift: dependencies.create('com.prowidesoftware:pw-swift-core:SRU2015-7.7') {
+                exclude group: 'javax.xml', module: 'jaxb-api'
+                exclude group: 'javax.xml', module: 'jaxb-impl'
+            },
+            jaxb: 'javax.xml.bind:jaxb-api:2.2.12'
     )
 }
 

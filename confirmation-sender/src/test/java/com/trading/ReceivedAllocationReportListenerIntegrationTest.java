@@ -35,7 +35,7 @@ public class ReceivedAllocationReportListenerIntegrationTest {
         );
 
         EnrichedAllocationReportMessageListener enrichedAllocationReportMessageListener = new EnrichedAllocationReportMessageListener(confirmationSender);
-        enrichedAllocationReportMessageListener.eventListener(allocationReportAsJson);
+        enrichedAllocationReportMessageListener.processEnrichedAllocationReport(allocationReportAsJson);
         verify(confirmationSender).send(argument.capture());
 
         AllocationReport allocationReportWithStatusSent = argument.getValue().getAllocationReport();
