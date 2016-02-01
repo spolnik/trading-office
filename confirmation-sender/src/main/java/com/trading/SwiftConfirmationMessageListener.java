@@ -19,6 +19,7 @@ public class SwiftConfirmationMessageListener {
     private static final Logger LOG = LoggerFactory.getLogger(SwiftConfirmationMessageListener.class);
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+    public static final String UNIT_NUMBER = "UNIT";
     private final Sender<Confirmation> confirmationSender;
 
     @Autowired
@@ -44,15 +45,29 @@ public class SwiftConfirmationMessageListener {
     }
 
     private MT518.SequenceB sequenceB(AllocationReport allocationReport) {
-        Field98A f98a = tradeDate(allocationReport);
-        Field90A f90a = price(allocationReport);
 
         return MT518.SequenceB.newInstance(
-                f98a.asTag(),
-                f90a.asTag(),
+                tradeDate(allocationReport).asTag(),
+                price(allocationReport).asTag(),
                 Field22A.tag(buySellTag(allocationReport)),
-                currency(allocationReport).asTag()
+                currency(allocationReport).asTag(),
+                quantity(allocationReport).asTag(),
+                instrument(allocationReport).asTag()
         );
+    }
+
+    private Field35B instrument(AllocationReport allocationReport) {
+        Field35B field35B = new Field35B();
+        field35B.setDescription(allocationReport.getInstrument().getName());
+        return field35B;
+    }
+
+    private Field36B quantity(AllocationReport allocationReport) {
+        Field36B f36b = new Field36B();
+        f36b.setQualifier(MT518.CONF);
+        f36b.setQuantityTypeCode(UNIT_NUMBER);
+        f36b.setQuantity(Integer.toString(allocationReport.getQuantity()));
+        return f36b;
     }
 
     private Field11A currency(AllocationReport allocationReport) {

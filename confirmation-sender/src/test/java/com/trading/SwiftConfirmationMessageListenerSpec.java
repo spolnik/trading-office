@@ -88,6 +88,22 @@ public class SwiftConfirmationMessageListenerSpec {
         );
     }
 
+    @Test
+    public void generates_swift_confirmation_with_quantity() throws Exception {
+
+        assertThat(confirmation().getField36B().get(0).getQuantity()).isEqualTo(
+                "1234"
+        );
+    }
+
+    @Test
+    public void generates_swift_confirmation_with_instrument_description() throws Exception {
+
+        assertThat(confirmation().getField35B().get(0).getDescription()).isEqualTo(
+                "AMAZON STOCKS"
+        );
+    }
+
     private MT518 confirmation() throws IOException {
         listener.processEnrichedAllocationReport(json);
         verify(confirmationSender).send(argument.capture());
