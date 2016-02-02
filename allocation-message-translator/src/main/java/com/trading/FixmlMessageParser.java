@@ -152,14 +152,7 @@ class FixmlMessageParser {
 
     private static TransactionType deriveTransactionType(Optional<Attribute> transactionType) {
         String value = transactionType.get().getValue();
-
-        if ("0".equals(value)) {
-            return TransactionType.NEW;
-        }
-
-        throw new UnsupportedOperationException(
-                "Transaction type is unsupported: " + value
-        );
+        return TransactionType.getTransactionType(value);
     }
 
     @SuppressWarnings("all")

@@ -13,7 +13,6 @@ public class Confirmation implements Serializable {
     static {
         AllocationReport allocationReport = new AllocationReport();
         allocationReport.setAllocationId("#empty");
-        allocationReport.setTransactionType(TransactionType.UNSUPPORTED);
 
         EMPTY_CONFIRMATION.setAllocationReport(allocationReport);
     }
