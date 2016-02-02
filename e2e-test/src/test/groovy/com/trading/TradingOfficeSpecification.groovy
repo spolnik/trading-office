@@ -1,6 +1,7 @@
 package com.trading
 
 import org.apache.activemq.ActiveMQConnectionFactory
+import org.apache.activemq.transport.InactivityIOException
 import org.slf4j.LoggerFactory
 import org.springframework.jms.connection.SingleConnectionFactory
 import org.springframework.jms.core.JmsTemplate
@@ -48,6 +49,17 @@ class TradingOfficeSpecification extends Specification {
 
         then: "New confirmation is generated as PDF"
 
+        try {
+            assertConfirmation()
+        } catch (InactivityIOException ex) {
+            log.warn(ex.getMessage())
+            log.warn("Retry")
+            TimeUnit.SECONDS.sleep(5)
+            assertConfirmation()
+        }
+    }
+
+    private void assertConfirmation() {
         def confirmation = restTemplate.getForObject(
                 "http://confirmation-service.herokuapp.com/api/confirmation?id=" + allocationReportId,
                 Confirmation.class

@@ -118,17 +118,7 @@ class FixmlMessageParser {
 
     private static TradeSide deriveTradeSide(Optional<Attribute> side) {
         String value = side.get().getValue();
-
-        switch (value) {
-            case "1":
-                return TradeSide.BUY;
-            case "2":
-                return TradeSide.SELL;
-            default:
-                throw new UnsupportedOperationException(
-                        "Trade Side is unsupported: " + value
-                );
-        }
+        return TradeSide.getTradeSide(value);
     }
 
     private static AllocationStatus deriveAllocationStatus(Optional<Attribute> status) {
