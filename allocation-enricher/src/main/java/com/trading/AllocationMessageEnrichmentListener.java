@@ -46,7 +46,7 @@ public class AllocationMessageEnrichmentListener {
     private AllocationReport enrich(AllocationReport allocationReport) {
 
         InstrumentDetails instrumentDetails = instrumentsApi.getInstrumentDetails(
-                allocationReport.getSecurityId(), allocationReport.getSecurityIdSource()
+                allocationReport.getSecurityId(), allocationReport.getInstrumentType()
         );
 
         Instrument instrument = instrumentsApi.getInstrument(instrumentDetails.getTicker());

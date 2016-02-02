@@ -11,7 +11,7 @@ public class AllocationReport implements Serializable {
     private String allocationId;
     private TransactionType transactionType;
     private String securityId;
-    private SecurityIDSource securityIdSource;
+    private InstrumentType instrumentType;
     private Instrument instrument;
     private TradeSide tradeSide;
     private ZonedDateTime tradeDate;
@@ -43,12 +43,12 @@ public class AllocationReport implements Serializable {
         this.securityId = securityId;
     }
 
-    public SecurityIDSource getSecurityIdSource() {
-        return securityIdSource;
+    public InstrumentType getInstrumentType() {
+        return instrumentType;
     }
 
-    public void setSecurityIdSource(SecurityIDSource securityIdSource) {
-        this.securityIdSource = securityIdSource;
+    public void setInstrumentType(InstrumentType instrumentType) {
+        this.instrumentType = instrumentType;
     }
 
     public Instrument getInstrument() {
@@ -105,7 +105,7 @@ public class AllocationReport implements Serializable {
                 .add("allocationId", allocationId)
                 .add("transactionType", transactionType)
                 .add("securityId", securityId)
-                .add("securityIdSource", securityIdSource)
+                .add("instrumentType", instrumentType)
                 .add("instrument", instrument)
                 .add("tradeSide", tradeSide)
                 .add("tradeDate", tradeDate)

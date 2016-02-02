@@ -51,7 +51,7 @@ public class FixmlMessageParserSpec {
 
     @Test
     public void parses_instrument_id_source() throws Exception {
-        assertThat(allocationReport.getSecurityIdSource()).isEqualTo(SecurityIDSource.SEDOL);
+        assertThat(allocationReport.getInstrumentType()).isEqualTo(InstrumentType.SEDOL);
     }
 
     @Test

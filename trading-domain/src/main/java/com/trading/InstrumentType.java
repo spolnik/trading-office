@@ -1,6 +1,6 @@
 package com.trading;
 
-public enum SecurityIDSource {
+public enum InstrumentType {
 
     CUSIP, SEDOL, QUIK, ISIN, RIC
 }

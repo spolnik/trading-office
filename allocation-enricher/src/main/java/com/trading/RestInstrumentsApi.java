@@ -20,8 +20,8 @@ public class    RestInstrumentsApi implements InstrumentsApi {
     private String financeDataServiceUrl;
 
     @Override
-    public InstrumentDetails getInstrumentDetails(String securityId, SecurityIDSource securityIdSource) {
-        if (securityIdSource != SecurityIDSource.SEDOL) {
+    public InstrumentDetails getInstrumentDetails(String securityId, InstrumentType instrumentType) {
+        if (instrumentType != InstrumentType.SEDOL) {
             throw new UnsupportedOperationException("Only SEDOL security id is supported");
         }
 

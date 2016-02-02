@@ -13,7 +13,7 @@ public class TestData {
         allocationReport.setAllocationId("1234567");
         allocationReport.setTransactionType(TransactionType.NEW);
         allocationReport.setSecurityId("2000019");
-        allocationReport.setSecurityIdSource(SecurityIDSource.SEDOL);
+        allocationReport.setInstrumentType(InstrumentType.SEDOL);
         allocationReport.setTradeSide(TradeSide.BUY);
         allocationReport.setQuantity(200);
         allocationReport.setStatus(AllocationStatus.RECEIVED);

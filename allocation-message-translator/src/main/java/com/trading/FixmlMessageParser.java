@@ -98,7 +98,7 @@ class FixmlMessageParser {
 
     private static void setSecurityIdSource(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
         Optional<Attribute> instrumentIdSource = getElement(fixmlMessage, INSTRUMENT_ID_SOURCE_XPATH);
-        allocationReport.setSecurityIdSource(deriveSecurityIdSource(instrumentIdSource));
+        allocationReport.setInstrumentType(deriveSecurityIdSource(instrumentIdSource));
     }
 
     private static void setSecurityId(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
@@ -138,11 +138,11 @@ class FixmlMessageParser {
         }
     }
 
-    private static SecurityIDSource deriveSecurityIdSource(Optional<Attribute> instrumentIdSource) {
+    private static InstrumentType deriveSecurityIdSource(Optional<Attribute> instrumentIdSource) {
         String value = instrumentIdSource.get().getValue();
 
         if ("2".equals(value)) {
-            return SecurityIDSource.SEDOL;
+            return InstrumentType.SEDOL;
         }
 
         throw new UnsupportedOperationException(
