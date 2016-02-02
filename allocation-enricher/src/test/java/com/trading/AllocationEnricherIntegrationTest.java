@@ -76,11 +76,11 @@ public class AllocationEnricherIntegrationTest {
     }
 
     private String destinationQueue() {
-        return "outgoing.allocation.report.queue";
+        return Queues.ENRICHED_JSON_ALLOCATION_REPORT_EMAIL_QUEUE;
     }
 
     private String incomingQueue() {
-        return "incoming.allocation.report.queue";
+        return Queues.RECEIVED_JSON_ALLOCATION_REPORT_QUEUE;
     }
 
     private ConnectionFactory connectionFactory() {

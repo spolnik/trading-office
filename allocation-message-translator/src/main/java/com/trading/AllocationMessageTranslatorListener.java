@@ -16,8 +16,8 @@ public class AllocationMessageTranslatorListener {
 
     private final FixmlMessageParser parser = new FixmlMessageParser();
 
-    @JmsListener(destination = "front.office.mailbox", containerFactory = "jmsContainerFactory")
-    @SendTo("incoming.allocation.report.queue")
+    @JmsListener(destination = Queues.INCOMING_FIXML_ALLOCATION_REPORT_QUEUE, containerFactory = "jmsContainerFactory")
+    @SendTo(Queues.RECEIVED_JSON_ALLOCATION_REPORT_QUEUE)
     public String processAllocationReport(String message) throws FixmlParserException {
 
         LOG.info("Received: " + message);

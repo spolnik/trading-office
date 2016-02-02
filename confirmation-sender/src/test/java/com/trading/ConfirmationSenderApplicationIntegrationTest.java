@@ -57,7 +57,7 @@ public class ConfirmationSenderApplicationIntegrationTest {
     }
 
     private String queue() {
-        return "outgoing.allocation.report.queue";
+        return Queues.ENRICHED_JSON_ALLOCATION_REPORT_EMAIL_QUEUE;
     }
 
     private ConnectionFactory connectionFactory() {

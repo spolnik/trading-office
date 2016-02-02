@@ -36,7 +36,7 @@ public class EnrichedAllocationReportMessageListener {
         jasperReport = JasperCompileManager.compileReport(resourceAsStream);
     }
 
-    @JmsListener(destination = "outgoing.allocation.report.queue", containerFactory = "jmsContainerFactory")
+    @JmsListener(destination = Queues.ENRICHED_JSON_ALLOCATION_REPORT_EMAIL_QUEUE, containerFactory = "jmsContainerFactory")
     public void processEnrichedAllocationReport(String message) throws IOException {
         AllocationReport allocationReport = objectMapper().toAllocationReport(message);
         LOG.info("Received: " + allocationReport);

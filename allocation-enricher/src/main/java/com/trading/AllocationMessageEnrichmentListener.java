@@ -24,8 +24,8 @@ public class AllocationMessageEnrichmentListener {
         this.instrumentsApi = instrumentsApi;
     }
 
-    @JmsListener(destination = "incoming.allocation.report.queue", containerFactory = "jmsContainerFactory")
-    @SendTo("outgoing.allocation.report.queue")
+    @JmsListener(destination = Queues.RECEIVED_JSON_ALLOCATION_REPORT_QUEUE, containerFactory = "jmsContainerFactory")
+    @SendTo(Queues.ENRICHED_JSON_ALLOCATION_REPORT_EMAIL_QUEUE)
     public String processAllocationReport(String message) throws IOException {
 
         return toJson(enrich(fromJson(message)));
