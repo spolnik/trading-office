@@ -123,31 +123,12 @@ class FixmlMessageParser {
 
     private static AllocationStatus deriveAllocationStatus(Optional<Attribute> status) {
         String value = status.get().getValue();
-
-        switch (value) {
-            case "0":
-                return AllocationStatus.ACCEPTED;
-            case "3":
-                return AllocationStatus.RECEIVED;
-            case "6":
-                return AllocationStatus.ALLOCATION_PENDING;
-            default:
-                throw new UnsupportedOperationException(
-                        "Allocation Status is unsupported: " + value
-                );
-        }
+        return AllocationStatus.getAllocationStatus(value);
     }
 
     private static InstrumentType deriveSecurityIdSource(Optional<Attribute> instrumentIdSource) {
         String value = instrumentIdSource.get().getValue();
-
-        if ("2".equals(value)) {
-            return InstrumentType.SEDOL;
-        }
-
-        throw new UnsupportedOperationException(
-                "Instrument ID Source is unsupported: " + value
-        );
+        return InstrumentType.getInstrumentType(value);
     }
 
     private static TransactionType deriveTransactionType(Optional<Attribute> transactionType) {
