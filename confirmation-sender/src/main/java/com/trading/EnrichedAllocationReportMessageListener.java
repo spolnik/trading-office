@@ -46,7 +46,9 @@ public class EnrichedAllocationReportMessageListener {
                     jasperReport, parameters(allocationReport), new JREmptyDataSource()
             );
 
-            confirmationSender.send(new Confirmation(allocationReport, data));
+            confirmationSender.send(
+                    new Confirmation(allocationReport, data, ConfirmationType.EMAIL)
+            );
 
         } catch (JRException e) {
             LOG.error(e.getMessage(), e);

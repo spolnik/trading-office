@@ -6,6 +6,7 @@ public class Confirmation implements Serializable {
 
     private AllocationReport allocationReport;
     private byte[] content;
+    private ConfirmationType confirmationType;
 
     public static final Confirmation EMPTY_CONFIRMATION = new Confirmation();
 
@@ -21,9 +22,10 @@ public class Confirmation implements Serializable {
         // empty
     }
 
-    public Confirmation(AllocationReport allocationReport, byte[] content) {
+    public Confirmation(AllocationReport allocationReport, byte[] content, ConfirmationType confirmationType) {
         this.allocationReport = allocationReport;
         this.content = content;
+        this.confirmationType = confirmationType;
     }
 
     public AllocationReport getAllocationReport() {
@@ -40,6 +42,14 @@ public class Confirmation implements Serializable {
 
     public void setContent(byte[] content) {
         this.content = content;
+    }
+
+    public ConfirmationType getConfirmationType() {
+        return confirmationType;
+    }
+
+    public void setConfirmationType(ConfirmationType confirmationType) {
+        this.confirmationType = confirmationType;
     }
 
     @Override
