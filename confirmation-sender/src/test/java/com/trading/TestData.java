@@ -7,6 +7,11 @@ import java.time.ZonedDateTime;
 public class TestData {
 
     static AllocationReport allocationReport(String allocationId) {
+        TradeSide tradeSide = TradeSide.BUY;
+        return allocationReport(allocationId, tradeSide);
+    }
+
+    static AllocationReport allocationReport(String allocationId, TradeSide tradeSide) {
         AllocationReport allocationReport = new AllocationReport();
 
         allocationReport.setAllocationId(allocationId);
@@ -18,7 +23,7 @@ public class TestData {
         allocationReport.setQuantity(1234);
         allocationReport.setStatus(AllocationStatus.ACCEPTED);
         allocationReport.setTradeDate(ZonedDateTime.of(2016, 6, 3, 0, 0, 0, 0, ZoneId.of("GMT")));
-        allocationReport.setTradeSide(TradeSide.BUY);
+        allocationReport.setTradeSide(tradeSide);
 
         allocationReport.setInstrument(instrument());
 

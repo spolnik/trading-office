@@ -23,7 +23,6 @@ public class SwiftConfirmationMessageListenerSpec {
     private Sender<Confirmation> confirmationSender;
     private ArgumentCaptor<Confirmation> argument;
     private ConversionService conversionService;
-    private String json;
 
     @SuppressWarnings("unchecked")
     @Before
@@ -34,15 +33,12 @@ public class SwiftConfirmationMessageListenerSpec {
 
         listener = new SwiftConfirmationMessageListener(confirmationSender);
         conversionService = new ConversionService();
-
-        AllocationReport allocationReport = TestData.allocationReport(UUID.randomUUID().toString());
-        json = objectMapper().toJson(allocationReport);
     }
 
     @Test
     public void generates_swift_confirmation_with_price_value() throws Exception {
 
-        assertThat(new BigDecimal(confirmation().getField90A().get(0).getPrice())).isEqualTo(
+        assertThat(new BigDecimal(confirmation_for_buy().getField90A().get(0).getPrice())).isEqualTo(
                 BigDecimal.valueOf(45.124)
         );
     }
@@ -50,7 +46,7 @@ public class SwiftConfirmationMessageListenerSpec {
     @Test
     public void generates_swift_confirmation_with_trade_transaction_type() throws Exception {
 
-        assertThat(confirmation().getField22F().get(0).getIndicator()).isEqualTo(
+        assertThat(confirmation_for_buy().getField22F().get(0).getIndicator()).isEqualTo(
                 MT518.TRAD
         );
     }
@@ -58,7 +54,7 @@ public class SwiftConfirmationMessageListenerSpec {
     @Test
     public void generates_swift_confirmation_with_function_of_message_as_new() throws Exception {
 
-        assertThat(confirmation().getField23G().getFunction()).isEqualTo(
+        assertThat(confirmation_for_buy().getField23G().getFunction()).isEqualTo(
                 "NEWM"
         );
     }
@@ -66,23 +62,31 @@ public class SwiftConfirmationMessageListenerSpec {
     @Test
     public void generates_swift_confirmation_with_trade_date() throws Exception {
 
-        assertThat(confirmation().getField98A().get(0).getDate()).isEqualTo(
+        assertThat(confirmation_for_buy().getField98A().get(0).getDate()).isEqualTo(
                 "20160603"
         );
     }
 
     @Test
-    public void generates_swift_confirmation_with_buy_sell_indicator() throws Exception {
+    public void generates_swift_confirmation_with_buyi_indicator_for_buy_trade_side() throws Exception {
 
-        assertThat(confirmation().getSequenceB().getFieldByName("22A").getComponent(1)).isEqualTo(
+        assertThat(confirmation_for_buy().getSequenceB().getFieldByName("22A").getComponent(1)).isEqualTo(
                 ":BUSE/BUYI"
+        );
+    }
+
+    @Test
+    public void generates_swift_confirmation_with_sell_indicator_for_sell_trade_side() throws Exception {
+
+        assertThat(confirmation_for_sell().getSequenceB().getFieldByName("22A").getComponent(1)).isEqualTo(
+                ":BUSE/SELL"
         );
     }
 
     @Test
     public void generates_swift_confirmation_with_currency() throws Exception {
 
-        Field11A field11A = confirmation().getField11A().get(0);
+        Field11A field11A = confirmation_for_buy().getField11A().get(0);
         assertThat(field11A.getCurrency()).isEqualTo(
                 "USD"
         );
@@ -91,7 +95,7 @@ public class SwiftConfirmationMessageListenerSpec {
     @Test
     public void generates_swift_confirmation_with_quantity() throws Exception {
 
-        assertThat(confirmation().getField36B().get(0).getQuantity()).isEqualTo(
+        assertThat(confirmation_for_buy().getField36B().get(0).getQuantity()).isEqualTo(
                 "1234"
         );
     }
@@ -99,12 +103,44 @@ public class SwiftConfirmationMessageListenerSpec {
     @Test
     public void generates_swift_confirmation_with_instrument_description() throws Exception {
 
-        assertThat(confirmation().getField35B().get(0).getDescription()).isEqualTo(
+        assertThat(confirmation_for_buy().getField35B().get(0).getDescription()).isEqualTo(
                 "AMAZON STOCKS"
         );
     }
 
-    private MT518 confirmation() throws IOException {
+    @Test
+    public void generates_swift_confirmation_with_currency_qualifier_for_buy() throws Exception {
+        Field11A field11A = confirmation_for_buy().getField11A().get(0);
+        assertThat(field11A.getQualifier()).isEqualTo(
+                MT518.FXIB
+        );
+    }
+
+    @Test
+    public void generates_swift_confirmation_with_currency_qualifier_for_sell() throws Exception {
+        Field11A field11A = confirmation_for_sell().getField11A().get(0);
+        assertThat(field11A.getQualifier()).isEqualTo(
+                MT518.FXIS
+        );
+    }
+
+    private MT518 confirmation_for_buy() throws IOException {
+        AllocationReport allocationReportBuy = TestData.allocationReport(
+                UUID.randomUUID().toString(), TradeSide.BUY
+        );
+        return mt518(allocationReportBuy);
+    }
+
+    private MT518 confirmation_for_sell() throws IOException {
+        AllocationReport allocationReportSell = TestData.allocationReport(
+                UUID.randomUUID().toString(), TradeSide.SELL
+        );
+        return mt518(allocationReportSell);
+    }
+
+    private MT518 mt518(AllocationReport allocationReportSell) throws IOException {
+        String json = objectMapper().toJson(allocationReportSell);
+
         listener.processEnrichedAllocationReport(json);
         verify(confirmationSender).send(argument.capture());
 
