@@ -1,0 +1,33 @@
+version = new ProjectVersion(
+        '1', '0', System.env.TRAVIS_BUILD_NUMBER
+)
+
+println "Version number: " + version
+
+/**
+ * Define the version (depends on branch and build number)
+ */
+class ProjectVersion {
+    String major
+    String minor
+    String build
+
+    ProjectVersion(String major, String minor, String build) {
+        this.major = major
+        this.minor = minor
+        this.build = build
+    }
+
+    @Override
+    String toString() {
+        String fullVersion = "$major.$minor"
+
+        if (build) {
+            fullVersion += ".$build"
+        } else {
+            fullVersion += "-SNAPSHOT"
+        }
+
+        fullVersion
+    }
+}

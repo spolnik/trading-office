@@ -1,0 +1,23 @@
+apply plugin: 'spring-boot'
+
+dependencies {
+    compile project(":trading-domain"),
+            libs.spring.boot_web,
+            libs.spring.boot_actuator,
+            libs.spring.jms,
+            libs.activemq,
+            libs.activemq_http,
+            libs.jackson,
+            libs.jackson_databind,
+            libs.jackson_annotations
+
+    testCompile libs.test.junit,
+            libs.test.assertj,
+            libs.activemq_kahadb,
+            libs.spring.test
+}
+
+jar {
+    baseName = 'trading-office-allocation-enricher'
+    version = '1.0.0'
+}

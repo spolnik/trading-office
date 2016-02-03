@@ -1,10 +1,11 @@
 rootProject.name = 'trading-office'
 
-include 'jms-service'
 include 'e2e-test'
 include 'confirmation-sender'
 include 'trading-domain'
 include 'allocation-message-translator'
-include 'xap-service'
 include 'confirmation-service'
+include 'finance-data-service'
+include 'instruments-service'
+include 'allocation-enricher'
 

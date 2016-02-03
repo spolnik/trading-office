@@ -1,13 +1,27 @@
 apply plugin: 'spring-boot'
 
 dependencies {
-    compile libs.spring.boot,
-            libs.gigaspaces,
+    compile libs.spring.boot_web,
+            libs.spring.boot_actuator,
             project(':trading-domain'),
             libs.jasperreports,
             libs.itext,
-            libs.guava
+            libs.spring.jms,
+            libs.activemq,
+            libs.activemq_http,
+            libs.jackson,
+            libs.jackson_databind,
+            libs.jackson_annotations,
+            libs.swift,
+            libs.jaxb
 
     testCompile libs.test.assertj,
-            libs.test.mockito
+            libs.test.mockito,
+            libs.test.junit,
+            libs.activemq_kahadb
+}
+
+jar {
+    baseName = 'trading-office-confirmation-sender'
+    version = '1.0.0'
 }

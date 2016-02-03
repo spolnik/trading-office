@@ -1,55 +1,39 @@
 package com.trading;
 
-import org.openspaces.core.GigaSpace;
-import org.openspaces.core.GigaSpaceConfigurer;
-import org.openspaces.core.space.UrlSpaceConfigurer;
-import org.openspaces.events.polling.SimplePollingContainerConfigurer;
-import org.openspaces.events.polling.SimplePollingEventListenerContainer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
+import org.apache.activemq.ActiveMQConnectionFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.jms.annotation.EnableJms;
+import org.springframework.jms.config.JmsListenerContainerFactory;
+import org.springframework.jms.config.SimpleJmsListenerContainerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.jms.ConnectionFactory;
 
 @SpringBootApplication
-public class ConfirmationSenderApplication implements CommandLineRunner {
+@EnableJms
+@PropertySource("classpath:app.properties")
+public class ConfirmationSenderApplication {
 
-    private static final String GIGASPACES_URL ="jini://*/*/tradingOffice";
-
-    private static final Logger LOG = LoggerFactory.getLogger(ConfirmationSenderApplication.class);
+    @Value("${activemqUrl}")
+    private String activemqUrl;
 
     public static void main(String[] args) {
-        SpringApplication springApplication = new SpringApplication(ConfirmationSenderApplication.class);
-        springApplication.setWebEnvironment(false);
-
-        Map<String, Object> settings = new HashMap<>();
-        settings.put("spring.jta.enabled", false);
-        springApplication.setDefaultProperties(settings);
-
-        springApplication.run(args);
+        SpringApplication.run(ConfirmationSenderApplication.class, args);
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        GigaSpace gigaSpace = new GigaSpaceConfigurer(new UrlSpaceConfigurer(GIGASPACES_URL)).gigaSpace();
-
-        SimplePollingEventListenerContainer pollingListener = new SimplePollingContainerConfigurer(gigaSpace)
-                .template(new AllocationReport())
-                .eventListenerAnnotation(new ReceivedAllocationReportListener(confirmationSender()))
-                .pollingContainer();
-
-        pollingListener.start();
-
-        LOG.info("Joining thread, you can press Ctrl+C to shutdown application");
-        Thread.currentThread().join();
-
-        pollingListener.stop();
+    @Bean
+    ConnectionFactory connectionFactory() {
+        return new ActiveMQConnectionFactory(activemqUrl);
     }
 
-    private Sender<Confirmation> confirmationSender() {
-        return new ConfirmationSender();
+    @Bean
+    JmsListenerContainerFactory jmsContainerFactory(ConnectionFactory connectionFactory) {
+        SimpleJmsListenerContainerFactory factory = new SimpleJmsListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory);
+
+        return factory;
     }
 }

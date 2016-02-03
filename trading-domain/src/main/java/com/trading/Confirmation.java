@@ -6,16 +6,25 @@ public class Confirmation implements Serializable {
 
     private AllocationReport allocationReport;
     private byte[] content;
+    private ConfirmationType confirmationType;
 
     public static final Confirmation EMPTY_CONFIRMATION = new Confirmation();
 
     static {
         AllocationReport allocationReport = new AllocationReport();
         allocationReport.setAllocationId("#empty");
-        allocationReport.setTransactionType(TransactionType.UNSUPPORTED);
-        allocationReport.setMessageStatus(MessageStatus.CONFIRMED);
 
         EMPTY_CONFIRMATION.setAllocationReport(allocationReport);
+    }
+
+    public Confirmation() {
+        // empty
+    }
+
+    public Confirmation(AllocationReport allocationReport, byte[] content, ConfirmationType confirmationType) {
+        this.allocationReport = allocationReport;
+        this.content = content;
+        this.confirmationType = confirmationType;
     }
 
     public AllocationReport getAllocationReport() {
@@ -34,29 +43,12 @@ public class Confirmation implements Serializable {
         this.content = content;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Confirmation that = (Confirmation) o;
-
-        return allocationReport != null
-                ? allocationReport.equals(that.allocationReport)
-                : that.allocationReport == null;
-
+    public ConfirmationType getConfirmationType() {
+        return confirmationType;
     }
 
-    @Override
-    public int hashCode() {
-        return allocationReport != null
-                ? allocationReport.hashCode()
-                : 0;
+    public void setConfirmationType(ConfirmationType confirmationType) {
+        this.confirmationType = confirmationType;
     }
 
     @Override
