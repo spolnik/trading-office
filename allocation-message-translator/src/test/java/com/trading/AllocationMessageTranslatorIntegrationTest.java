@@ -53,7 +53,7 @@ public class AllocationMessageTranslatorIntegrationTest {
     }
 
     private String destinationQueue() {
-        return Queues.ENRICHED_JSON_ALLOCATION_REPORT_EMAIL_QUEUE;
+        return Queues.RECEIVED_JSON_ALLOCATION_REPORT_QUEUE;
     }
 
     private String incomingQueue() {
