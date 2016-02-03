@@ -25,9 +25,9 @@ addons:
 
     notification_email: jacek.spolnik@gmail.com
 
-    build_command_prepend: ""
+    build_command_prepend: "./gradlew clean"
 
-    build_command: "./gradlew build"
+    build_command: "./gradlew compileJava"
 
     branch_pattern: coverity_scan
 
@@ -35,6 +35,7 @@ branches:
   only:
     - master
     - /^heroku-.*$/
+    - coverity_scan
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 cache:
