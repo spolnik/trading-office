@@ -28,7 +28,7 @@ public class SwiftConfirmationMessageListener {
         this.confirmationSender = confirmationSender;
     }
 
-    @JmsListener(destination = "swift.confirmation.queue", containerFactory = "jmsContainerFactory")
+    @JmsListener(destination = Queues.ENRICHED_JSON_ALLOCATION_REPORT_SWIFT_QUEUE, containerFactory = "jmsContainerFactory")
     public void processEnrichedAllocationReport(String message) throws IOException {
         AllocationReport allocationReport = objectMapper().toAllocationReport(message);
         LOG.info("Received: " + allocationReport);

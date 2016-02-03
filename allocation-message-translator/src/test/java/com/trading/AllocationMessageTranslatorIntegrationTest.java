@@ -53,11 +53,11 @@ public class AllocationMessageTranslatorIntegrationTest {
     }
 
     private String destinationQueue() {
-        return "incoming.allocation.report.queue";
+        return Queues.RECEIVED_JSON_ALLOCATION_REPORT_QUEUE;
     }
 
     private String incomingQueue() {
-        return "front.office.mailbox";
+        return Queues.INCOMING_FIXML_ALLOCATION_REPORT_QUEUE;
     }
 
     private ConnectionFactory connectionFactory() {
