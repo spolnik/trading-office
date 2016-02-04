@@ -7,7 +7,6 @@ import org.springframework.jms.connection.SingleConnectionFactory
 import org.springframework.jms.core.JmsTemplate
 import org.springframework.jms.core.MessageCreator
 import org.springframework.web.client.RestTemplate
-import spock.lang.Ignore
 import spock.lang.Specification
 
 import javax.jms.JMSException
@@ -15,7 +14,6 @@ import javax.jms.Message
 import javax.jms.Session
 import java.util.concurrent.TimeUnit
 
-@Ignore
 class TradingOfficeSpecification extends Specification {
 
     def log = LoggerFactory.getLogger(TradingOfficeSpecification.class)
@@ -25,14 +23,22 @@ class TradingOfficeSpecification extends Specification {
     def restTemplate = new RestTemplate()
 
     def setup() {
-        healthCheck("http://allocation-message-translator.herokuapp.com/health")
-        healthCheck("http://allocation-enricher.herokuapp.com/health")
-        healthCheck("http://confirmation-sender.herokuapp.com/health")
+        healthCheck(herokuApp("allocation-message-translator"))
+        healthCheck(herokuApp("allocation-enricher"))
+        healthCheck(herokuApp("confirmation-sender"))
+        healthCheck(herokuApp("confirmation-service"))
+        healthCheck(herokuApp("financial-data-service"))
+        healthCheck(herokuApp("instruments-service"))
+    }
+
+    def herokuApp(String name) {
+        "http://" + name + ".herokuapp.com/health"
     }
 
     def healthCheck(String url) {
+        log.info(url + ":")
         def status = restTemplate.getForObject(url, String.class)
-        log.info(url + ": " + status)
+        log.info(status)
     }
 
     def "For new trade we generate confirmation as pdf"() {
@@ -44,7 +50,8 @@ class TradingOfficeSpecification extends Specification {
         def jmsTemplate = new JmsTemplate(connectionFactory())
 
         jmsTemplate.send(
-                queue(), messageCreator(fixmlAllocationMessage)
+                Queues.INCOMING_FIXML_ALLOCATION_REPORT_QUEUE,
+                messageCreator(fixmlAllocationMessage)
         )
 
         TimeUnit.SECONDS.sleep(10)
@@ -83,9 +90,6 @@ class TradingOfficeSpecification extends Specification {
         }
     }
 
-    def queue() {
-        "front.office.mailbox"
-    }
 
     def connectionFactory() {
 
