@@ -48,7 +48,7 @@ public class OpenFigiInstrumentsRepository implements InstrumentsRepository {
         return response(data[0]);
     }
 
-    private OpenFigiResponse response(OpenFigiDataResponse response) throws IOException {
+    private static OpenFigiResponse response(OpenFigiDataResponse response) throws IOException {
 
         if (response == null || response.getData() == null) {
             throw new IOException("No data received from open figi service.");
