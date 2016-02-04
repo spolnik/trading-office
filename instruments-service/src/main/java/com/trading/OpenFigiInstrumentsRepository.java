@@ -37,9 +37,24 @@ public class OpenFigiInstrumentsRepository implements InstrumentsRepository {
     private OpenFigiResponse parseResponse(String responseAsJson) throws IOException {
         LOG.info("Response: " + responseAsJson);
 
-        OpenFigiDataResponse[] data = objectMapper.readValue(responseAsJson, OpenFigiDataResponse[].class);
+        OpenFigiDataResponse[] data = objectMapper.readValue(
+                responseAsJson, OpenFigiDataResponse[].class
+        );
 
-        return data[0].getData()[0];
+        if (data == null) {
+            throw new IOException("Cannot read: " + responseAsJson);
+        }
+
+        return response(data[0]);
+    }
+
+    private OpenFigiResponse response(OpenFigiDataResponse response) throws IOException {
+
+        if (response == null || response.getData() == null) {
+            throw new IOException("No data received from open figi service.");
+        }
+
+        return response.getData()[0];
     }
 
     private String request(String sedol) {
