@@ -36,8 +36,9 @@ class TradingOfficeSpecification extends Specification {
     }
 
     def healthCheck(String url) {
+        log.info(url + ":")
         def status = restTemplate.getForObject(url, String.class)
-        log.info(url + ": " + status)
+        log.info(status)
     }
 
     def "For new trade we generate confirmation as pdf"() {
@@ -49,7 +50,8 @@ class TradingOfficeSpecification extends Specification {
         def jmsTemplate = new JmsTemplate(connectionFactory())
 
         jmsTemplate.send(
-                queue(), messageCreator(fixmlAllocationMessage)
+                Queues.INCOMING_FIXML_ALLOCATION_REPORT_QUEUE,
+                messageCreator(fixmlAllocationMessage)
         )
 
         TimeUnit.SECONDS.sleep(10)
@@ -88,9 +90,6 @@ class TradingOfficeSpecification extends Specification {
         }
     }
 
-    def queue() {
-        "front.office.mailbox"
-    }
 
     def connectionFactory() {
 
