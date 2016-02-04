@@ -23,9 +23,16 @@ class TradingOfficeSpecification extends Specification {
     def restTemplate = new RestTemplate()
 
     def setup() {
-        healthCheck("http://allocation-message-translator.herokuapp.com/health")
-        healthCheck("http://allocation-enricher.herokuapp.com/health")
-        healthCheck("http://confirmation-sender.herokuapp.com/health")
+        healthCheck(herokuApp("allocation-message-translator"))
+        healthCheck(herokuApp("allocation-enricher"))
+        healthCheck(herokuApp("confirmation-sender"))
+        healthCheck(herokuApp("confirmation-service"))
+        healthCheck(herokuApp("financial-data-service"))
+        healthCheck(herokuApp("instruments-service"))
+    }
+
+    def herokuApp(String name) {
+        "http://" + name + ".herokuapp.com/health"
     }
 
     def healthCheck(String url) {
