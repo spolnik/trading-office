@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
 
+import java.nio.charset.StandardCharsets;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConfirmationRestServiceIntegrationTest {
@@ -27,7 +29,7 @@ public class ConfirmationRestServiceIntegrationTest {
         );
 
         assertThat(confirmation.id()).isEqualTo(DUMMY_ALLOCATION_ID);
-        assertThat(confirmation.getContent()).isEqualTo(DUMMY_CONFIRMATION.getBytes());
+        assertThat(confirmation.getContent()).isEqualTo(DUMMY_CONFIRMATION.getBytes(StandardCharsets.UTF_8));
     }
 
     private Confirmation confirmation() {
@@ -38,7 +40,7 @@ public class ConfirmationRestServiceIntegrationTest {
 
         Confirmation confirmation = new Confirmation();
         confirmation.setAllocationReport(allocationReport);
-        confirmation.setContent(DUMMY_CONFIRMATION.getBytes());
+        confirmation.setContent(DUMMY_CONFIRMATION.getBytes(StandardCharsets.UTF_8));
 
         return confirmation;
     }

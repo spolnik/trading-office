@@ -2,6 +2,8 @@ package com.trading;
 
 import org.junit.Test;
 
+import java.nio.charset.StandardCharsets;
+
 import static com.trading.DomainObjectMapper.objectMapper;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,7 +39,7 @@ public class ConfirmationSpec {
     private Confirmation confirmation() {
         Confirmation confirmation = new Confirmation();
         confirmation.setAllocationReport(TestData.allocationReport());
-        confirmation.setContent("dummy confirmation content".getBytes());
+        confirmation.setContent("dummy confirmation content".getBytes(StandardCharsets.UTF_8));
         return confirmation;
     }
 }

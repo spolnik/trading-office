@@ -10,6 +10,7 @@ import org.mockito.ArgumentCaptor;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 import static com.trading.DomainObjectMapper.objectMapper;
@@ -144,7 +145,7 @@ public class SwiftConfirmationMessageListenerSpec {
         listener.processEnrichedAllocationReport(json);
         verify(confirmationSender).send(argument.capture());
 
-        String fin = new String(argument.getValue().getContent());
+        String fin = new String(argument.getValue().getContent(), StandardCharsets.UTF_8);
         SwiftMessage swiftMessage = conversionService.getMessageFromFIN(fin);
 
         return new MT518(swiftMessage);

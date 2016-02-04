@@ -9,6 +9,7 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.format.DateTimeFormatter;
 
 import static com.trading.DomainObjectMapper.objectMapper;
@@ -40,7 +41,7 @@ public class SwiftConfirmationMessageListener {
         confirmation.append(sequenceA());
         confirmation.append(sequenceB(allocationReport));
 
-        byte[] data = confirmation.message().getBytes();
+        byte[] data = confirmation.message().getBytes(StandardCharsets.UTF_8);
 
         confirmationSender.send(
                 new Confirmation(allocationReport, data, ConfirmationType.SWIFT)
