@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static com.trading.DomainObjectMapper.objectMapper;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
@@ -24,6 +25,7 @@ public class AllocationMessageEnrichmentListenerSpec {
     @Test(expected = IOException.class)
     public void throws_exception_if_cannot_return_instrument_details() throws Exception {
         when(instrumentsApi.getInstrumentDetails(any(), any())).thenReturn(null);
-        listener.processAllocationReport("dummy");
+        String json = objectMapper().toJson(TestData.allocationReport());
+        listener.processAllocationReport(json);
     }
 }
