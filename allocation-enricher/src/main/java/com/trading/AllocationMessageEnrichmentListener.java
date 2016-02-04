@@ -43,11 +43,15 @@ public class AllocationMessageEnrichmentListener {
         return allocationReport;
     }
 
-    private AllocationReport enrich(AllocationReport allocationReport) {
+    private AllocationReport enrich(AllocationReport allocationReport) throws IOException {
 
         InstrumentDetails instrumentDetails = instrumentsApi.getInstrumentDetails(
                 allocationReport.getSecurityId(), allocationReport.getInstrumentType()
         );
+
+        if (instrumentDetails == null) {
+            throw new IOException("Cannot read instrument details");
+        }
 
         Instrument instrument = instrumentsApi.getInstrument(instrumentDetails.getTicker());
         allocationReport.setInstrument(instrument);
