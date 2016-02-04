@@ -7,6 +7,7 @@ import org.springframework.jms.connection.SingleConnectionFactory
 import org.springframework.jms.core.JmsTemplate
 import org.springframework.jms.core.MessageCreator
 import org.springframework.web.client.RestTemplate
+import spock.lang.Ignore
 import spock.lang.Specification
 
 import javax.jms.JMSException
@@ -14,6 +15,7 @@ import javax.jms.Message
 import javax.jms.Session
 import java.util.concurrent.TimeUnit
 
+@Ignore
 class TradingOfficeSpecification extends Specification {
 
     def log = LoggerFactory.getLogger(TradingOfficeSpecification.class)
