@@ -8,4 +8,5 @@ include 'confirmation-service'
 include 'finance-data-service'
 include 'instruments-service'
 include 'allocation-enricher'
+include 'counterparty-service'
 

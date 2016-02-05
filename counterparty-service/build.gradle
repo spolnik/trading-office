@@ -1,0 +1,15 @@
+apply plugin: 'spring-boot'
+
+dependencies {
+    compile libs.spring.boot_web,
+            libs.spring.boot_actuator,
+            project(":trading-domain")
+
+    testCompile libs.test.junit,
+            libs.test.assertj
+}
+
+jar {
+    baseName = 'trading-office-counterparty-service'
+    version = '1.0.0'
+}
