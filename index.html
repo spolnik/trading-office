@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Trading-office by spolnik</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Trading-office</h1>
+        <h2>Trading Office</h2>
+        <a href="https://github.com/spolnik/trading-office" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <p><a href="https://travis-ci.org/spolnik/trading-office"><img src="https://travis-ci.org/spolnik/trading-office.svg?branch=master" alt="Build Status"></a> <a href="https://codecov.io/github/spolnik/trading-office?branch=master"><img src="https://codecov.io/github/spolnik/trading-office/coverage.svg?branch=master" alt="codecov.io"></a> <a href="https://sonar-nprogramming.rhcloud.com/dashboard/index/1"><img src="https://img.shields.io/sonar/https/sonar-nprogramming.rhcloud.com/trading-office/coverage.svg" alt="Sonar Coverage"></a> <a href="https://sonar-nprogramming.rhcloud.com/dashboard/index/1"><img src="https://img.shields.io/sonar/https/sonar-nprogramming.rhcloud.com/trading-office/tech_debt.svg" alt="Sonar Tech Debt"></a> <a href="https://scan.coverity.com/projects/spolnik-trading-office"><img src="https://scan.coverity.com/projects/7604/badge.svg" alt="Coverity Scan Build Status"></a></p>
+
+<h1>
+<a id="trading-office" class="anchor" href="#trading-office" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Trading Office</h1>
+
+<ul>
+<li>set of applications simulating simple flow in post trade part of trade lifecycle</li>
+<li>it's focused on generating confirmation based on received allocation report</li>
+</ul>
+
+<h2>
+<a id="allocation-message-translator" class="anchor" href="#allocation-message-translator" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Allocation Message Translator</h2>
+
+<ul>
+<li>spring boot application</li>
+<li>subscribes to jms looking for new allocation report messages (fixml)</li>
+<li>after receiving message it parses it to AllocationReport POJO</li>
+<li>finally, it sends the POJO as json into ActiveMQ</li>
+<li>deployment to heroku</li>
+</ul>
+
+<h2>
+<a id="allocation-enricher" class="anchor" href="#allocation-enricher" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Allocation Enricher</h2>
+
+<ul>
+<li>spring boot application</li>
+<li>subscribes to jms looking for tranlated allocation report messages (json)</li>
+<li>after receiving message, it enriches it with instrument data (using Intrument Service, and Finance Data Service)</li>
+<li>finally, it sends enriched allocation as json into ActiveMQ</li>
+<li>deployment to heroku</li>
+</ul>
+
+<h2>
+<a id="instrument-service" class="anchor" href="#instrument-service" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instrument Service</h2>
+
+<ul>
+<li>spring boot web application</li>
+<li>exposes REST endpoints for instrument data</li>
+<li>works in readonly mode</li>
+<li>data consumed from instruments.json file</li>
+<li>deployment to heroku</li>
+</ul>
+
+<h2>
+<a id="finance-data-service" class="anchor" href="#finance-data-service" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Finance Data Service</h2>
+
+<ul>
+<li>spring boot web application</li>
+<li>exposes REST endpoint for financial data (using Yahoo Finance Api)</li>
+<li>based on a given symbol, downloads instrument data with actual price</li>
+<li>works in readonly mode</li>
+<li>deployment to heroku</li>
+</ul>
+
+<h2>
+<a id="confirmation-sender" class="anchor" href="#confirmation-sender" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Confirmation Sender</h2>
+
+<ul>
+<li>spring boot application</li>
+<li>subscribes to jms looking for enriched allocation report messages (json)</li>
+<li>after receiving message, it generates PDF confirmation using JasperReports template</li>
+<li>finally, it sends the Confirmation POJO with attached PDF (as byte[]) to confirmation service (REST Service)</li>
+<li>deployment to heroku</li>
+</ul>
+
+<h2>
+<a id="confirmation-service" class="anchor" href="#confirmation-service" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Confirmation Service</h2>
+
+<ul>
+<li>spring boot web application (rest service)</li>
+<li>exposes REST endpoint api to store and retrieve confirmations</li>
+<li>data stored as files</li>
+<li>deployment to heroku</li>
+</ul>
+
+<h2>
+<a id="trading-domain" class="anchor" href="#trading-domain" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Trading Domain</h2>
+
+<ul>
+<li>library, containing all domain specific entities</li>
+</ul>
+
+<h2>
+<a id="e2e-test" class="anchor" href="#e2e-test" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>E2E Test</h2>
+
+<ul>
+<li>end to end tests written in spock</li>
+<li>it runs against deployed applications (Heroku, all above + OpenShift, ActiveMq)</li>
+</ul>
+
+<h2>
+<a id="activemq" class="anchor" href="#activemq" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ActiveMQ</h2>
+
+<ul>
+<li>OpenShift hosted ActiveMQ 5.13</li>
+</ul>
+
+<h1></h1>
+
+<h1>
+<a id="technologies-used" class="anchor" href="#technologies-used" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Technologies used</h1>
+
+<h2>
+<a id="infrastructure" class="anchor" href="#infrastructure" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Infrastructure</h2>
+
+<ul>
+<li>Heroku</li>
+<li>Openshift</li>
+<li>Heroku Add-ins (logging, monitoring)</li>
+<li>TravisCI</li>
+<li>SonarQube (hosted on openshift)</li>
+<li>Coverity (Static code analysis)</li>
+</ul>
+
+<h1>
+<a id="notes" class="anchor" href="#notes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Notes</h1>
+
+<ul>
+<li>to have access to OpenShift activemq web console - run rhc port-forward activemq (only if you have admin access)</li>
+</ul>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/spolnik/trading-office/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/spolnik/trading-office/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/spolnik/trading-office"></a> is maintained by <a href="https://github.com/spolnik">spolnik</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
