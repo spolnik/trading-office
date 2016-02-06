@@ -18,7 +18,7 @@ public class AllocationReport implements Serializable {
     private int quantity;
     private AllocationStatus status;
     private BigDecimal price;
-    private Party coutnerparty;
+    private Party counterparty;
     private Party executingParty;
     private Exchange exchange;
 
@@ -102,12 +102,12 @@ public class AllocationReport implements Serializable {
         this.price = price;
     }
 
-    public Party getCoutnerparty() {
-        return coutnerparty;
+    public Party getCounterparty() {
+        return counterparty;
     }
 
-    public void setCoutnerparty(Party coutnerparty) {
-        this.coutnerparty = coutnerparty;
+    public void setCounterparty(Party counterparty) {
+        this.counterparty = counterparty;
     }
 
     public Party getExecutingParty() {
@@ -140,7 +140,7 @@ public class AllocationReport implements Serializable {
                 .add("status", status)
                 .add("price", price)
                 .add("exchange", exchange)
-                .add("counterparty", coutnerparty)
+                .add("counterparty", counterparty)
                 .add("executingParty", executingParty)
                 .toString();
     }
