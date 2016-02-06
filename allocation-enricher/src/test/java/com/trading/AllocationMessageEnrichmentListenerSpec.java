@@ -18,7 +18,8 @@ public class AllocationMessageEnrichmentListenerSpec {
     @Before
     public void setUp() throws Exception {
         instrumentsApi = mock(InstrumentsApi.class);
-        listener = new AllocationMessageEnrichmentListener(instrumentsApi);
+        CounterpartyApi counterpartyApi = mock(CounterpartyApi.class);
+        listener = new AllocationMessageEnrichmentListener(instrumentsApi, counterpartyApi);
     }
 
     @Test(expected = IOException.class)

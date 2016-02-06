@@ -43,6 +43,9 @@ public class AllocationEnricherIntegrationTest {
         Instrument instrument = enrichedAllocationReport.getInstrument();
 
         assertThat(instrument).isEqualToIgnoringGivenFields(TestData.instrument(), "price");
+        assertThat(enrichedAllocationReport.getExchange()).isEqualToComparingFieldByField(
+                TestData.exchange()
+        );
     }
 
     private String allocationReportAsJson() throws JsonProcessingException {
