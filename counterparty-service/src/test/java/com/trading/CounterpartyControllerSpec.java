@@ -16,15 +16,15 @@ public class CounterpartyControllerSpec {
 
     @Test
     public void returns_Trading_Office_Ltd_counterparty_for_TROF_id() throws Exception {
-        Counterparty counterparty = controller.getCounterparty("TROF");
+        Party party = controller.getCounterparty("TROF");
 
-        assertThat(counterparty.getName()).isEqualTo("Trading Office Ltd.");
+        assertThat(party.getName()).isEqualTo("Trading Office Ltd.");
     }
 
     @Test
     public void returns_Customer_UK_Ltd_counterparty_for_CUSTUK_id() throws Exception {
-        Counterparty counterparty = controller.getCounterparty("CUSTUK");
+        Party party = controller.getCounterparty("CUSTUK");
 
-        assertThat(counterparty.getName()).isEqualTo("Customer UK Ltd.");
+        assertThat(party.getName()).isEqualTo("Customer UK Ltd.");
     }
 }

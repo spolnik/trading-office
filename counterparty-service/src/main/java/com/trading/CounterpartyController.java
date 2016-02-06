@@ -19,23 +19,23 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CounterpartyController {
     private static final Logger LOG = LoggerFactory.getLogger(CounterpartyController.class);
 
-    private final Map<String, Counterparty> counterparties = new ConcurrentHashMap<>();
+    private final Map<String, Party> parties = new ConcurrentHashMap<>();
 
     public CounterpartyController() throws FileNotFoundException {
         InputStream resourceAsStream = CounterpartyController.class
-                .getClassLoader().getResourceAsStream("counterparties.csv");
+                .getClassLoader().getResourceAsStream("parties.csv");
 
         Reader reader = new InputStreamReader(resourceAsStream);
 
-        CsvClientImpl<Counterparty> csvClient = new CsvClientImpl<>(reader, Counterparty.class);
+        CsvClientImpl<Party> csvClient = new CsvClientImpl<>(reader, Party.class);
         csvClient.readBeans()
                 .stream()
-                .forEach(counterparty -> counterparties.put(counterparty.getId(), counterparty));
-        LOG.info("Successfully load all counterparties.");
+                .forEach(counterparty -> parties.put(counterparty.getId(), counterparty));
+        LOG.info("Successfully load all parties.");
     }
 
-    @RequestMapping("counterparty/{id}")
-    public Counterparty getCounterparty(@PathVariable String id) {
-        return counterparties.getOrDefault(id, new Counterparty());
+    @RequestMapping("party/{id}")
+    public Party getCounterparty(@PathVariable String id) {
+        return parties.getOrDefault(id, new Party());
     }
 }
