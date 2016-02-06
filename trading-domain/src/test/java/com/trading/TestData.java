@@ -24,7 +24,7 @@ class TestData {
         allocationReport.setPrice(BigDecimal.valueOf(7.89));
 
         allocationReport.setExchange(exchange());
-        allocationReport.setCoutnerparty(counterparty());
+        allocationReport.setCounterparty(counterparty());
         allocationReport.setExecutingParty(executingParty());
 
         return allocationReport;
