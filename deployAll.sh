@@ -17,6 +17,6 @@ refresh heroku-finance-data-service
 refresh heroku-allocation-message-translator
 refresh heroku-allocation-enricher
 refresh heroku-confirmation-sender
-refresh coverity_can
+refresh coverity_scan
 
 git checkout master
