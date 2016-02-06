@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class ReceivedAllocationReportListenerIntegrationTest {
+public class EmailConfirmationMessageListenerIntegrationTest {
 
     private ConfirmationSender confirmationSender;
     private ArgumentCaptor<Confirmation> argument;
@@ -34,8 +34,8 @@ public class ReceivedAllocationReportListenerIntegrationTest {
                 TestData.allocationReport(DUMMY_ALLOCATION_ID)
         );
 
-        EnrichedAllocationReportMessageListener enrichedAllocationReportMessageListener = new EnrichedAllocationReportMessageListener(confirmationSender);
-        enrichedAllocationReportMessageListener.processEnrichedAllocationReport(allocationReportAsJson);
+        EmailConfirmationMessageListener emailConfirmationMessageListener = new EmailConfirmationMessageListener(confirmationSender);
+        emailConfirmationMessageListener.processEnrichedAllocationReport(allocationReportAsJson);
         verify(confirmationSender).send(argument.capture());
 
         AllocationReport allocationReportWithStatusSent = argument.getValue().getAllocationReport();
