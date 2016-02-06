@@ -19,7 +19,31 @@ public class TestData {
         allocationReport.setStatus(AllocationStatus.RECEIVED);
         allocationReport.setPrice(BigDecimal.valueOf(57.5054673));
         allocationReport.setTradeDate(ZonedDateTime.of(2016, 6, 3, 0, 0, 0, 0, ZoneId.of("GMT")));
+        allocationReport.setExchange(exchange());
+        allocationReport.setCounterparty(counterparty());
+        allocationReport.setExecutingParty(executingParty());
 
         return allocationReport;
+    }
+
+    private static Exchange exchange() {
+        Exchange exchange = new Exchange();
+        exchange.setMic("XNAS");
+
+        return exchange;
+    }
+
+    private static Party counterparty() {
+        Party counterparty = new Party();
+        counterparty.setId("CUSTUS");
+
+        return counterparty;
+    }
+
+    private static Party executingParty() {
+        Party executingParty = new Party();
+        executingParty.setId("TROF");
+
+        return executingParty;
     }
 }

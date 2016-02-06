@@ -97,4 +97,25 @@ public class FixmlMessageParserSpec {
                 ZonedDateTime.of(2016, 6, 3, 0, 0, 0, 0, ZoneId.of("GMT"))
         );
     }
+
+    @Test
+    public void parses_exchange_mic_code() throws Exception {
+        assertThat(allocationReport.getExchange().getMic()).isEqualTo(
+                "XNAS"
+        );
+    }
+
+    @Test
+    public void parses_counterparty_id() throws Exception {
+        assertThat(allocationReport.getCounterparty().getId()).isEqualTo(
+                "CUSTUS"
+        );
+    }
+
+    @Test
+    public void parses_executing_party_id() throws Exception {
+        assertThat(allocationReport.getExecutingParty().getId()).isEqualTo(
+                "TROF"
+        );
+    }
 }
