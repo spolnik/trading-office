@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class    RestInstrumentsApi implements InstrumentsApi {
+public class RestInstrumentsApi implements InstrumentsApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(RestInstrumentsApi.class);
 

@@ -37,7 +37,8 @@ ext {
                 exclude group: 'javax.xml', module: 'jaxb-api'
                 exclude group: 'javax.xml', module: 'jaxb-impl'
             },
-            jaxb: 'javax.xml.bind:jaxb-api:2.2.12'
+            jaxb: 'javax.xml.bind:jaxb-api:2.2.12',
+            csveed: 'org.csveed:csveed:0.4.2'
     )
 }
 

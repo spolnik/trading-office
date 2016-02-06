@@ -57,5 +57,15 @@
 
 =========
 
+# Technologies used
+
+## Infrastructure
+- Heroku
+- Openshift
+- Heroku Add-ins (logging, monitoring)
+- TravisCI
+- SonarQube (hosted on openshift)
+- Coverity (Static code analysis)
+
 #Notes
 - to have access to OpenShift activemq web console - run rhc port-forward activemq (only if you have admin access)
