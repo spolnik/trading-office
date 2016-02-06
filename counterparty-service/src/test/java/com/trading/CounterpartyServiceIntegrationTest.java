@@ -18,12 +18,12 @@ public class CounterpartyServiceIntegrationTest {
     @Test
     public void service_returns_counterparty() throws Exception {
 
-        Counterparty counterparty = restTemplate.getForObject(
-                "http://localhost:9008/api/counterparty/CUSTAU",
-                Counterparty.class
+        Party party = restTemplate.getForObject(
+                "http://localhost:9008/api/party/CUSTAU",
+                Party.class
         );
 
-        assertThat(counterparty.getName()).isEqualTo(
+        assertThat(party.getName()).isEqualTo(
                 "Customer Australia Pty Ltd."
         );
     }

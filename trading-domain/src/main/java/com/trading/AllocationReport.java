@@ -18,6 +18,9 @@ public class AllocationReport implements Serializable {
     private int quantity;
     private AllocationStatus status;
     private BigDecimal price;
+    private Party coutnerparty;
+    private Party executingParty;
+    private Exchange exchange;
 
     public String getAllocationId() {
         return allocationId;
@@ -99,6 +102,30 @@ public class AllocationReport implements Serializable {
         this.price = price;
     }
 
+    public Party getCoutnerparty() {
+        return coutnerparty;
+    }
+
+    public void setCoutnerparty(Party coutnerparty) {
+        this.coutnerparty = coutnerparty;
+    }
+
+    public Party getExecutingParty() {
+        return executingParty;
+    }
+
+    public void setExecutingParty(Party executingParty) {
+        this.executingParty = executingParty;
+    }
+
+    public Exchange getExchange() {
+        return exchange;
+    }
+
+    public void setExchange(Exchange exchange) {
+        this.exchange = exchange;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -112,6 +139,9 @@ public class AllocationReport implements Serializable {
                 .add("quantity", quantity)
                 .add("status", status)
                 .add("price", price)
+                .add("exchange", exchange)
+                .add("counterparty", coutnerparty)
+                .add("executingParty", executingParty)
                 .toString();
     }
 }

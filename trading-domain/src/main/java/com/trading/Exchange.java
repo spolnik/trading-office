@@ -2,7 +2,9 @@ package com.trading;
 
 import com.google.common.base.MoreObjects;
 
-public class Exchange {
+import java.io.Serializable;
+
+public class Exchange implements Serializable {
 
     private String country;
     private String countryCode;
@@ -89,5 +91,26 @@ public class Exchange {
                 .add("website", website)
                 .add("comments", comments)
                 .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Exchange exchange = (Exchange) o;
+
+        return mic != null ? mic.equals(exchange.mic) : exchange.mic == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return mic != null ? mic.hashCode() : 0;
     }
 }
