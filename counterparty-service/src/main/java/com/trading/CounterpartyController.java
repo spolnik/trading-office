@@ -1,6 +1,5 @@
 package com.trading;
 
-import com.google.common.io.Resources;
 import org.csveed.api.CsvClientImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.net.URL;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -22,8 +22,10 @@ public class CounterpartyController {
     private final Map<String, Counterparty> counterparties = new ConcurrentHashMap<>();
 
     public CounterpartyController() throws FileNotFoundException {
-        URL path = Resources.getResource("counterparties.csv");
-        FileReader reader = new FileReader(path.getFile());
+        InputStream resourceAsStream = CounterpartyController.class
+                .getClassLoader().getResourceAsStream("counterparties.csv");
+
+        Reader reader = new InputStreamReader(resourceAsStream);
 
         CsvClientImpl<Counterparty> csvClient = new CsvClientImpl<>(reader, Counterparty.class);
         csvClient.readBeans()

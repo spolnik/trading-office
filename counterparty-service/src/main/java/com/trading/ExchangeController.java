@@ -1,6 +1,5 @@
 package com.trading;
 
-import com.google.common.io.Resources;
 import org.csveed.api.CsvClientImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.net.URL;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -23,8 +23,10 @@ public class ExchangeController {
     private final Map<String, Exchange> exchanges = new ConcurrentHashMap<>();
 
     public ExchangeController() throws FileNotFoundException {
-        URL micCodesPath = Resources.getResource("mic_codes.csv");
-        FileReader reader = new FileReader(micCodesPath.getFile());
+        InputStream resourceAsStream = CounterpartyController.class
+                .getClassLoader().getResourceAsStream("mic_codes.csv");
+
+        Reader reader = new InputStreamReader(resourceAsStream);;
 
         CsvClientImpl<Exchange> csvClient = new CsvClientImpl<>(reader, Exchange.class);
         csvClient.readBeans()
