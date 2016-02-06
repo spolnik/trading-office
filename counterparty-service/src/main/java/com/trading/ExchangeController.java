@@ -26,7 +26,7 @@ public class ExchangeController {
         InputStream resourceAsStream = CounterpartyController.class
                 .getClassLoader().getResourceAsStream("mic_codes.csv");
 
-        Reader reader = new InputStreamReader(resourceAsStream);;
+        Reader reader = new InputStreamReader(resourceAsStream);
 
         CsvClientImpl<Exchange> csvClient = new CsvClientImpl<>(reader, Exchange.class);
         csvClient.readBeans()
