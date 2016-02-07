@@ -79,7 +79,7 @@ class TradingOfficeSpecification extends Specification {
         confirmation.id() == allocationReportId
     }
 
-    def messageCreator(fixmlAllocationMessage) {
+    def messageCreator(String fixmlAllocationMessage) {
         new MessageCreator() {
 
             @Override
