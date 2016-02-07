@@ -13,7 +13,7 @@ import java.io.IOException;
 import static com.trading.DomainObjectMapper.objectMapper;
 
 @Component
-public class AllocationMessageEnrichmentListener {
+class AllocationMessageEnrichmentListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(AllocationMessageEnrichmentListener.class);
 

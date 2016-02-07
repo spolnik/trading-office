@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -17,12 +16,12 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequestMapping("/api")
-public class CounterpartyController {
+class CounterpartyController {
     private static final Logger LOG = LoggerFactory.getLogger(CounterpartyController.class);
 
     private final Map<String, Party> parties = new ConcurrentHashMap<>();
 
-    public CounterpartyController() throws FileNotFoundException {
+    public CounterpartyController() {
         InputStream resourceAsStream = CounterpartyController.class
                 .getClassLoader().getResourceAsStream("parties.csv");
 

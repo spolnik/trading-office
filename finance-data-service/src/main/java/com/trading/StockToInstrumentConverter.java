@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import yahoofinance.Stock;
 
 @Service
-public class StockToInstrumentConverter implements Converter<Stock, Instrument> {
+class StockToInstrumentConverter implements Converter<Stock, Instrument> {
 
     @Override
     public Instrument convert(Stock stock) {

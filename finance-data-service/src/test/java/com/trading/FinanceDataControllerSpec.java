@@ -14,17 +14,17 @@ import static org.mockito.Mockito.when;
 
 public class FinanceDataControllerSpec {
 
-    public static final String INTEL_SYMBOL = "INTC";
+    private static final String INTEL_SYMBOL = "INTC";
 
     private static Instrument instrument;
 
-    private static FinanceDataController controller = new FinanceDataController(
+    private static final FinanceDataController FINANCE_DATA_CONTROLLER = new FinanceDataController(
             new StockToInstrumentConverter()
     );
 
     @BeforeClass
     public static void setUp() throws Exception {
-        instrument = controller.getInstrument(INTEL_SYMBOL);
+        instrument = FINANCE_DATA_CONTROLLER.getInstrument(INTEL_SYMBOL);
     }
 
     @Test

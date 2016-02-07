@@ -17,7 +17,7 @@ import java.util.Map;
 import static com.trading.DomainObjectMapper.objectMapper;
 
 @Component
-public class EmailConfirmationMessageListener {
+class EmailConfirmationMessageListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(EmailConfirmationMessageListener.class);
 

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-public class TestData {
+class TestData {
 
     static AllocationReport allocationReport(String allocationId) {
         TradeSide tradeSide = TradeSide.BUY;

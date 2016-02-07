@@ -39,25 +39,19 @@ public class AllocationMessageTranslatorIntegrationTest {
 
         JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory());
         jmsTemplate.send(
-                incomingQueue(),
+                Queues.INCOMING_FIXML_ALLOCATION_REPORT_QUEUE,
                 session -> session.createTextMessage(String.format(TestData.FIXML_ALLOCATION_REPORT_MESSAGE, allocationReportId))
         );
 
-        String message = (String) jmsTemplate.receiveAndConvert(destinationQueue());
+        String message = (String) jmsTemplate.receiveAndConvert(
+                Queues.RECEIVED_JSON_ALLOCATION_REPORT_QUEUE
+        );
 
         AllocationReport allocationReport = objectMapper().toAllocationReport(message);
 
         AllocationReport expected = TestData.allocationReport();
         expected.setAllocationId(allocationReportId);
         assertThat(allocationReport).isEqualToComparingFieldByField(expected);
-    }
-
-    private String destinationQueue() {
-        return Queues.RECEIVED_JSON_ALLOCATION_REPORT_QUEUE;
-    }
-
-    private String incomingQueue() {
-        return Queues.INCOMING_FIXML_ALLOCATION_REPORT_QUEUE;
     }
 
     private ConnectionFactory connectionFactory() {

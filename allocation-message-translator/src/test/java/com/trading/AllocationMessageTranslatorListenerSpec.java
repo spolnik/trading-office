@@ -12,8 +12,6 @@ public class AllocationMessageTranslatorListenerSpec {
     private static final String SECURITY_SOURCE_ID_CUSIP = "1";
     private static final String SECURITY_SOURCE_ID_SEDOL = "2";
 
-    public static final String DUMMY_ID = "DUMMY_ID";
-
     private AllocationMessageTranslatorListener listener;
 
     @Before
@@ -24,7 +22,7 @@ public class AllocationMessageTranslatorListenerSpec {
     @Test(expected = UnsupportedOperationException.class)
     public void rejects_replace_transactions_as_unsupported() throws Exception {
         String allocationReportMessageWithReplaceTransaction =
-                fixmlAllocationReportMessage(DUMMY_ID, TRANSACTION_TYPE_REPLACE, SECURITY_SOURCE_ID_SEDOL);
+                fixmlAllocationReportMessage(TRANSACTION_TYPE_REPLACE, SECURITY_SOURCE_ID_SEDOL);
 
         listener.processAllocationReport(allocationReportMessageWithReplaceTransaction);
     }
@@ -32,7 +30,7 @@ public class AllocationMessageTranslatorListenerSpec {
     @Test(expected = UnsupportedOperationException.class)
     public void rejects_cancel_transactions_as_unsupported() throws Exception {
         String allocationReportMessageWithCancelTransaction =
-                fixmlAllocationReportMessage(DUMMY_ID, TRANSACTION_TYPE_CANCEL, SECURITY_SOURCE_ID_SEDOL);
+                fixmlAllocationReportMessage(TRANSACTION_TYPE_CANCEL, SECURITY_SOURCE_ID_SEDOL);
 
         listener.processAllocationReport(allocationReportMessageWithCancelTransaction);
     }
@@ -40,7 +38,7 @@ public class AllocationMessageTranslatorListenerSpec {
     @Test(expected = UnsupportedOperationException.class)
     public void rejects_new_transaction_with_different_than_sedol_security_id_source() throws Exception {
         String allocationReportMessageWithCusipSecurityId =
-                fixmlAllocationReportMessage(DUMMY_ID, TRANSACTION_TYPE_NEW, SECURITY_SOURCE_ID_CUSIP);
+                fixmlAllocationReportMessage(TRANSACTION_TYPE_NEW, SECURITY_SOURCE_ID_CUSIP);
 
         listener.processAllocationReport(allocationReportMessageWithCusipSecurityId);
     }
@@ -50,10 +48,10 @@ public class AllocationMessageTranslatorListenerSpec {
         listener.processAllocationReport("BROKEN");
     }
 
-    private static String fixmlAllocationReportMessage(String id, String transactionType, String securitySourceId) {
+    private static String fixmlAllocationReportMessage(String transactionType, String securitySourceId) {
         return String.format(
-                "<FIXML><AllocRpt TransTyp=\"%s\" RptID=\"%s\" GrpID=\"1234567\" AvgPxGrpID=\"AP101\" Stat=\"3\" BizDt=\"2016-06-03\" RptTyp=\"2\" Qty=\"200\" AvgPxInd=\"2\" Side=\"1\" TrdTyp=\"0\" TrdSubTyp=\"5\" AvgPx=\"57.5054673\" TrdDt=\"2016-06-03\" RndPx=\"57.51\" GrpQty=\"350\" RemQty=\"150\" InptDev=\"API\"><Hdr SID=\"ICE\" TID=\"GUF\"/><Instrmt ID=\"2000019\" Src=\"%s\"/><Pty R=\"1\" Src=\"D\" ID=\"TROF\" /><Pty R=\"22\" Src=\"G\" ID=\"XNAS\" /><Pty R=\"3\" Src=\"D\" ID=\"CUSTUS\" /><Amt Typ=\"CRES\"  Amt=\"10.93\" Ccy=\"EUR\"/><Alloc IndAllocID2=\"2827379\" Qty=\"200\"></Alloc> </AllocRpt></FIXML>",
-                transactionType, id, securitySourceId
+                "<FIXML><AllocRpt TransTyp=\"%s\" RptID=\"DUMMY_ID\" GrpID=\"1234567\" AvgPxGrpID=\"AP101\" Stat=\"3\" BizDt=\"2016-06-03\" RptTyp=\"2\" Qty=\"200\" AvgPxInd=\"2\" Side=\"1\" TrdTyp=\"0\" TrdSubTyp=\"5\" AvgPx=\"57.5054673\" TrdDt=\"2016-06-03\" RndPx=\"57.51\" GrpQty=\"350\" RemQty=\"150\" InptDev=\"API\"><Hdr SID=\"ICE\" TID=\"GUF\"/><Instrmt ID=\"2000019\" Src=\"%s\"/><Pty R=\"1\" Src=\"D\" ID=\"TROF\" /><Pty R=\"22\" Src=\"G\" ID=\"XNAS\" /><Pty R=\"3\" Src=\"D\" ID=\"CUSTUS\" /><Amt Typ=\"CRES\"  Amt=\"10.93\" Ccy=\"EUR\"/><Alloc IndAllocID2=\"2827379\" Qty=\"200\"></Alloc> </AllocRpt></FIXML>",
+                transactionType, securitySourceId
         );
     }
 }

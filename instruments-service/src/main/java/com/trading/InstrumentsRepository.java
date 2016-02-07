@@ -1,5 +1,6 @@
 package com.trading;
 
-public interface InstrumentsRepository {
+@FunctionalInterface
+interface InstrumentsRepository {
     InstrumentDetails queryBySedol(String sedol);
 }

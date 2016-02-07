@@ -1,6 +1,6 @@
 package com.trading;
 
-public class TestData {
+class TestData {
     static AllocationReport allocationReport() {
         AllocationReport allocationReport = new AllocationReport();
 

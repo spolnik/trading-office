@@ -1,6 +1,6 @@
 package com.trading;
 
-public class OpenFigiDataResponse {
+class OpenFigiDataResponse {
     private OpenFigiResponse[] data;
 
     public OpenFigiResponse[] getData() {

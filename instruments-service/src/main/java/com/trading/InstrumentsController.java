@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class InstrumentsController {
+class InstrumentsController {
 
     private final InstrumentsRepository instrumentsRepository;
 
