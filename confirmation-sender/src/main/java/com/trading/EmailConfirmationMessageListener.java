@@ -17,9 +17,9 @@ import java.util.Map;
 import static com.trading.DomainObjectMapper.objectMapper;
 
 @Component
-public class EnrichedAllocationReportMessageListener {
+class EmailConfirmationMessageListener {
 
-    private static final Logger LOG = LoggerFactory.getLogger(EnrichedAllocationReportMessageListener.class);
+    private static final Logger LOG = LoggerFactory.getLogger(EmailConfirmationMessageListener.class);
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter
             .ofPattern("MMM d yyyy", Locale.US);
@@ -28,9 +28,9 @@ public class EnrichedAllocationReportMessageListener {
     private final Sender<Confirmation> confirmationSender;
 
     @Autowired
-    public EnrichedAllocationReportMessageListener(Sender<Confirmation> confirmationSender) throws JRException {
+    public EmailConfirmationMessageListener(Sender<Confirmation> confirmationSender) throws JRException {
         this.confirmationSender = confirmationSender;
-        InputStream resourceAsStream = EnrichedAllocationReportMessageListener.class
+        InputStream resourceAsStream = EmailConfirmationMessageListener.class
                 .getClassLoader().getResourceAsStream("Confirmation.jrxml");
 
         jasperReport = JasperCompileManager.compileReport(resourceAsStream);

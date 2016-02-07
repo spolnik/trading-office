@@ -1,6 +1,6 @@
 package com.trading;
 
-public class TestData {
+class TestData {
     static InstrumentDetails instrumentDetails() {
         InstrumentDetails instrumentDetails = new InstrumentDetails();
 

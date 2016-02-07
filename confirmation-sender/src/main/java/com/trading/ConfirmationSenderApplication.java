@@ -15,7 +15,7 @@ import javax.jms.ConnectionFactory;
 @SpringBootApplication
 @EnableJms
 @PropertySource("classpath:app.properties")
-public class ConfirmationSenderApplication {
+class ConfirmationSenderApplication {
 
     @Value("${activemqUrl}")
     private String activemqUrl;

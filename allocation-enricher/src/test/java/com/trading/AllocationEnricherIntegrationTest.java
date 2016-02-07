@@ -43,6 +43,9 @@ public class AllocationEnricherIntegrationTest {
         Instrument instrument = enrichedAllocationReport.getInstrument();
 
         assertThat(instrument).isEqualToIgnoringGivenFields(TestData.instrument(), "price");
+        assertThat(enrichedAllocationReport.getExchange()).isEqualToComparingFieldByField(
+                TestData.exchange()
+        );
     }
 
     private String allocationReportAsJson() throws JsonProcessingException {
@@ -62,25 +65,19 @@ public class AllocationEnricherIntegrationTest {
         JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory());
 
         jmsTemplate.send(
-                incomingQueue(),
+                Queues.RECEIVED_JSON_ALLOCATION_REPORT_QUEUE,
                 session -> session.createTextMessage(allocationReportAsJson)
         );
 
-        return (String) jmsTemplate.receiveAndConvert(destinationQueue());
+        return (String) jmsTemplate.receiveAndConvert(
+                Queues.ENRICHED_JSON_ALLOCATION_REPORT_EMAIL_QUEUE
+        );
     }
 
     private AllocationReport allocationReportToEnrich(String allocationReportId) {
         AllocationReport allocationReportToEnrich = TestData.allocationReport();
         allocationReportToEnrich.setAllocationId(allocationReportId);
         return allocationReportToEnrich;
-    }
-
-    private String destinationQueue() {
-        return Queues.ENRICHED_JSON_ALLOCATION_REPORT_EMAIL_QUEUE;
-    }
-
-    private String incomingQueue() {
-        return Queues.RECEIVED_JSON_ALLOCATION_REPORT_QUEUE;
     }
 
     private ConnectionFactory connectionFactory() {

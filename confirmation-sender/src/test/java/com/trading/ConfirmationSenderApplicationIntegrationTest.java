@@ -44,7 +44,7 @@ public class ConfirmationSenderApplicationIntegrationTest {
 
         JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory());
         jmsTemplate.send(
-                queue(),
+                Queues.ENRICHED_JSON_ALLOCATION_REPORT_EMAIL_QUEUE,
                 session -> session.createTextMessage(allocationReportAsJson)
         );
 
@@ -54,10 +54,6 @@ public class ConfirmationSenderApplicationIntegrationTest {
 
         assertThat(confirmation.getAllocationReport())
                 .isEqualToComparingFieldByField(allocationReport);
-    }
-
-    private String queue() {
-        return Queues.ENRICHED_JSON_ALLOCATION_REPORT_EMAIL_QUEUE;
     }
 
     private ConnectionFactory connectionFactory() {

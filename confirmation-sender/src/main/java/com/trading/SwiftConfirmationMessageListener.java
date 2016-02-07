@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 import static com.trading.DomainObjectMapper.objectMapper;
 
 @Component
-public class SwiftConfirmationMessageListener {
+class SwiftConfirmationMessageListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(SwiftConfirmationMessageListener.class);
 

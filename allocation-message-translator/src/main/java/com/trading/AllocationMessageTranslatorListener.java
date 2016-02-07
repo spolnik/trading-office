@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import static com.trading.DomainObjectMapper.objectMapper;
 
 @Component
-public class AllocationMessageTranslatorListener {
+class AllocationMessageTranslatorListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(AllocationMessageTranslatorListener.class);
 

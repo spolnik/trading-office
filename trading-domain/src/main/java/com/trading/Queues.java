@@ -1,6 +1,6 @@
 package com.trading;
 
-public class Queues {
+class Queues {
 
     public static final String INCOMING_FIXML_ALLOCATION_REPORT_QUEUE = "incoming.fixml.allocation.report";
     public static final String RECEIVED_JSON_ALLOCATION_REPORT_QUEUE = "received.json.allocation.report";

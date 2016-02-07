@@ -14,7 +14,9 @@ public class OpenFigiInstrumentsRepository implements InstrumentsRepository {
 
     private static final Logger LOG = LoggerFactory.getLogger(OpenFigiInstrumentsRepository.class);
 
+    private static final String OPEN_FIGI_API_URL = "https://api.openfigi.com/v1/mapping";
     private static final MediaType TEXT_JSON = MediaType.parse("text/json");
+
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final OkHttpClient client = new OkHttpClient();
 
@@ -24,7 +26,7 @@ public class OpenFigiInstrumentsRepository implements InstrumentsRepository {
         String requestAsJson = request(sedol);
 
         try {
-            String responseAsJson = post("https://api.openfigi.com/v1/mapping", requestAsJson);
+            String responseAsJson = post(requestAsJson);
             OpenFigiResponse response = parseResponse(responseAsJson);
             return response.toInstrumentDetails();
         } catch (IOException ioe) {
@@ -74,10 +76,10 @@ public class OpenFigiInstrumentsRepository implements InstrumentsRepository {
         return null;
     }
 
-    private String post(String url, String json) throws IOException {
+    private String post(String json) throws IOException {
         RequestBody requestBody = RequestBody.create(TEXT_JSON, wrapInArray(json));
         Request request = new Request.Builder()
-                .url(url)
+                .url(OPEN_FIGI_API_URL)
                 .post(requestBody)
                 .build();
 

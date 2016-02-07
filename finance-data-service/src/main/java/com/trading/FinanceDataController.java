@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api")
-public class FinanceDataController {
+class FinanceDataController {
 
     private static final Logger LOG = LoggerFactory.getLogger(FinanceDataController.class);
 

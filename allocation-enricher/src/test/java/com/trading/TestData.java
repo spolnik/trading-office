@@ -1,6 +1,6 @@
 package com.trading;
 
-public class TestData {
+class TestData {
     static AllocationReport allocationReport() {
         AllocationReport allocationReport = new AllocationReport();
 
@@ -8,6 +8,18 @@ public class TestData {
         allocationReport.setTransactionType(TransactionType.NEW);
         allocationReport.setSecurityId("2000019");
         allocationReport.setInstrumentType(InstrumentType.SEDOL);
+
+        Party counterparty = new Party();
+        counterparty.setId("CUSTUS");
+        allocationReport.setCounterparty(counterparty);
+
+        Party executingParty = new Party();
+        executingParty.setId("TROF");
+        allocationReport.setExecutingParty(executingParty);
+
+        Exchange exchange = new Exchange();
+        exchange.setMic("XNAS");
+        allocationReport.setExchange(exchange);
 
         return allocationReport;
     }
@@ -21,5 +33,26 @@ public class TestData {
         instrument.setSymbol("AMZN");
 
         return instrument;
+    }
+
+    static Exchange exchange() {
+        Exchange exchange = new Exchange();
+
+        exchange.setAcronym("NASDAQ");
+        exchange.setCity("NEW YORK");
+        exchange.setCountry("UNITED STATES OF AMERICA");
+        exchange.setCountryCode("US");
+        exchange.setName("NASDAQ - ALL MARKETS");
+        exchange.setMic("XNAS");
+        exchange.setWebsite("WWW.NASDAQ.COM");
+
+        return exchange;
+    }
+
+    static Party executingParty() {
+        Party party = new Party();
+        party.setId("TROF");
+        party.setName("Trading Office Ltd.");
+        return party;
     }
 }

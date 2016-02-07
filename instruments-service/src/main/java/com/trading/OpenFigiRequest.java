@@ -3,7 +3,7 @@ package com.trading;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class OpenFigiRequest {
+class OpenFigiRequest {
 
     private String idType;
     private String idValue;

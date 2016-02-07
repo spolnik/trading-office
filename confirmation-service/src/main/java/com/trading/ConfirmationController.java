@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequestMapping("/api")
-public class ConfirmationController {
+class ConfirmationController {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConfirmationController.class);
 

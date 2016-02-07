@@ -12,9 +12,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @EnableAutoConfiguration
-@ContextConfiguration(classes = {RestInstrumentsApiIntegrationTest.class, RestInstrumentsApi.class})
+@ContextConfiguration(classes = {InstrumentsApiIntegrationTest.class, RestInstrumentsApi.class})
 @PropertySource("classpath:app.properties")
-public class RestInstrumentsApiIntegrationTest {
+public class InstrumentsApiIntegrationTest {
 
     @Autowired
     private RestInstrumentsApi instrumentsApi;
