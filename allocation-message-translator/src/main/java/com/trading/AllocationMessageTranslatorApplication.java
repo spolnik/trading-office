@@ -16,7 +16,7 @@ import javax.jms.ConnectionFactory;
 @SpringBootApplication
 @EnableJms
 @PropertySource("classpath:app.properties")
-class AllocationMessageTranslatorApplication {
+public class AllocationMessageTranslatorApplication {
 
     @Value("${activemqUrl}")
     private String activemqUrl;
