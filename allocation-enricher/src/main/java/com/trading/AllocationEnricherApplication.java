@@ -16,7 +16,7 @@ import javax.jms.ConnectionFactory;
 @SpringBootApplication
 @EnableJms
 @PropertySource("classpath:app.properties")
-class AllocationEnricherApplication {
+public class AllocationEnricherApplication {
 
     @Value("${activemqUrl}")
     private String activemqUrl;
