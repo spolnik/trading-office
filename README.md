@@ -11,7 +11,7 @@
 - finally, it sends the POJO as json into ActiveMQ
 - deployment to heroku
 
-Heroku app: http://allocation-enricher.herokuapp.com
+Heroku app: http://allocation-message-translator.herokuapp.com
 
 ## Allocation Enricher
 - spring boot application
@@ -19,6 +19,8 @@ Heroku app: http://allocation-enricher.herokuapp.com
 - after receiving message, it enriches it with instrument data (using Intrument Service, and Finance Data Service)
 - finally, it sends enriched allocation as json into ActiveMQ
 - deployment to heroku
+
+Heroku app: http://allocation-enricher.herokuapp.com
 
 ## Instrument Service
 - spring boot web application
