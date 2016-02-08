@@ -11,6 +11,8 @@
 - finally, it sends the POJO as json into ActiveMQ
 - deployment to heroku
 
+Heroku app: http://allocation-enricher.herokuapp.com
+
 ## Allocation Enricher
 - spring boot application
 - subscribes to jms looking for tranlated allocation report messages (json)
