@@ -49,6 +49,12 @@ Heroku app: http://allocation-enricher.herokuapp.com
 - data stored as files
 - deployment to heroku
 
+## Counterparty Service
+- spring boot web application (rest service)
+- exposes REST endpoint to query Exchange data based on mic code
+- exposes REST endpoint to query Party data based on custom id
+- deployment to heroku
+
 ## Trading Domain
 - library, containing all domain specific entities
 
