@@ -11,7 +11,7 @@
 - finally, it sends the POJO as json into ActiveMQ
 - deployment to heroku
 
-Heroku app: http://allocation-message-translator.herokuapp.com
+Heroku app: http://allocation-message-translator.herokuapp.com/health
 
 ## Allocation Enricher
 - spring boot application
@@ -20,14 +20,16 @@ Heroku app: http://allocation-message-translator.herokuapp.com
 - finally, it sends enriched allocation as json into ActiveMQ
 - deployment to heroku
 
-Heroku app: http://allocation-enricher.herokuapp.com
+Heroku app: http://allocation-enricher.herokuapp.com/health
 
-## Instrument Service
+## Instruments Service
 - spring boot web application
 - exposes REST endpoints for instrument data
 - works in readonly mode
 - data consumed from instruments.json file
 - deployment to heroku
+
+Heroku app: http://instruments-service.herokuapp.com/health
 
 ## Finance Data Service
 - spring boot web application
@@ -35,6 +37,8 @@ Heroku app: http://allocation-enricher.herokuapp.com
 - based on a given symbol, downloads instrument data with actual price
 - works in readonly mode
 - deployment to heroku
+
+Heroku app: http://financial-data-service.herokuapp.com/health
 
 ## Confirmation Sender
 - spring boot application
@@ -49,11 +53,15 @@ Heroku app: http://allocation-enricher.herokuapp.com
 - data stored as files
 - deployment to heroku
 
+Heroku app: http://confirmation-service.herokuapp.com/health
+
 ## Counterparty Service
 - spring boot web application (rest service)
 - exposes REST endpoint to query Exchange data based on mic code
 - exposes REST endpoint to query Party data based on custom id
 - deployment to heroku
+
+Heroku app: http://counterparty-service.herokuapp.com/health
 
 ## Trading Domain
 - library, containing all domain specific entities
