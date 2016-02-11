@@ -17,22 +17,21 @@ class AllocationMessageEnrichmentListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(AllocationMessageEnrichmentListener.class);
 
-    private final InstrumentsApi instrumentsApi;
-    private final CounterpartyApi counterpartyApi;
+    private final AllocationMessageEnricher enricher;
 
     @Autowired
-    public AllocationMessageEnrichmentListener(
-            InstrumentsApi instrumentsApi, CounterpartyApi counterpartyApi) {
-
-        this.instrumentsApi = instrumentsApi;
-        this.counterpartyApi = counterpartyApi;
+    public AllocationMessageEnrichmentListener(AllocationMessageEnricher enricher) {
+        this.enricher = enricher;
     }
 
     @JmsListener(destination = Queues.RECEIVED_JSON_ALLOCATION_REPORT_QUEUE, containerFactory = "jmsContainerFactory")
     @SendTo(Queues.ENRICHED_JSON_ALLOCATION_REPORT_EMAIL_QUEUE)
     public String processAllocationReport(String message) throws IOException {
 
-        return toJson(enrich(fromJson(message)));
+        AllocationReport allocationReport = fromJson(message);
+        AllocationReport enrichedAllocationReport = enricher.process(allocationReport);
+
+        return toJson(enrichedAllocationReport);
     }
 
     private static String toJson(AllocationReport allocationReport) throws JsonProcessingException {
@@ -45,43 +44,5 @@ class AllocationMessageEnrichmentListener {
         AllocationReport allocationReport = objectMapper().toAllocationReport(message);
         LOG.info("Received: " + allocationReport);
         return allocationReport;
-    }
-
-    private AllocationReport enrich(AllocationReport allocationReport) throws IOException {
-
-        enrichWithInstrument(allocationReport);
-        enrichWithExchange(allocationReport);
-        enrichWithCounterparty(allocationReport);
-        enrichWithExecutingParty(allocationReport);
-
-        return allocationReport;
-    }
-
-    private void enrichWithInstrument(AllocationReport allocationReport) throws IOException {
-        InstrumentDetails instrumentDetails = instrumentsApi.getInstrumentDetails(
-                allocationReport.getSecurityId(), allocationReport.getInstrumentType()
-        );
-
-        if (instrumentDetails == null) {
-            throw new IOException("Cannot read instrument details");
-        }
-
-        Instrument instrument = instrumentsApi.getInstrument(instrumentDetails.getTicker());
-        allocationReport.setInstrument(instrument);
-    }
-
-    private void enrichWithExchange(AllocationReport allocationReport) {
-        Exchange exchange = counterpartyApi.getExchange(allocationReport.getExchange().getMic());
-        allocationReport.setExchange(exchange);
-    }
-
-    private void enrichWithCounterparty(AllocationReport allocationReport) {
-        Party counterparty = counterpartyApi.getParty(allocationReport.getCounterparty().getId());
-        allocationReport.setCounterparty(counterparty);
-    }
-
-    private void enrichWithExecutingParty(AllocationReport allocationReport) {
-        Party executingParty = counterpartyApi.getParty(allocationReport.getExecutingParty().getId());
-        allocationReport.setExecutingParty(executingParty);
     }
 }
