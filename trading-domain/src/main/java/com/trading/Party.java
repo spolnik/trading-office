@@ -3,6 +3,7 @@ package com.trading;
 import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Party implements Serializable {
 
@@ -35,6 +36,7 @@ public class Party implements Serializable {
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) {
             return true;
         }
@@ -43,14 +45,14 @@ public class Party implements Serializable {
             return false;
         }
 
-        Party party = (Party) o;
+        Party that = (Party) o;
 
-        return id != null ? id.equals(party.id) : party.id == null;
+        return Objects.equals(id, that.id);
 
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return Objects.hash(id);
     }
 }
