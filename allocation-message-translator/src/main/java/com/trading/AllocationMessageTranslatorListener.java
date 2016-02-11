@@ -20,14 +20,13 @@ class AllocationMessageTranslatorListener {
     @SendTo(Queues.RECEIVED_JSON_ALLOCATION_REPORT_QUEUE)
     public String processAllocationReport(String message) throws FixmlParserException {
 
-        LOG.info("Received: " + message);
         return toJson(toAllocationReport(message));
     }
 
     private static String toJson(AllocationReport allocationReport) throws FixmlParserException {
         try {
             String allocationReportAsJson = objectMapper().toJson(allocationReport);
-            LOG.info("Sending: " + allocationReportAsJson);
+            LOG.info("Sending Allocation Report #" + allocationReport.getAllocationId());
             return allocationReportAsJson;
         } catch (JsonProcessingException ex) {
             throw new FixmlParserException(ex);
@@ -35,9 +34,7 @@ class AllocationMessageTranslatorListener {
     }
 
     private AllocationReport toAllocationReport(String message) throws FixmlParserException {
-        AllocationReport allocationReport = parser.parse(message);
-        LOG.info("Parsed to: " + allocationReport);
 
-        return allocationReport;
+        return parser.parse(message);
     }
 }

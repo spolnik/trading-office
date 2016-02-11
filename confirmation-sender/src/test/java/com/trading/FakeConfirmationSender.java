@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Primary
 @Service
-public class FakeConfirmationSender implements Sender<Confirmation> {
+public class FakeConfirmationSender implements ConfirmationSender {
 
     private static Confirmation confirmation;
 

@@ -5,6 +5,8 @@ import org.apache.activemq.broker.BrokerService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.jms.connection.SingleConnectionFactory;
 import org.springframework.jms.core.JmsTemplate;
 
@@ -32,6 +34,12 @@ public class ConfirmationSenderApplicationIntegrationTest {
     @After
     public void tearDown() throws Exception {
         brokerService.stop();
+    }
+
+    @Primary
+    @Bean
+    ConfirmationSender confirmationSender() {
+        return new FakeConfirmationSender();
     }
 
     @Test

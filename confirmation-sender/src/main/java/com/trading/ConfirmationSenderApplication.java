@@ -1,5 +1,6 @@
 package com.trading;
 
+import net.sf.jasperreports.engine.JRException;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -20,6 +21,9 @@ public class ConfirmationSenderApplication {
     @Value("${activemqUrl}")
     private String activemqUrl;
 
+    @Value("${confirmationServiceUrl}")
+    private String confirmationServiceUrl;
+
     public static void main(String[] args) {
         SpringApplication.run(ConfirmationSenderApplication.class, args);
     }
@@ -36,4 +40,24 @@ public class ConfirmationSenderApplication {
 
         return factory;
     }
+
+    @Bean
+    EmailConfirmationMessageListener emailConfirmationMessageListener(ConfirmationSender confirmationSender) throws JRException {
+        return new EmailConfirmationMessageListener(
+                confirmationSender, new EmailConfirmationParser()
+        );
+    }
+
+    @Bean
+    SwiftConfirmationMessageListener swiftConfirmationMessageListener(ConfirmationSender confirmationSender) {
+        return new SwiftConfirmationMessageListener(
+                confirmationSender, new SwiftConfirmationParser()
+        );
+    }
+
+    @Bean
+    public ConfirmationSender confirmationSender() {
+        return new ConfirmationServiceClient(confirmationServiceUrl);
+    }
+
 }
