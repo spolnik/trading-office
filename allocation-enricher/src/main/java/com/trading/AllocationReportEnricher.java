@@ -1,17 +1,12 @@
 package com.trading;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.io.IOException;
 
-@Component
 public class AllocationReportEnricher {
 
     private final InstrumentsApi instrumentsApi;
     private final CounterpartyApi counterpartyApi;
 
-    @Autowired
     public AllocationReportEnricher(InstrumentsApi instrumentsApi, CounterpartyApi counterpartyApi) {
         this.instrumentsApi = instrumentsApi;
         this.counterpartyApi = counterpartyApi;

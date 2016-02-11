@@ -2,19 +2,19 @@ package com.trading;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-@Service
-public class CounterpartyApiClient implements CounterpartyApi {
+class CounterpartyApiClient implements CounterpartyApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(CounterpartyApiClient.class);
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    @Value("${counterpartyServiceUrl}")
     private String counterpartyServiceUrl;
+
+    public CounterpartyApiClient(String counterpartyServiceUrl) {
+        this.counterpartyServiceUrl = counterpartyServiceUrl;
+    }
 
     @Override
     public Exchange getExchange(String micCode) {

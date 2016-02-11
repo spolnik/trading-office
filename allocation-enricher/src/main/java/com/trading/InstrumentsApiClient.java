@@ -2,22 +2,22 @@ package com.trading;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-@Service
-public class InstrumentsApiClient implements InstrumentsApi {
+class InstrumentsApiClient implements InstrumentsApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(InstrumentsApiClient.class);
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    @Value("${instrumentServiceUrl}")
     private String instrumentServiceUrl;
 
-    @Value("${financeDataServiceUrl}")
     private String financeDataServiceUrl;
+
+    public InstrumentsApiClient(String instrumentServiceUrl, String financeDataServiceUrl) {
+        this.instrumentServiceUrl = instrumentServiceUrl;
+        this.financeDataServiceUrl = financeDataServiceUrl;
+    }
 
     @Override
     public InstrumentDetails getInstrumentDetails(String securityId, InstrumentType instrumentType) {
