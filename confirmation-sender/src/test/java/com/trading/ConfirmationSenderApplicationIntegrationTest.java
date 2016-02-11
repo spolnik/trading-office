@@ -48,7 +48,7 @@ public class ConfirmationSenderApplicationIntegrationTest {
                 session -> session.createTextMessage(allocationReportAsJson)
         );
 
-        TimeUnit.SECONDS.sleep(5);
+        TimeUnit.SECONDS.sleep(10);
 
         Confirmation confirmation = FakeConfirmationSender.getConfirmation();
 
