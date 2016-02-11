@@ -1,31 +1,25 @@
 package com.trading;
 
-import org.junit.Before;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.Test;
-
-import java.io.IOException;
 
 import static com.trading.DomainObjectMapper.objectMapper;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 
 public class AllocationMessageEnrichmentListenerSpec {
 
-    private InstrumentsApi instrumentsApi;
-    private AllocationMessageEnrichmentListener listener;
+    @Test
+    public void uses_allocation_report_enricher_for_message_enrichment() throws Exception {
+        AllocationReportEnricher enricher = mock(AllocationReportEnricher.class);
+        AllocationMessageEnrichmentListener listener = new AllocationMessageEnrichmentListener(enricher);
 
-    @Before
-    public void setUp() throws Exception {
-        instrumentsApi = mock(InstrumentsApi.class);
-        CounterpartyApi counterpartyApi = mock(CounterpartyApi.class);
-        listener = new AllocationMessageEnrichmentListener(instrumentsApi, counterpartyApi);
+        listener.processAllocationReport(allocationReportAsJson());
+        verify(enricher).process(any(AllocationReport.class));
     }
 
-    @Test(expected = IOException.class)
-    public void throws_exception_if_cannot_return_instrument_details() throws Exception {
-        when(instrumentsApi.getInstrumentDetails(any(), any())).thenReturn(null);
-        String json = objectMapper().toJson(TestData.allocationReport());
-        listener.processAllocationReport(json);
+    private String allocationReportAsJson() throws JsonProcessingException {
+        return objectMapper().toJson(TestData.allocationReport());
     }
 }

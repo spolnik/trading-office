@@ -5,6 +5,8 @@ import org.apache.activemq.broker.BrokerService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.jms.connection.SingleConnectionFactory;
 import org.springframework.jms.core.JmsTemplate;
 
@@ -34,6 +36,12 @@ public class ConfirmationSenderApplicationIntegrationTest {
         brokerService.stop();
     }
 
+    @Primary
+    @Bean
+    ConfirmationSender confirmationSender() {
+        return new FakeConfirmationSender();
+    }
+
     @Test
     public void consumes_incoming_message_and_send_confirmation() throws Exception {
         ConfirmationSenderApplication.main(new String[0]);
@@ -48,7 +56,7 @@ public class ConfirmationSenderApplicationIntegrationTest {
                 session -> session.createTextMessage(allocationReportAsJson)
         );
 
-        TimeUnit.SECONDS.sleep(5);
+        TimeUnit.SECONDS.sleep(10);
 
         Confirmation confirmation = FakeConfirmationSender.getConfirmation();
 

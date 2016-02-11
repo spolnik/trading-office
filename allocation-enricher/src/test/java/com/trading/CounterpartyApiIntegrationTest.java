@@ -1,23 +1,12 @@
 package com.trading;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@EnableAutoConfiguration
-@ContextConfiguration(classes = {CounterpartyApiIntegrationTest.class, RestCounterpartyApi.class})
-@PropertySource("classpath:app.properties")
 public class CounterpartyApiIntegrationTest {
 
-    @Autowired
-    private RestCounterpartyApi counterpartyApi;
+    private CounterpartyApiClient counterpartyApi = new CounterpartyApiClient("http://counterparty-service.herokuapp.com");
 
     @Test
     public void returns_exchange_for_given_mic_code() throws Exception {

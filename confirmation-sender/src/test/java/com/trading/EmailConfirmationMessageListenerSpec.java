@@ -9,12 +9,14 @@ import java.util.UUID;
 
 import static com.trading.DomainObjectMapper.objectMapper;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 
-public class SwiftConfirmationMessageListenerSpec {
+public class EmailConfirmationMessageListenerSpec {
 
-    private SwiftConfirmationMessageListener listener;
+    private EmailConfirmationMessageListener listener;
 
     private ConfirmationParser confirmationParser;
     private ConfirmationSender confirmationSender;
@@ -26,7 +28,7 @@ public class SwiftConfirmationMessageListenerSpec {
 
         when(confirmationParser.parse(any())).thenReturn(Optional.of(new Confirmation()));
 
-        listener = new SwiftConfirmationMessageListener(
+        listener = new EmailConfirmationMessageListener(
                 confirmationSender, confirmationParser
         );
     }

@@ -3,6 +3,7 @@ package com.trading;
 import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Exchange implements Serializable {
 
@@ -103,14 +104,14 @@ public class Exchange implements Serializable {
             return false;
         }
 
-        Exchange exchange = (Exchange) o;
+        Exchange that = (Exchange) o;
 
-        return mic != null ? mic.equals(exchange.mic) : exchange.mic == null;
+        return Objects.equals(mic, that.mic);
 
     }
 
     @Override
     public int hashCode() {
-        return mic != null ? mic.hashCode() : 0;
+        return Objects.hash(mic);
     }
 }

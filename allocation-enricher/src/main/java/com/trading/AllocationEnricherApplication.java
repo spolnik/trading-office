@@ -21,6 +21,15 @@ public class AllocationEnricherApplication {
     @Value("${activemqUrl}")
     private String activemqUrl;
 
+    @Value("${counterpartyServiceUrl}")
+    private String counterpartyServiceUrl;
+
+    @Value("${instrumentServiceUrl}")
+    private String instrumentServiceUrl;
+
+    @Value("${financeDataServiceUrl}")
+    private String financeDataServiceUrl;
+
     @Bean
     ConnectionFactory connectionFactory() {
 
@@ -30,11 +39,26 @@ public class AllocationEnricherApplication {
     }
 
     @Bean
-    JmsListenerContainerFactory jmsContainerFactory(ConnectionFactory connectionFactory) {
+    JmsListenerContainerFactory jmsListenerContainerFactory(ConnectionFactory connectionFactory) {
         SimpleJmsListenerContainerFactory factory = new SimpleJmsListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
 
         return factory;
+    }
+
+    @Bean
+    CounterpartyApi counterpartyApi() {
+        return new CounterpartyApiClient(counterpartyServiceUrl);
+    }
+
+    @Bean
+    InstrumentsApi instrumentsApi() {
+        return new InstrumentsApiClient(instrumentServiceUrl, financeDataServiceUrl);
+    }
+
+    @Bean
+    AllocationReportEnricher allocationReportEnricher(InstrumentsApi instrumentsApi, CounterpartyApi counterpartyApi) {
+        return new AllocationReportEnricher(instrumentsApi, counterpartyApi);
     }
 
     public static void main(String[] args) {

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Primary
 @Service
-public class FakeInstrumentsApi implements InstrumentsApi {
+public class InstrumentsApiClientStub implements InstrumentsApi {
 
     @Override
     public InstrumentDetails getInstrumentDetails(String securityId, InstrumentType instrumentType) {

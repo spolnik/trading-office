@@ -1,23 +1,15 @@
 package com.trading;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@EnableAutoConfiguration
-@ContextConfiguration(classes = {InstrumentsApiIntegrationTest.class, RestInstrumentsApi.class})
-@PropertySource("classpath:app.properties")
 public class InstrumentsApiIntegrationTest {
 
-    @Autowired
-    private RestInstrumentsApi instrumentsApi;
+    private InstrumentsApiClient instrumentsApi = new InstrumentsApiClient(
+            "http://instruments-service.herokuapp.com",
+            "http://financial-data-service.herokuapp.com"
+    );
 
     @Test
     public void returns_instrument_details_for_given_sedol_id() throws Exception {
