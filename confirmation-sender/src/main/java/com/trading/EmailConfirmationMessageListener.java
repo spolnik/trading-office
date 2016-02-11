@@ -26,7 +26,7 @@ class EmailConfirmationMessageListener {
         this.confirmationParser = confirmationParser;
     }
 
-    @JmsListener(destination = Queues.ENRICHED_JSON_ALLOCATION_REPORT_EMAIL_QUEUE, containerFactory = "jmsContainerFactory")
+    @JmsListener(destination = Queues.ENRICHED_JSON_ALLOCATION_REPORT_EMAIL_QUEUE)
     public void onMessage(String message) throws IOException {
         AllocationReport allocationReport = objectMapper().toAllocationReport(message);
         LOG.info("Received: " + allocationReport);

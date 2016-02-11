@@ -34,7 +34,7 @@ public class ConfirmationSenderApplication {
     }
 
     @Bean
-    JmsListenerContainerFactory jmsContainerFactory(ConnectionFactory connectionFactory) {
+    JmsListenerContainerFactory jmsListenerContainerFactory(ConnectionFactory connectionFactory) {
         SimpleJmsListenerContainerFactory factory = new SimpleJmsListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
 
