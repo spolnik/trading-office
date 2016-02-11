@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class RestCounterpartyApi implements CounterpartyApi {
+public class CounterpartyApiClient implements CounterpartyApi {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RestCounterpartyApi.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CounterpartyApiClient.class);
 
     private final RestTemplate restTemplate = new RestTemplate();
 

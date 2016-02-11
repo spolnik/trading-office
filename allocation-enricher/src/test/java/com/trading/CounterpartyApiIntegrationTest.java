@@ -12,12 +12,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @EnableAutoConfiguration
-@ContextConfiguration(classes = {CounterpartyApiIntegrationTest.class, RestCounterpartyApi.class})
+@ContextConfiguration(classes = {CounterpartyApiIntegrationTest.class, CounterpartyApiClient.class})
 @PropertySource("classpath:app.properties")
 public class CounterpartyApiIntegrationTest {
 
     @Autowired
-    private RestCounterpartyApi counterpartyApi;
+    private CounterpartyApiClient counterpartyApi;
 
     @Test
     public void returns_exchange_for_given_mic_code() throws Exception {

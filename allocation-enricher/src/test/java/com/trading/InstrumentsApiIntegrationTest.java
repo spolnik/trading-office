@@ -12,12 +12,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @EnableAutoConfiguration
-@ContextConfiguration(classes = {InstrumentsApiIntegrationTest.class, RestInstrumentsApi.class})
+@ContextConfiguration(classes = {InstrumentsApiIntegrationTest.class, InstrumentsApiClient.class})
 @PropertySource("classpath:app.properties")
 public class InstrumentsApiIntegrationTest {
 
     @Autowired
-    private RestInstrumentsApi instrumentsApi;
+    private InstrumentsApiClient instrumentsApi;
 
     @Test
     public void returns_instrument_details_for_given_sedol_id() throws Exception {

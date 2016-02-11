@@ -15,13 +15,13 @@ public class AllocationMessageEnricherSpec {
     private InstrumentsApi instrumentsApi;
     private CounterpartyApi counterpartyApi;
 
-    private AllocationMessageEnricher enricher;
+    private AllocationReportEnricher enricher;
 
     @Before
     public void setUp() throws Exception {
         instrumentsApi = mock(InstrumentsApi.class);
         counterpartyApi = mock(CounterpartyApi.class);
-        enricher = new AllocationMessageEnricher(instrumentsApi, counterpartyApi);
+        enricher = new AllocationReportEnricher(instrumentsApi, counterpartyApi);
     }
 
     @Test(expected = IOException.class)

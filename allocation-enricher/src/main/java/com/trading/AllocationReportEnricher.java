@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class AllocationMessageEnricher {
+public class AllocationReportEnricher {
 
     private final InstrumentsApi instrumentsApi;
     private final CounterpartyApi counterpartyApi;
 
     @Autowired
-    public AllocationMessageEnricher(InstrumentsApi instrumentsApi, CounterpartyApi counterpartyApi) {
+    public AllocationReportEnricher(InstrumentsApi instrumentsApi, CounterpartyApi counterpartyApi) {
         this.instrumentsApi = instrumentsApi;
         this.counterpartyApi = counterpartyApi;
     }
@@ -28,30 +28,49 @@ public class AllocationMessageEnricher {
     }
 
     private void enrichWithInstrument(AllocationReport allocationReport) throws IOException {
-        InstrumentDetails instrumentDetails = instrumentsApi.getInstrumentDetails(
+        InstrumentDetails instrumentDetails = requestInstrumentDetails(
                 allocationReport.getSecurityId(), allocationReport.getInstrumentType()
+        );
+
+        Instrument instrument = instrumentsApi.getInstrument(instrumentDetails.getTicker());
+        allocationReport.setInstrument(instrument);
+    }
+
+    private InstrumentDetails requestInstrumentDetails(
+            String securityId, InstrumentType instrumentType) throws IOException {
+
+        InstrumentDetails instrumentDetails = instrumentsApi.getInstrumentDetails(
+                securityId, instrumentType
         );
 
         if (instrumentDetails == null) {
             throw new IOException("Cannot read instrument details");
         }
 
-        Instrument instrument = instrumentsApi.getInstrument(instrumentDetails.getTicker());
-        allocationReport.setInstrument(instrument);
+        return instrumentDetails;
     }
 
     private void enrichWithExchange(AllocationReport allocationReport) {
-        Exchange exchange = counterpartyApi.getExchange(allocationReport.getExchange().getMic());
+        Exchange exchange = counterpartyApi.getExchange(
+                allocationReport.getExchange().getMic()
+        );
+
         allocationReport.setExchange(exchange);
     }
 
     private void enrichWithCounterparty(AllocationReport allocationReport) {
-        Party counterparty = counterpartyApi.getParty(allocationReport.getCounterparty().getId());
+        Party counterparty = counterpartyApi.getParty(
+                allocationReport.getCounterparty().getId()
+        );
+
         allocationReport.setCounterparty(counterparty);
     }
 
     private void enrichWithExecutingParty(AllocationReport allocationReport) {
-        Party executingParty = counterpartyApi.getParty(allocationReport.getExecutingParty().getId());
+        Party executingParty = counterpartyApi.getParty(
+                allocationReport.getExecutingParty().getId()
+        );
+
         allocationReport.setExecutingParty(executingParty);
     }
 }

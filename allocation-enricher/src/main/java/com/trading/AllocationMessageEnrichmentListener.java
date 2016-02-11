@@ -17,10 +17,10 @@ class AllocationMessageEnrichmentListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(AllocationMessageEnrichmentListener.class);
 
-    private final AllocationMessageEnricher enricher;
+    private final AllocationReportEnricher enricher;
 
     @Autowired
-    public AllocationMessageEnrichmentListener(AllocationMessageEnricher enricher) {
+    public AllocationMessageEnrichmentListener(AllocationReportEnricher enricher) {
         this.enricher = enricher;
     }
 
