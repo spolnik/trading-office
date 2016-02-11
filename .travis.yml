@@ -1,15 +1,11 @@
 language: Java
-
 jdk:
   - oraclejdk8
-
 before_install:
   - pip install --user codecov
-
 after_success:
   - codecov
   - ./gradlew sonarqube
-
 # coverity scan
 env:
   global:
