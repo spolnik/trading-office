@@ -67,21 +67,21 @@ class FixmlMessageParser {
         }
     }
 
-    private void setExecutingParty(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+    private static void setExecutingParty(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
         Optional<Attribute> executingPartyId = getAttribute(fixmlMessage, EXECUTING_PARTY_ID_XPATH);
         Party executingParty = new Party();
         executingParty.setId(executingPartyId.get().getValue());
         allocationReport.setExecutingParty(executingParty);
     }
 
-    private void setCounterparty(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+    private static void setCounterparty(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
         Optional<Attribute> counterpartyId = getAttribute(fixmlMessage, COUNTERPARTY_ID_XPATH);
         Party counterparty = new Party();
         counterparty.setId(counterpartyId.get().getValue());
         allocationReport.setCounterparty(counterparty);
     }
 
-    private void setExchange(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+    private static void setExchange(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
         Optional<Attribute> exchangeMicCode = getAttribute(fixmlMessage, EXCHANGE_MIC_CODE_XPATH);
         Exchange exchange = new Exchange();
         exchange.setMic(exchangeMicCode.get().getValue());
