@@ -38,7 +38,11 @@ ext {
                 exclude group: 'javax.xml', module: 'jaxb-impl'
             },
             jaxb: 'javax.xml.bind:jaxb-api:2.2.12',
-            csveed: 'org.csveed:csveed:0.4.2'
+            csveed: 'org.csveed:csveed:0.4.2',
+            springfox: [
+                    swagger_ui: 'io.springfox:springfox-swagger-ui:2.3.1',
+                    swagger2: 'io.springfox:springfox-swagger2:2.3.1'
+            ]
     )
 }
 
