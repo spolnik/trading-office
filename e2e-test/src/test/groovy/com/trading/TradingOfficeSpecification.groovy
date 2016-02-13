@@ -42,9 +42,9 @@ class TradingOfficeSpecification extends Specification {
         log.info(status)
     }
 
-    def "For new trade we generate confirmation as pdf"() {
+    def "For new trade we generate confirmation as pdf"(String micCode, ConfirmationType confirmationType) {
         given: "A new trade with FIXML representation"
-        def fixmlAllocationMessage = String.format(fixmlAllocationMessage(), allocationReportId)
+        def fixmlAllocationMessage = String.format(fixmlAllocationMessage(), allocationReportId, micCode)
 
         when: "We receive FIXML message describing allocation for a trade"
 
@@ -60,23 +60,31 @@ class TradingOfficeSpecification extends Specification {
         then: "New confirmation is generated as PDF"
 
         try {
-            assertConfirmation()
+            assertConfirmation(confirmationType)
         } catch (InactivityIOException ex) {
-            log.warn(ex.getMessage())
-            log.warn("Retry")
+            log.error(ex.getMessage())
+            log.info("Retry")
             TimeUnit.SECONDS.sleep(5)
-            assertConfirmation()
+            assertConfirmation(confirmationType)
         }
+
+        where:
+        micCode | confirmationType
+        "XNAS"  | ConfirmationType.EMAIL
+        "XLON"  | ConfirmationType.SWIFT
     }
 
-    private void assertConfirmation() {
+    def assertConfirmation(ConfirmationType confirmationType) {
         def confirmation = restTemplate.getForObject(
                 "http://confirmation-service.herokuapp.com/api/confirmation?id=" + allocationReportId,
                 Confirmation.class
         );
 
+        log.info("Confirmation data: " + new String(confirmation.content))
+
         confirmation.getContent().size() > 100
         confirmation.id() == allocationReportId
+        confirmation.getConfirmationType() == confirmationType
     }
 
     def messageCreator(String fixmlAllocationMessage) {
@@ -115,7 +123,7 @@ class TradingOfficeSpecification extends Specification {
         <Instrmt ID="2000019" Src="2"/>
 
         <Pty R="1" Src="D" ID="TROF" />
-        <Pty R="22" Src="G" ID="XNAS" />
+        <Pty R="22" Src="G" ID="%s" />
         <Pty R="3" Src="D" ID="CUSTUS" />
         <Amt Typ="CRES"
              Amt="10.93" Ccy="EUR"/>
