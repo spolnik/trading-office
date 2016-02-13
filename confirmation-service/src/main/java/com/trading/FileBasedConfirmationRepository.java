@@ -2,7 +2,6 @@ package com.trading;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
@@ -12,7 +11,6 @@ import java.nio.file.Paths;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Repository
 public class FileBasedConfirmationRepository implements ConfirmationRepository {
 
     private static final Logger LOG = LoggerFactory.getLogger(FileBasedConfirmationRepository.class);
