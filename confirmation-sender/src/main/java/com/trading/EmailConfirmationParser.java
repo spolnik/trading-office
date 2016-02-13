@@ -21,7 +21,7 @@ class EmailConfirmationParser implements ConfirmationParser {
     private final JasperReport jasperReport;
 
     public EmailConfirmationParser() throws JRException {
-        InputStream resourceAsStream = EmailConfirmationMessageListener.class
+        InputStream resourceAsStream = EmailConfirmationParser.class
                 .getClassLoader().getResourceAsStream("Confirmation.jrxml");
 
         jasperReport = JasperCompileManager.compileReport(resourceAsStream);

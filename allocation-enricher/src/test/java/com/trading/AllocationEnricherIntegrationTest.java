@@ -70,7 +70,7 @@ public class AllocationEnricherIntegrationTest {
         );
 
         return (String) jmsTemplate.receiveAndConvert(
-                Queues.ENRICHED_JSON_ALLOCATION_REPORT_EMAIL_QUEUE
+                Queues.ENRICHED_JSON_ALLOCATION_REPORT_QUEUE
         );
     }
 

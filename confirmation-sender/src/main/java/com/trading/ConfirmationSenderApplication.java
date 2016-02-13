@@ -42,22 +42,24 @@ public class ConfirmationSenderApplication {
     }
 
     @Bean
-    EmailConfirmationMessageListener emailConfirmationMessageListener(ConfirmationSender confirmationSender) throws JRException {
-        return new EmailConfirmationMessageListener(
-                confirmationSender, new EmailConfirmationParser()
-        );
+    ConfirmationMessageListener confirmationMessageListener(
+            ConfirmationSender confirmationSender, ConfirmationApi confirmationApi) throws JRException {
+
+        return new ConfirmationMessageListener(
+                confirmationSender,
+                new EmailConfirmationParser(),
+                new SwiftConfirmationParser(),
+                confirmationApi);
     }
 
     @Bean
-    SwiftConfirmationMessageListener swiftConfirmationMessageListener(ConfirmationSender confirmationSender) {
-        return new SwiftConfirmationMessageListener(
-                confirmationSender, new SwiftConfirmationParser()
-        );
-    }
-
-    @Bean
-    public ConfirmationSender confirmationSender() {
+    ConfirmationSender confirmationSender() {
         return new ConfirmationServiceClient(confirmationServiceUrl);
+    }
+
+    @Bean
+    ConfirmationApi confirmationApi() {
+        return new ConfirmationApiClient(confirmationServiceUrl);
     }
 
 }

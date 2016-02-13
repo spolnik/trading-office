@@ -27,6 +27,10 @@ class TestData {
 
         allocationReport.setInstrument(instrument());
 
+        Exchange exchange = new Exchange();
+        exchange.setMic("XNAS");
+        allocationReport.setExchange(exchange);
+
         return allocationReport;
     }
 
@@ -34,7 +38,7 @@ class TestData {
         Instrument instrument = new Instrument();
 
         instrument.setCurrency("USD");
-        instrument.setExchange("NASDAQ");
+        instrument.setExchange("XNAS");
         instrument.setName("AMAZON STOCKS");
         instrument.setSymbol("AMZN");
 
