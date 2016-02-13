@@ -3,6 +3,7 @@
 function refresh {
 
     git checkout $1
+    git pull
     git merge master
     git push
 }

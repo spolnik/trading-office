@@ -5,8 +5,7 @@ import org.apache.activemq.broker.BrokerService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.connection.SingleConnectionFactory;
 import org.springframework.jms.core.JmsTemplate;
 
@@ -17,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 import static com.trading.DomainObjectMapper.objectMapper;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Configuration
 public class ConfirmationSenderApplicationIntegrationTest {
 
     private BrokerService brokerService;
@@ -36,12 +36,6 @@ public class ConfirmationSenderApplicationIntegrationTest {
         brokerService.stop();
     }
 
-    @Primary
-    @Bean
-    ConfirmationSender confirmationSender() {
-        return new FakeConfirmationSender();
-    }
-
     @Test
     public void consumes_incoming_message_and_send_confirmation() throws Exception {
         ConfirmationSenderApplication.main(new String[0]);
@@ -52,7 +46,7 @@ public class ConfirmationSenderApplicationIntegrationTest {
 
         JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory());
         jmsTemplate.send(
-                Queues.ENRICHED_JSON_ALLOCATION_REPORT_EMAIL_QUEUE,
+                Queues.ENRICHED_JSON_ALLOCATION_REPORT_QUEUE,
                 session -> session.createTextMessage(allocationReportAsJson)
         );
 

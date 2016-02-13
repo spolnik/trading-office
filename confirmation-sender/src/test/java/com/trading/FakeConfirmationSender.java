@@ -18,3 +18,4 @@ public class FakeConfirmationSender implements ConfirmationSender {
         return confirmation;
     }
 }
+

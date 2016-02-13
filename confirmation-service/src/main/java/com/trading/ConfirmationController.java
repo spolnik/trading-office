@@ -11,6 +11,8 @@ class ConfirmationController {
 
     private final ConfirmationRepository confirmationRepository;
 
+    private static final String LONDON_STOCK_EXCHANGE_MIC_CODE = "XLON";
+
     @Autowired
     public ConfirmationController(ConfirmationRepository confirmationRepository) {
         this.confirmationRepository = confirmationRepository;
@@ -27,5 +29,12 @@ class ConfirmationController {
         confirmationRepository.save(confirmation);
 
         return new ResponseEntity<>(null, HttpStatus.CREATED);
+    }
+
+    @RequestMapping("confirmation/type/{micCode}")
+    public ConfirmationType getConfirmationType(@PathVariable String micCode) {
+        return LONDON_STOCK_EXCHANGE_MIC_CODE.equals(micCode)
+                ? ConfirmationType.SWIFT
+                : ConfirmationType.EMAIL;
     }
 }

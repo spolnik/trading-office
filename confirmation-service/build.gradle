@@ -6,7 +6,8 @@ dependencies {
             project(":trading-domain")
 
     testCompile libs.test.junit,
-            libs.test.assertj
+            libs.test.assertj,
+            libs.test.mockito
 }
 
 jar {
