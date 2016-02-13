@@ -8,6 +8,7 @@ import org.springframework.jms.core.JmsTemplate
 import org.springframework.jms.core.MessageCreator
 import org.springframework.web.client.RestTemplate
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import javax.jms.JMSException
 import javax.jms.Message
@@ -42,7 +43,8 @@ class TradingOfficeSpecification extends Specification {
         log.info(status)
     }
 
-    def "For new trade we generate confirmation as pdf"(String micCode, ConfirmationType confirmationType) {
+    @Unroll
+    def "For new trade with exchange mic as #micCode, we generate confirmation as #confirmationType"(String micCode, ConfirmationType confirmationType) {
         given: "A new trade with FIXML representation"
         def fixmlAllocationMessage = String.format(fixmlAllocationMessage(), allocationReportId, micCode)
 
