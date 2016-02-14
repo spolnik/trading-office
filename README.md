@@ -53,7 +53,7 @@ Heroku app: http://financial-data-service.herokuapp.com/swagger-ui.html
 - data stored as files
 - deployment to heroku
 
-Heroku app: http://confirmation-service.herokuapp.com/health
+Heroku app: http://confirmation-service.herokuapp.com/swagger-ui.html
 
 ## Counterparty Service
 - spring boot web application (rest service)
