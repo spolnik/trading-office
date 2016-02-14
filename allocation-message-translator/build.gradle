@@ -11,7 +11,9 @@ dependencies {
             libs.activemq_http,
             libs.jackson,
             libs.jackson_databind,
-            libs.jackson_annotations
+            libs.jackson_annotations,
+            libs.springfox.swagger_ui,
+            libs.springfox.swagger2
 
     testCompile libs.test.junit,
             libs.test.assertj,

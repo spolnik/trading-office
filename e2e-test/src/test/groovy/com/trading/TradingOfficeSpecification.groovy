@@ -101,7 +101,6 @@ class TradingOfficeSpecification extends Specification {
         }
     }
 
-
     def connectionFactory() {
 
         def activeMQConnectionFactory = new ActiveMQConnectionFactory()
