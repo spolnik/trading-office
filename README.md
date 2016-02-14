@@ -11,7 +11,7 @@
 - finally, it sends the POJO as json into ActiveMQ
 - deployment to heroku
 
-Heroku app: http://allocation-message-translator.herokuapp.com/health
+Heroku app: http://allocation-message-translator.herokuapp.com/swagger-ui.html
 
 ## Allocation Enricher
 - spring boot application
