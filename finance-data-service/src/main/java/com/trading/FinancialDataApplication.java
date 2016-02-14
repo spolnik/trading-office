@@ -41,7 +41,7 @@ public class FinancialDataApplication {
                 .build();
     }
 
-    private ApiInfo apiInfo() {
+    private static ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Financial Data REST Service")
                 .description("Financial Data REST Service")

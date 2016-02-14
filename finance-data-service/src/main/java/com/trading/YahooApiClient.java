@@ -30,7 +30,7 @@ class YahooApiClient implements YahooApi {
         return Instrument.empty();
     }
 
-    private Stock getStock(String symbol) throws IOException {
+    private static Stock getStock(String symbol) throws IOException {
         return YahooFinance.get(symbol);
     }
 }

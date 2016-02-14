@@ -33,7 +33,7 @@ public class InstrumentsApplication {
                 .build();
     }
 
-    private ApiInfo apiInfo() {
+    private static ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Instruments REST Service")
                 .description("Instruments REST Service")
