@@ -30,7 +30,7 @@ class TestData {
         return allocationReport;
     }
 
-    private static Instrument instrument() {
+    static Instrument instrument() {
         Instrument instrument = new Instrument();
 
         instrument.setCurrency("USD");

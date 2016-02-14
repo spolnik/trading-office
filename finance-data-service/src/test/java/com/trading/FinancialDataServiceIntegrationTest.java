@@ -6,11 +6,11 @@ import org.springframework.web.client.RestTemplate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FinanceDataServiceIntegrationTest {
+public class FinancialDataServiceIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        FinanceDataApplication.main(new String[0]);
+        FinancialDataApplication.main(new String[0]);
     }
 
     @Test

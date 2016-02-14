@@ -1,10 +1,8 @@
 package com.trading;
 
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.stereotype.Service;
 import yahoofinance.Stock;
 
-@Service
 class StockToInstrumentConverter implements Converter<Stock, Instrument> {
 
     @Override

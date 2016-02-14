@@ -29,7 +29,7 @@ Heroku app: http://allocation-enricher.herokuapp.com/health
 - data consumed from instruments.json file
 - deployment to heroku
 
-Heroku app: http://instruments-service.herokuapp.com/health
+Heroku app: http://instruments-service.herokuapp.com/swagger-ui.html
 
 ## Finance Data Service
 - spring boot web application
@@ -38,7 +38,7 @@ Heroku app: http://instruments-service.herokuapp.com/health
 - works in readonly mode
 - deployment to heroku
 
-Heroku app: http://financial-data-service.herokuapp.com/health
+Heroku app: http://financial-data-service.herokuapp.com/swagger-ui.html
 
 ## Confirmation Sender
 - spring boot application
