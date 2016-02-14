@@ -20,7 +20,7 @@ class CounterpartyController {
     }
 
     @ApiOperation(value = "getParty", nickname = "getParty", notes = "Example: CUSTUK, TROF")
-    @RequestMapping(value = "/party/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "party/{id}", method = RequestMethod.GET)
     @ApiParam(name = "id", example = "CUSTUK", required = true)
     public Party getParty(@PathVariable String id) {
         return partyRepository.getById(id);

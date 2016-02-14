@@ -3,6 +3,7 @@ package com.trading;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
@@ -13,6 +14,7 @@ import static springfox.documentation.builders.PathSelectors.regex;
 
 @SpringBootApplication
 @EnableSwagger2
+@ComponentScan("com.trading")
 public class CounterpartyServiceApplication {
 
     public static void main(String[] args) {
@@ -35,7 +37,7 @@ public class CounterpartyServiceApplication {
                 .groupName("counterparty")
                 .apiInfo(apiInfo())
                 .select()
-                .paths(regex("/api/*"))
+                .paths(regex("(/api.*)"))
                 .build();
     }
 
