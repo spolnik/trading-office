@@ -1,10 +1,28 @@
-[![Build Status](https://travis-ci.org/spolnik/trading-office.svg?branch=master)](https://travis-ci.org/spolnik/trading-office) [![codecov.io](https://codecov.io/github/spolnik/trading-office/coverage.svg?branch=master)](https://codecov.io/github/spolnik/trading-office?branch=master) [![Sonar Coverage](https://img.shields.io/sonar/https/sonar-nprogramming.rhcloud.com/trading-office/coverage.svg)](https://sonar-nprogramming.rhcloud.com/dashboard/index/1) [![Sonar Tech Debt](https://img.shields.io/sonar/https/sonar-nprogramming.rhcloud.com/trading-office/tech_debt.svg)](https://sonar-nprogramming.rhcloud.com/dashboard/index/1) [![Coverity Scan Build Status](https://scan.coverity.com/projects/7604/badge.svg)](https://scan.coverity.com/projects/spolnik-trading-office)
+# Trading Office [![Build Status](https://travis-ci.org/spolnik/trading-office.svg?branch=master)](https://travis-ci.org/spolnik/trading-office) [![codecov.io](https://codecov.io/github/spolnik/trading-office/coverage.svg?branch=master)](https://codecov.io/github/spolnik/trading-office?branch=master) [![Sonar Coverage](https://img.shields.io/sonar/https/sonar-nprogramming.rhcloud.com/trading-office/coverage.svg)](https://sonar-nprogramming.rhcloud.com/dashboard/index/1) [![Sonar Tech Debt](https://img.shields.io/sonar/https/sonar-nprogramming.rhcloud.com/trading-office/tech_debt.svg)](https://sonar-nprogramming.rhcloud.com/dashboard/index/1) [![Coverity Scan Build Status](https://scan.coverity.com/projects/7604/badge.svg)](https://scan.coverity.com/projects/spolnik-trading-office)
 
-# Trading Office
+Trading Office is reference implementation of microservices architecture, based on Spring Boot. It's modeling part of post trade processing, mainly focused on receiving Fixml message and preparing confirmation for it.
+
+- [Introduction](#introduction)
+- [Allocation Message Receiver](#allocation-message-receiver)
+- [Allocation Enricher](#allocation-enricher)
+- [Confirmation Sender](#confirmation-sender)
+- [Instruments Service](#instruments-service)
+- [Financial Data Service](#financial-data-service)
+- [Confirmation Service](#confirmation-service)
+- [Counterparty Service](#counterparty-service)
+- [Trading Domain](#trading-domain)
+- [E2E Test](#e2e-test)
+- [Infrastructure](#infrastructure)
+- [Notes](#notes)
+
+## Introduction
+
 - set of applications simulating simple flow in post trade part of trade lifecycle
 - it's focused on generating confirmation based on received allocation report
 
-## Allocation Message Translator
+![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/component_diagram.png)
+
+## Allocation Message Receiver
 - spring boot application
 - subscribes to jms looking for new allocation report messages (fixml)
 - after receiving message it parses it to AllocationReport POJO
@@ -22,6 +40,15 @@ Heroku app: http://allocation-message-translator.herokuapp.com/swagger-ui.html
 
 Heroku app: http://allocation-enricher.herokuapp.com/health
 
+## Confirmation Sender
+- spring boot application
+- subscribes to jms looking for enriched allocation report messages (json)
+- after receiving message, it generates PDF confirmation using JasperReports template
+- finally, it sends the Confirmation POJO with attached PDF (as byte[]) to confirmation service (REST Service)
+- deployment to heroku
+
+Heroku app: http://confirmation-sender.herokuapp.com/health
+
 ## Instruments Service
 - spring boot web application
 - exposes REST endpoints for instrument data
@@ -31,7 +58,7 @@ Heroku app: http://allocation-enricher.herokuapp.com/health
 
 Heroku app: http://instruments-service.herokuapp.com/swagger-ui.html
 
-## Finance Data Service
+## Financial Data Service
 - spring boot web application
 - exposes REST endpoint for financial data (using Yahoo Finance Api)
 - based on a given symbol, downloads instrument data with actual price
@@ -39,15 +66,6 @@ Heroku app: http://instruments-service.herokuapp.com/swagger-ui.html
 - deployment to heroku
 
 Heroku app: http://financial-data-service.herokuapp.com/swagger-ui.html
-
-## Confirmation Sender
-- spring boot application
-- subscribes to jms looking for enriched allocation report messages (json)
-- after receiving message, it generates PDF confirmation using JasperReports template
-- finally, it sends the Confirmation POJO with attached PDF (as byte[]) to confirmation service (REST Service)
-- deployment to heroku
-
-Heroku app: http://confirmation-sender.herokuapp.com/health
 
 ## Confirmation Service
 - spring boot web application (rest service)
@@ -72,21 +90,16 @@ Heroku app: http://counterparty-service.herokuapp.com/swagger-ui.html
 - end to end tests written in spock
 - it runs against deployed applications (Heroku, all above + OpenShift, ActiveMq)
 
-## ActiveMQ
-- OpenShift hosted ActiveMQ 5.13
-
 =========
 
-# Technologies used
-
 ## Infrastructure
-- Heroku
-- Openshift
-- Heroku Add-ins (logging, monitoring)
-- TravisCI
-- SonarQube (hosted on openshift)
-- Coverity (Static code analysis)
+- Heroku (hosting microservices)
+- Heroku Add-ons (logging - papertrial, monitoring - new relic)
+- ActiveMQ (hosted on OpenShift)
+- SonarQube (hosted on OpenShift) - https://sonar-nprogramming.rhcloud.com
+- TravisCI - https://travis-ci.org/spolnik/trading-office
+- Coverity (Static code analysis) - https://scan.coverity.com/projects/spolnik-trading-office
 
-#Notes
+## Notes
 - to have access to OpenShift activemq web console - run rhc port-forward activemq (only if you have admin access)
 - checking if [dependencies are up to date](https://www.versioneye.com/user/projects/56ad39427e03c7003ba41427)
