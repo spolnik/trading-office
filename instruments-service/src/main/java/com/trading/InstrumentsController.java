@@ -20,10 +20,12 @@ class InstrumentsController {
         this.instrumentsRepository = instrumentsRepository;
     }
 
-    @ApiOperation(value = "getInstrumentDetails", nickname = "getInstrumentDetails", notes = "Example SEDOL: 2000019")
+    @ApiOperation(value = "getInstrumentDetails", nickname = "getInstrumentDetails")
     @RequestMapping(value = "/instruments/sedol/{id}", method = RequestMethod.GET)
-    @ApiParam(name = "id", example = "2000019", required = true)
-    public InstrumentDetails getInstrumentDetailsBySedol(@PathVariable String id) {
+    public InstrumentDetails getInstrumentDetailsBySedol(
+            @ApiParam(name = "id", value = "Sedol id", defaultValue = "2000019", required = true)
+            @PathVariable String id
+    ) {
         return instrumentsRepository.queryBySedol(id);
     }
 }

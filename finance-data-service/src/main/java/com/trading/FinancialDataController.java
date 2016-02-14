@@ -19,10 +19,12 @@ class FinancialDataController {
         this.yahooApi = yahooApi;
     }
 
-    @ApiOperation(value = "getInstrument", nickname = "getInstrument", notes = "Example: AMZN")
+    @ApiOperation(value = "getInstrument", nickname = "getInstrument")
     @RequestMapping(value = "instrument/{symbol}", method = RequestMethod.GET)
-    @ApiParam(name = "symbol", example = "AMZN", required = true)
-    public Instrument getInstrument(@PathVariable String symbol) {
+    public Instrument getInstrument(
+            @ApiParam(name = "symbol", value = "Instrument symbol", defaultValue = "AMZN", required = true)
+            @PathVariable String symbol
+    ) {
         return yahooApi.getInstrument(symbol);
     }
 }

@@ -19,10 +19,12 @@ class ExchangeController {
         this.exchangeRepository = exchangeRepository;
     }
 
-    @ApiOperation(value = "getExchange", nickname = "getExchange", notes = "Example: XNAS, XLON")
+    @ApiOperation(value = "getExchange", nickname = "getExchange")
     @RequestMapping(value = "exchange/mic/{micCode}", method = RequestMethod.GET)
-    @ApiParam(name = "micCode", required = true)
-    public Exchange getExchange(@PathVariable String micCode) {
+    public Exchange getExchange(
+            @ApiParam(name = "micCode", value = "Exchange Mic Code", defaultValue = "XLON", required = true)
+            @PathVariable String micCode
+    ) {
         return exchangeRepository.getByMicCode(micCode);
     }
 }
