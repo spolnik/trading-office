@@ -14,7 +14,7 @@ import java.util.UUID;
 import static com.trading.DomainObjectMapper.objectMapper;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AllocationMessageTranslatorIntegrationTest {
+public class AllocationMessageReceiverIntegrationTest {
 
     private BrokerService brokerService;
 
@@ -33,7 +33,7 @@ public class AllocationMessageTranslatorIntegrationTest {
 
     @Test
     public void consumes_incoming_message_and_sent_transformed_message_back_to_jms_server() throws Exception {
-        AllocationMessageTranslatorApplication.main(new String[0]);
+        AllocationMessageReceiverApplication.main(new String[0]);
 
         String allocationReportId = UUID.randomUUID().toString();
 

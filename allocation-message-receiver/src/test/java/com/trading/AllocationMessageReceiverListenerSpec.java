@@ -3,7 +3,7 @@ package com.trading;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AllocationMessageTranslatorListenerSpec {
+public class AllocationMessageReceiverListenerSpec {
 
     private static final String TRANSACTION_TYPE_NEW = "0";
     private static final String TRANSACTION_TYPE_REPLACE = "1";
@@ -12,11 +12,11 @@ public class AllocationMessageTranslatorListenerSpec {
     private static final String SECURITY_SOURCE_ID_CUSIP = "1";
     private static final String SECURITY_SOURCE_ID_SEDOL = "2";
 
-    private AllocationMessageTranslatorListener listener;
+    private AllocationMessageReceiverListener listener;
 
     @Before
     public void setUp() throws Exception {
-        listener = new AllocationMessageTranslatorListener();
+        listener = new AllocationMessageReceiverListener();
     }
 
     @Test(expected = UnsupportedOperationException.class)

@@ -21,6 +21,6 @@ dependencies {
 }
 
 jar {
-    baseName = 'trading-office-allocation-message-translator'
+    baseName = 'trading-office-allocation-message-receiver'
     version = '1.0.0'
 }

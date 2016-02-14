@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 import static com.trading.DomainObjectMapper.objectMapper;
 
 @Component
-class AllocationMessageTranslatorListener {
+class AllocationMessageReceiverListener {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AllocationMessageTranslatorListener.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AllocationMessageReceiverListener.class);
 
     private final FixmlMessageParser parser = new FixmlMessageParser();
 

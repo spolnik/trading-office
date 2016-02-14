@@ -24,13 +24,13 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @EnableJms
 @EnableSwagger2
 @PropertySource("classpath:app.properties")
-public class AllocationMessageTranslatorApplication {
+public class AllocationMessageReceiverApplication {
 
     @Value("${activemqUrl}")
     private String activemqUrl;
 
     public static void main(String[] args) {
-        SpringApplication.run(AllocationMessageTranslatorApplication.class, args);
+        SpringApplication.run(AllocationMessageReceiverApplication.class, args);
     }
 
     @Bean
