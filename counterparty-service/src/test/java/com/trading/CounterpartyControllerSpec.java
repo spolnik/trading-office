@@ -37,14 +37,14 @@ public class CounterpartyControllerSpec {
     @Test
     public void returns_Trading_Office_Ltd_counterparty_for_TROF_id() throws Exception {
 
-        Party party = controller.getCounterparty(TROF_PARTY_ID);
+        Party party = controller.getParty(TROF_PARTY_ID);
 
         assertThat(party.getName()).isEqualTo(TRADING_OFFICE_LTD_PARTY_NAME);
     }
 
     @Test
     public void returns_Customer_UK_Ltd_counterparty_for_CUSTUK_id() throws Exception {
-        Party party = controller.getCounterparty(CUSTUK_PARTY_ID);
+        Party party = controller.getParty(CUSTUK_PARTY_ID);
 
         assertThat(party.getName()).isEqualTo(CUSTOMER_UK_LTD_PARTY_NAME);
     }
@@ -54,7 +54,7 @@ public class CounterpartyControllerSpec {
 
         String dummyId = "DUMMY";
 
-        controller.getCounterparty(dummyId);
+        controller.getParty(dummyId);
 
         verify(partyRepository).getById(dummyId);
     }

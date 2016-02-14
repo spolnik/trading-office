@@ -61,7 +61,7 @@ Heroku app: http://confirmation-service.herokuapp.com/health
 - exposes REST endpoint to query Party data based on custom id
 - deployment to heroku
 
-Heroku app: http://counterparty-service.herokuapp.com/health
+Heroku app: http://counterparty-service.herokuapp.com/swagger-ui.html
 
 ## Trading Domain
 - library, containing all domain specific entities
