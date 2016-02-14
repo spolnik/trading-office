@@ -78,7 +78,7 @@ class TradingOfficeSpecification extends Specification {
 
     def assertConfirmation(ConfirmationType confirmationType) {
         def confirmation = restTemplate.getForObject(
-                "http://confirmation-service.herokuapp.com/api/confirmation?id=" + allocationReportId,
+                "http://confirmation-service.herokuapp.com/api/confirmation/" + allocationReportId,
                 Confirmation.class
         );
 
