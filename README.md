@@ -87,3 +87,4 @@ Heroku app: http://counterparty-service.herokuapp.com/swagger-ui.html
 
 #Notes
 - to have access to OpenShift activemq web console - run rhc port-forward activemq (only if you have admin access)
+- checking if [dependencies are up to date](https://www.versioneye.com/user/projects/56ad39427e03c7003ba41427)
