@@ -13,7 +13,14 @@ public class CsvPartyRepositoryIntegrationTest {
         Party tradingOfficeParty = repository.getById("TROF");
 
         assertThat(tradingOfficeParty).isEqualToComparingFieldByField(
-                TestData.executingParty()
+                executingParty()
         );
+    }
+
+    private static Party executingParty() {
+        Party party = new Party();
+        party.setId("TROF");
+        party.setName("Trading Office Ltd.");
+        return party;
     }
 }

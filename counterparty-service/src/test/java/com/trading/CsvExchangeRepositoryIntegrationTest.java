@@ -12,6 +12,20 @@ public class CsvExchangeRepositoryIntegrationTest {
 
         Exchange nasdaq = repository.getByMicCode("XNAS");
 
-        assertThat(nasdaq).isEqualToComparingFieldByField(TestData.exchange());
+        assertThat(nasdaq).isEqualToComparingFieldByField(exchange());
+    }
+
+    private static Exchange exchange() {
+        Exchange exchange = new Exchange();
+
+        exchange.setAcronym("NASDAQ");
+        exchange.setCity("NEW YORK");
+        exchange.setCountry("UNITED STATES OF AMERICA");
+        exchange.setCountryCode("US");
+        exchange.setName("NASDAQ - ALL MARKETS");
+        exchange.setMic("XNAS");
+        exchange.setWebsite("WWW.NASDAQ.COM");
+
+        return exchange;
     }
 }

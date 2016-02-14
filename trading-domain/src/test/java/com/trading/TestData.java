@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-class TestData {
+public class TestData {
 
     static AllocationReport allocationReport() {
         AllocationReport allocationReport = new AllocationReport();
