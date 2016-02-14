@@ -24,7 +24,7 @@ class TradingOfficeSpecification extends Specification {
     def restTemplate = new RestTemplate()
 
     def setup() {
-        healthCheck(herokuApp("allocation-message-translator"))
+        healthCheck(herokuApp("allocation-message-receiver"))
         healthCheck(herokuApp("allocation-enricher"))
         healthCheck(herokuApp("confirmation-sender"))
         healthCheck(herokuApp("confirmation-service"))
