@@ -47,6 +47,8 @@ Heroku app: http://financial-data-service.herokuapp.com/swagger-ui.html
 - finally, it sends the Confirmation POJO with attached PDF (as byte[]) to confirmation service (REST Service)
 - deployment to heroku
 
+Heroku app: http://confirmation-sender.herokuapp.com/health
+
 ## Confirmation Service
 - spring boot web application (rest service)
 - exposes REST endpoint api to store and retrieve confirmations
