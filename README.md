@@ -4,6 +4,8 @@
 - set of applications simulating simple flow in post trade part of trade lifecycle
 - it's focused on generating confirmation based on received allocation report
 
+![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/component_diagram.png)
+
 ## Allocation Message Translator
 - spring boot application
 - subscribes to jms looking for new allocation report messages (fixml)
