@@ -82,12 +82,12 @@ Heroku app: http://counterparty-service.herokuapp.com/swagger-ui.html
 # Technologies used
 
 ## Infrastructure
-- Heroku
-- Openshift
-- Heroku Add-ins (logging, monitoring)
-- TravisCI
-- SonarQube (hosted on openshift)
-- Coverity (Static code analysis)
+- Heroku (hosting microservices)
+- Heroku Add-ons (logging - papertrial, monitoring - new relic)
+- ActiveMQ (hosted on OpenShift)
+- SonarQube (hosted on OpenShift) - https://sonar-nprogramming.rhcloud.com
+- TravisCI - https://travis-ci.org/spolnik/trading-office
+- Coverity (Static code analysis) - https://scan.coverity.com/projects/spolnik-trading-office
 
 #Notes
 - to have access to OpenShift activemq web console - run rhc port-forward activemq (only if you have admin access)
