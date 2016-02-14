@@ -14,9 +14,6 @@ import static springfox.documentation.builders.PathSelectors.regex;
 
 @SpringBootApplication
 @EnableSwagger2
-@ComponentScan(basePackageClasses = {
-        InstrumentsController.class
-})
 public class InstrumentsApplication {
 
     public static void main(String[] args) {

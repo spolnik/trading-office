@@ -32,7 +32,7 @@ public class FinancialDataApplication {
     }
 
     @Bean
-    public Docket instrumentsApi() {
+    public Docket financialDataApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("financial-data")
                 .apiInfo(apiInfo())

@@ -41,13 +41,12 @@ class TestData {
         return instrument;
     }
 
-    private static Exchange exchange() {
+    static Exchange exchange() {
         Exchange exchange = new Exchange();
 
         exchange.setAcronym("NASDAQ");
         exchange.setCity("NEW YORK");
         exchange.setCountry("UNITED STATES OF AMERICA");
-        exchange.setComments("Comment");
         exchange.setCountryCode("US");
         exchange.setName("NASDAQ - ALL MARKETS");
         exchange.setMic("XNAS");
@@ -63,7 +62,7 @@ class TestData {
         return party;
     }
 
-    private static Party executingParty() {
+    static Party executingParty() {
         Party party = new Party();
         party.setId("TROF");
         party.setName("Trading Office Ltd.");
