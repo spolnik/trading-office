@@ -15,7 +15,7 @@ refresh heroku-instruments-service
 refresh heroku-counterparty-service
 refresh heroku-confirmation-service
 refresh heroku-finance-data-service
-refresh heroku-allocation-message-translator
+refresh heroku-allocation-message-receiver
 refresh heroku-allocation-enricher
 refresh heroku-confirmation-sender
 refresh coverity_scan
