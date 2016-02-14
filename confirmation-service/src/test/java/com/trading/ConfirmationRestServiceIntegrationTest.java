@@ -25,7 +25,7 @@ public class ConfirmationRestServiceIntegrationTest {
         restTemplate.postForObject("http://localhost:9003/api/confirmation", confirmation(), Object.class);
 
         Confirmation confirmation = restTemplate.getForObject(
-                "http://localhost:9003/api/confirmation?id=" + confirmation().id(),
+                "http://localhost:9003/api/confirmation/" + confirmation().id(),
                 Confirmation.class
         );
 
