@@ -1,12 +1,12 @@
 package com.trading
 
+import groovyx.net.http.RESTClient
 import org.apache.activemq.ActiveMQConnectionFactory
 import org.apache.activemq.transport.InactivityIOException
 import org.slf4j.LoggerFactory
 import org.springframework.jms.connection.SingleConnectionFactory
 import org.springframework.jms.core.JmsTemplate
 import org.springframework.jms.core.MessageCreator
-import org.springframework.web.client.RestTemplate
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -21,7 +21,9 @@ class TradingOfficeSpecification extends Specification {
 
     def allocationReportId = UUID.randomUUID().toString()
 
-    def restTemplate = new RestTemplate()
+    def confirmationServiceClient = new RESTClient("http://confirmation-service.herokuapp.com/")
+
+    def jmsTemplate = new JmsTemplate(connectionFactory())
 
     def setup() {
         healthCheck(herokuApp("allocation-message-receiver"))
@@ -34,23 +36,24 @@ class TradingOfficeSpecification extends Specification {
     }
 
     def herokuApp(String name) {
-        "http://" + name + ".herokuapp.com/health"
+        "http://${name}.herokuapp.com/"
     }
 
     def healthCheck(String url) {
-        log.info(url + ":")
-        def status = restTemplate.getForObject(url, String.class)
-        log.info(status)
+
+        def status = new RESTClient(url)
+                .get(path: "health")
+                .responseData.diskSpace.status.toString()
+
+        log.info("$url - $status")
     }
 
     @Unroll
-    def "For new trade with exchange mic as #micCode, we generate confirmation as #confirmationType"(String micCode, ConfirmationType confirmationType) {
+    def "For new trade with exchange mic as #micCode, we generate confirmation as #confirmationType"(String micCode, String confirmationType) {
         given: "A new trade with FIXML representation"
         def fixmlAllocationMessage = String.format(fixmlAllocationMessage(), allocationReportId, micCode)
 
         when: "We receive FIXML message describing allocation for a trade"
-
-        def jmsTemplate = new JmsTemplate(connectionFactory())
 
         jmsTemplate.send(
                 "incoming.fixml.allocation.report",
@@ -72,21 +75,19 @@ class TradingOfficeSpecification extends Specification {
 
         where:
         micCode | confirmationType
-        "XNAS"  | ConfirmationType.EMAIL
-        "XLON"  | ConfirmationType.SWIFT
+        "XNAS"  | "EMAIL"
+        "XLON"  | "SWIFT"
     }
 
-    def assertConfirmation(ConfirmationType confirmationType) {
-        def confirmation = restTemplate.getForObject(
-                "http://confirmation-service.herokuapp.com/api/confirmation/" + allocationReportId,
-                Confirmation.class
-        );
+    def assertConfirmation(String confirmationType) {
 
-        log.info("Confirmation data: " + new String(confirmation.content))
+        def confirmation = confirmationServiceClient.get(path: "api/confirmation/" + allocationReportId).responseData
 
-        confirmation.getContent().size() > 100
-        confirmation.id() == allocationReportId
-        confirmation.getConfirmationType() == confirmationType
+        log.info("Confirmation data: ${new String((byte[]) confirmation.content)}")
+
+        confirmation.content.size() > 100
+        confirmation.allocationReport.allocationId == allocationReportId
+        confirmation.confirmationType == confirmationType
     }
 
     def messageCreator(String fixmlAllocationMessage) {

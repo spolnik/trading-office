@@ -1,12 +1,11 @@
 apply plugin: 'groovy'
 
 dependencies {
-    testCompile project(":trading-domain"),
-            'org.codehaus.groovy:groovy-all:2.4.5',
+    testCompile 'org.codehaus.groovy:groovy-all:2.4.5',
             'org.springframework:spring-jms:4.2.4.RELEASE',
-            'org.springframework:spring-web:4.2.4.RELEASE',
             'org.spockframework:spock-core:1.0-groovy-2.4',
             'org.apache.activemq:activemq-broker:5.13.1',
+            'org.codehaus.groovy.modules.http-builder:http-builder:0.7.1',
             dependencies.create('org.apache.activemq:activemq-http:5.13.1') {
                 exclude module: 'jetty-all'
             },
