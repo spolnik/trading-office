@@ -39,12 +39,12 @@ public class AllocationMessageReceiverIntegrationTest {
 
         JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory());
         jmsTemplate.send(
-                Queues.INCOMING_FIXML_ALLOCATION_REPORT_QUEUE,
+                "incoming.fixml.allocation.report",
                 session -> session.createTextMessage(String.format(TestData.FIXML_ALLOCATION_REPORT_MESSAGE, allocationReportId))
         );
 
         String message = (String) jmsTemplate.receiveAndConvert(
-                Queues.RECEIVED_JSON_ALLOCATION_REPORT_QUEUE
+                "received.json.allocation.report"
         );
 
         AllocationReport allocationReport = objectMapper().toAllocationReport(message);

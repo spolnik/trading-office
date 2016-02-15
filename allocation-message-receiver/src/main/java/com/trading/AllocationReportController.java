@@ -30,7 +30,7 @@ public class AllocationReportController {
             @RequestBody(required = true) String fixmlMessage
     ) {
         jmsTemplate.send(
-                Queues.INCOMING_FIXML_ALLOCATION_REPORT_QUEUE,
+                "incoming.fixml.allocation.report",
                 session -> session.createTextMessage(fixmlMessage)
         );
 

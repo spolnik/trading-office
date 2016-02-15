@@ -16,8 +16,8 @@ class AllocationMessageReceiverListener {
 
     private final FixmlMessageParser parser = new FixmlMessageParser();
 
-    @JmsListener(destination = Queues.INCOMING_FIXML_ALLOCATION_REPORT_QUEUE)
-    @SendTo(Queues.RECEIVED_JSON_ALLOCATION_REPORT_QUEUE)
+    @JmsListener(destination = "incoming.fixml.allocation.report")
+    @SendTo("received.json.allocation.report")
     public String processAllocationReport(String message) throws FixmlParserException {
 
         return toJson(toAllocationReport(message));

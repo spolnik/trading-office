@@ -24,8 +24,8 @@ class AllocationMessageEnrichmentListener {
         this.enricher = enricher;
     }
 
-    @JmsListener(destination = Queues.RECEIVED_JSON_ALLOCATION_REPORT_QUEUE)
-    @SendTo(Queues.ENRICHED_JSON_ALLOCATION_REPORT_QUEUE)
+    @JmsListener(destination = "received.json.allocation.report")
+    @SendTo("enriched.json.allocation.report")
     public String processAllocationReport(String message) throws IOException {
 
         AllocationReport allocationReport = fromJson(message);

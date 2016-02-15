@@ -53,7 +53,7 @@ class TradingOfficeSpecification extends Specification {
         def jmsTemplate = new JmsTemplate(connectionFactory())
 
         jmsTemplate.send(
-                Queues.INCOMING_FIXML_ALLOCATION_REPORT_QUEUE,
+                "incoming.fixml.allocation.report",
                 messageCreator(fixmlAllocationMessage)
         )
 

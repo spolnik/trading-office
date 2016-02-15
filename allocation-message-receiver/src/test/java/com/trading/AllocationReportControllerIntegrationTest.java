@@ -42,7 +42,7 @@ public class AllocationReportControllerIntegrationTest {
         JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory());
 
         String message = (String) jmsTemplate.receiveAndConvert(
-                Queues.INCOMING_FIXML_ALLOCATION_REPORT_QUEUE
+                "incoming.fixml.allocation.report"
         );
 
         assertThat(message).isEqualTo(DUMMY);
