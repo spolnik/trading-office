@@ -27,61 +27,54 @@ Trading Office is reference implementation of microservices architecture, based 
 - subscribes to jms looking for new allocation report messages (fixml)
 - after receiving message it parses it to AllocationReport POJO
 - finally, it sends the POJO as json into ActiveMQ
-- deployment to heroku
 
-Heroku app: http://allocation-message-translator.herokuapp.com/swagger-ui.html
+Heroku: http://allocation-message-receiver.herokuapp.com/swagger-ui.html
 
 ## Allocation Enricher
 - spring boot application
 - subscribes to jms looking for tranlated allocation report messages (json)
 - after receiving message, it enriches it with instrument data (using Intrument Service, and Finance Data Service)
 - finally, it sends enriched allocation as json into ActiveMQ
-- deployment to heroku
 
-Heroku app: http://allocation-enricher.herokuapp.com/health
+Heroku: http://allocation-enricher.herokuapp.com/health
 
 ## Confirmation Sender
 - spring boot application
 - subscribes to jms looking for enriched allocation report messages (json)
 - after receiving message, it generates PDF confirmation using JasperReports template
 - finally, it sends the Confirmation POJO with attached PDF (as byte[]) to confirmation service (REST Service)
-- deployment to heroku
 
-Heroku app: http://confirmation-sender.herokuapp.com/health
+Heroku: http://confirmation-sender.herokuapp.com/health
 
 ## Instruments Service
 - spring boot web application
 - exposes REST endpoints for instrument data
 - works in readonly mode
 - data consumed from instruments.json file
-- deployment to heroku
 
-Heroku app: http://instruments-service.herokuapp.com/swagger-ui.html
+Heroku: http://instruments-service.herokuapp.com/swagger-ui.html
 
 ## Financial Data Service
 - spring boot web application
 - exposes REST endpoint for financial data (using Yahoo Finance Api)
 - based on a given symbol, downloads instrument data with actual price
 - works in readonly mode
-- deployment to heroku
 
-Heroku app: http://financial-data-service.herokuapp.com/swagger-ui.html
+Heroku: http://financial-data-service.herokuapp.com/swagger-ui.html
 
 ## Confirmation Service
 - spring boot web application (rest service)
 - exposes REST endpoint api to store and retrieve confirmations
 - data stored as files
-- deployment to heroku
 
-Heroku app: http://confirmation-service.herokuapp.com/swagger-ui.html
+Heroku: http://confirmation-service.herokuapp.com/swagger-ui.html
 
 ## Counterparty Service
 - spring boot web application (rest service)
 - exposes REST endpoint to query Exchange data based on mic code
 - exposes REST endpoint to query Party data based on custom id
-- deployment to heroku
 
-Heroku app: http://counterparty-service.herokuapp.com/swagger-ui.html
+Heroku: http://counterparty-service.herokuapp.com/swagger-ui.html
 
 ## Trading Domain
 - library, containing all domain specific entities
