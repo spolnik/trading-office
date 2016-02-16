@@ -12,7 +12,6 @@ public class TestData {
         allocationReport.setAllocationId("12345");
         allocationReport.setTransactionType(TransactionType.NEW);
         allocationReport.setSecurityId("54321");
-        allocationReport.setInstrumentType(InstrumentType.SEDOL);
         allocationReport.setInstrument(instrument());
         allocationReport.setTradeSide(TradeSide.BUY);
 

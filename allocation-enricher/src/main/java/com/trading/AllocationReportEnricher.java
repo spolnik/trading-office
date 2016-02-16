@@ -24,7 +24,7 @@ public class AllocationReportEnricher {
 
     private void enrichWithInstrument(AllocationReport allocationReport) throws IOException {
         InstrumentDetails instrumentDetails = requestInstrumentDetails(
-                allocationReport.getSecurityId(), allocationReport.getInstrumentType()
+                allocationReport.getSecurityId()
         );
 
         Instrument instrument = instrumentsApi.getInstrument(instrumentDetails.getTicker());
@@ -32,11 +32,9 @@ public class AllocationReportEnricher {
     }
 
     private InstrumentDetails requestInstrumentDetails(
-            String securityId, InstrumentType instrumentType) throws IOException {
+            String securityId) throws IOException {
 
-        InstrumentDetails instrumentDetails = instrumentsApi.getInstrumentDetails(
-                securityId, instrumentType
-        );
+        InstrumentDetails instrumentDetails = instrumentsApi.getInstrumentDetails(securityId);
 
         if (instrumentDetails == null) {
             throw new IOException("Cannot read instrument details");

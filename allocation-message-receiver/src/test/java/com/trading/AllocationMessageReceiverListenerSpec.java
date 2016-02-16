@@ -35,7 +35,7 @@ public class AllocationMessageReceiverListenerSpec {
         listener.processAllocationReport(allocationReportMessageWithCancelTransaction);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test(expected = FixmlParserException.class)
     public void rejects_new_transaction_with_different_than_sedol_security_id_source() throws Exception {
         String allocationReportMessageWithCusipSecurityId =
                 fixmlAllocationReportMessage(TRANSACTION_TYPE_NEW, SECURITY_SOURCE_ID_CUSIP);

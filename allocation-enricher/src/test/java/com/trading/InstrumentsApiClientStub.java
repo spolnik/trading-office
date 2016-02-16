@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class InstrumentsApiClientStub implements InstrumentsApi {
 
     @Override
-    public InstrumentDetails getInstrumentDetails(String securityId, InstrumentType instrumentType) {
+    public InstrumentDetails getInstrumentDetails(String securityId) {
 
         InstrumentDetails instrumentDetails = new InstrumentDetails();
         instrumentDetails.setTicker("AMZN");

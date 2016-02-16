@@ -50,11 +50,6 @@ public class FixmlMessageParserSpec {
     }
 
     @Test
-    public void parses_instrument_id_source() throws Exception {
-        assertThat(allocationReport.getInstrumentType()).isEqualTo(InstrumentType.SEDOL);
-    }
-
-    @Test
     public void parses_transaction_buy_side() throws Exception {
         assertThat(allocationReport.getTradeSide()).isEqualTo(TradeSide.BUY);
     }

@@ -36,6 +36,7 @@ class FixmlMessageParser {
     private static final String EXCHANGE_MIC_CODE_XPATH = "/FIXML/AllocRpt/Pty[@R=\"22\" and @Src=\"G\"]/@ID";
     private static final String COUNTERPARTY_ID_XPATH = "/FIXML/AllocRpt/Pty[@R=\"3\" and @Src=\"D\"]/@ID";
     private static final String EXECUTING_PARTY_ID_XPATH = "/FIXML/AllocRpt/Pty[@R=\"1\" and @Src=\"D\"]/@ID";
+    private static final String SEDOL_FIX_SOURCE_ID = "2";
 
     public AllocationReport parse(String message) throws FixmlParserException {
 
@@ -48,7 +49,7 @@ class FixmlMessageParser {
             setId(fixmlMessage, allocationReport);
             setTransactionType(fixmlMessage, allocationReport);
             setSecurityId(fixmlMessage, allocationReport);
-            setSecurityIdSource(fixmlMessage, allocationReport);
+            checkSecurityIdSource(fixmlMessage);
             setTradeSide(fixmlMessage, allocationReport);
             setQuantity(fixmlMessage, allocationReport);
             setStatus(fixmlMessage, allocationReport);
@@ -123,9 +124,14 @@ class FixmlMessageParser {
         allocationReport.setTradeSide(deriveTradeSide(side));
     }
 
-    private static void setSecurityIdSource(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+    private static void checkSecurityIdSource(Document fixmlMessage) throws JaxenException, FixmlParserException {
         Optional<Attribute> instrumentIdSource = getAttribute(fixmlMessage, INSTRUMENT_ID_SOURCE_XPATH);
-        allocationReport.setInstrumentType(deriveSecurityIdSource(instrumentIdSource));
+
+        String value = instrumentIdSource.get().getValue();
+
+        if (!SEDOL_FIX_SOURCE_ID.equals(value)) {
+            throw new FixmlParserException("Only SEDOL security id is supported");
+        }
     }
 
     private static void setSecurityId(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
@@ -151,11 +157,6 @@ class FixmlMessageParser {
     private static AllocationStatus deriveAllocationStatus(Optional<Attribute> status) {
         String value = status.get().getValue();
         return AllocationStatus.getAllocationStatus(value);
-    }
-
-    private static InstrumentType deriveSecurityIdSource(Optional<Attribute> instrumentIdSource) {
-        String value = instrumentIdSource.get().getValue();
-        return InstrumentType.getInstrumentType(value);
     }
 
     private static TransactionType deriveTransactionType(Optional<Attribute> transactionType) {

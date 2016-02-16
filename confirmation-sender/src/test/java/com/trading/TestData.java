@@ -17,7 +17,6 @@ class TestData {
         allocationReport.setAllocationId(allocationId);
         allocationReport.setTransactionType(TransactionType.NEW);
         allocationReport.setSecurityId("2000019");
-        allocationReport.setInstrumentType(InstrumentType.SEDOL);
 
         allocationReport.setPrice(BigDecimal.valueOf(45.124));
         allocationReport.setQuantity(1234);

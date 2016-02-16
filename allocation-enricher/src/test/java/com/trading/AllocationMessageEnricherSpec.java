@@ -26,7 +26,7 @@ public class AllocationMessageEnricherSpec {
 
     @Test(expected = IOException.class)
     public void throws_exception_if_cannot_return_instrument_details() throws Exception {
-        when(instrumentsApi.getInstrumentDetails(any(), any())).thenReturn(null);
+        when(instrumentsApi.getInstrumentDetails(any())).thenReturn(null);
         enricher.process(TestData.allocationReport());
     }
 
@@ -35,7 +35,7 @@ public class AllocationMessageEnricherSpec {
         setupInstrumentsApi();
 
         enricher.process(TestData.allocationReport());
-        verify(instrumentsApi).getInstrumentDetails("2000019", InstrumentType.SEDOL);
+        verify(instrumentsApi).getInstrumentDetails("2000019");
     }
 
     @Test
@@ -75,6 +75,6 @@ public class AllocationMessageEnricherSpec {
 
         when(instrumentDetails.getTicker()).thenReturn("AMZN");
 
-        when(instrumentsApi.getInstrumentDetails(any(), any())).thenReturn(instrumentDetails);
+        when(instrumentsApi.getInstrumentDetails(any())).thenReturn(instrumentDetails);
     }
 }
