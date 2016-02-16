@@ -20,7 +20,6 @@ class TestData {
 
         allocationReport.setPrice(BigDecimal.valueOf(45.124));
         allocationReport.setQuantity(1234);
-        allocationReport.setStatus(AllocationStatus.ACCEPTED);
         allocationReport.setTradeDate(ZonedDateTime.of(2016, 6, 3, 0, 0, 0, 0, ZoneId.of("GMT")));
         allocationReport.setTradeSide(tradeSide);
 

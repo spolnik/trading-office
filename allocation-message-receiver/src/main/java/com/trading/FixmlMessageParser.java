@@ -52,7 +52,7 @@ class FixmlMessageParser {
             checkSecurityIdSource(fixmlMessage);
             setTradeSide(fixmlMessage, allocationReport);
             setQuantity(fixmlMessage, allocationReport);
-            setStatus(fixmlMessage, allocationReport);
+            setStatus(fixmlMessage);
             setPrice(fixmlMessage, allocationReport);
             setTradeDate(fixmlMessage, allocationReport);
             setExchange(fixmlMessage, allocationReport);
@@ -109,9 +109,14 @@ class FixmlMessageParser {
         allocationReport.setPrice(new BigDecimal(price.get().getValue()));
     }
 
-    private static void setStatus(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+    private static void setStatus(Document fixmlMessage) throws JaxenException, FixmlParserException {
         Optional<Attribute> status = getAttribute(fixmlMessage, ALLOCATION_STATUS_XPATH);
-        allocationReport.setStatus(deriveAllocationStatus(status));
+
+        String value = status.get().getValue();
+
+        if (!"3".equals(value)) {
+            throw new FixmlParserException("Only allocations with Received status are allowed");
+        }
     }
 
     private static void setQuantity(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException, DataConversionException {
@@ -152,11 +157,6 @@ class FixmlMessageParser {
     private static TradeSide deriveTradeSide(Optional<Attribute> side) {
         String value = side.get().getValue();
         return TradeSide.getTradeSide(value);
-    }
-
-    private static AllocationStatus deriveAllocationStatus(Optional<Attribute> status) {
-        String value = status.get().getValue();
-        return AllocationStatus.getAllocationStatus(value);
     }
 
     private static TransactionType deriveTransactionType(Optional<Attribute> transactionType) {

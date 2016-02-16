@@ -77,11 +77,6 @@ public class FixmlMessageParserSpec {
     }
 
     @Test
-    public void parses_allocation_status() throws Exception {
-        assertThat(allocationReport.getStatus()).isEqualTo(AllocationStatus.RECEIVED);
-    }
-
-    @Test
     public void parses_price() throws Exception {
         assertThat(allocationReport.getPrice()).isEqualTo(BigDecimal.valueOf(57.5054673));
     }

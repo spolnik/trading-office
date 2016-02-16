@@ -15,7 +15,6 @@ public class AllocationReport implements Serializable {
     private TradeSide tradeSide;
     private ZonedDateTime tradeDate;
     private int quantity;
-    private AllocationStatus status;
     private BigDecimal price;
     private Party counterparty;
     private Party executingParty;
@@ -77,14 +76,6 @@ public class AllocationReport implements Serializable {
         this.quantity = quantity;
     }
 
-    public AllocationStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(AllocationStatus status) {
-        this.status = status;
-    }
-
     public BigDecimal getPrice() {
         return price;
     }
@@ -127,7 +118,6 @@ public class AllocationReport implements Serializable {
                 .add("tradeSide", tradeSide)
                 .add("tradeDate", tradeDate)
                 .add("quantity", quantity)
-                .add("status", status)
                 .add("price", price)
                 .add("exchange", exchange)
                 .add("counterparty", counterparty)

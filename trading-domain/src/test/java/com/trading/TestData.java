@@ -19,7 +19,6 @@ public class TestData {
         allocationReport.setTradeDate(tradeDate);
 
         allocationReport.setQuantity(10);
-        allocationReport.setStatus(AllocationStatus.RECEIVED);
         allocationReport.setPrice(BigDecimal.valueOf(7.89));
 
         allocationReport.setExchange(exchange());

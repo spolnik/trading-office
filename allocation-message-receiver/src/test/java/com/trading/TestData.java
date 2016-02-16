@@ -15,7 +15,6 @@ class TestData {
         allocationReport.setSecurityId("2000019");
         allocationReport.setTradeSide(TradeSide.BUY);
         allocationReport.setQuantity(200);
-        allocationReport.setStatus(AllocationStatus.RECEIVED);
         allocationReport.setPrice(BigDecimal.valueOf(57.5054673));
         allocationReport.setTradeDate(ZonedDateTime.of(2016, 6, 3, 0, 0, 0, 0, ZoneId.of("GMT")));
         allocationReport.setExchange(exchange());
