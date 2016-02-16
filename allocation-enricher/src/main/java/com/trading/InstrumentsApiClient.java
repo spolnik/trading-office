@@ -20,7 +20,7 @@ class InstrumentsApiClient implements InstrumentsApi {
     }
 
     @Override
-    public InstrumentDetails getInstrumentDetails(String securityId, InstrumentType instrumentType) {
+    public InstrumentDetails getInstrumentDetails(String securityId) {
 
         String url = String.format("%s/api/instruments/sedol/%s", instrumentServiceUrl, securityId);
         LOG.info("Getting instrument details from: " + url);

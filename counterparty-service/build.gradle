@@ -4,10 +4,13 @@ dependencies {
     compile libs.spring.boot_web,
             libs.spring.boot_actuator,
             project(":trading-domain"),
-            libs.csveed
+            libs.csveed,
+            libs.springfox.swagger_ui,
+            libs.springfox.swagger2
 
     testCompile libs.test.junit,
-            libs.test.assertj
+            libs.test.assertj,
+            libs.test.mockito
 }
 
 jar {

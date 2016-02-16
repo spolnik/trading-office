@@ -5,9 +5,7 @@ class TestData {
         AllocationReport allocationReport = new AllocationReport();
 
         allocationReport.setAllocationId("1234567");
-        allocationReport.setTransactionType(TransactionType.NEW);
         allocationReport.setSecurityId("2000019");
-        allocationReport.setInstrumentType(InstrumentType.SEDOL);
 
         Party counterparty = new Party();
         counterparty.setId("CUSTUS");

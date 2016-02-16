@@ -1,11 +1,12 @@
 apply plugin: 'spring-boot'
 
 dependencies {
-    compile project(":trading-domain"),
-            libs.spring.boot_web,
+    compile libs.spring.boot_web,
             libs.spring.boot_actuator,
             libs.okhttp,
-            libs.jackson_annotations
+            libs.jackson_annotations,
+            libs.springfox.swagger_ui,
+            libs.springfox.swagger2
 
     testCompile libs.test.junit,
             libs.test.mockito,

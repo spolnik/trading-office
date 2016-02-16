@@ -4,15 +4,13 @@ import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-class TestData {
+public class TestData {
 
     static AllocationReport allocationReport() {
         AllocationReport allocationReport = new AllocationReport();
 
         allocationReport.setAllocationId("12345");
-        allocationReport.setTransactionType(TransactionType.NEW);
         allocationReport.setSecurityId("54321");
-        allocationReport.setInstrumentType(InstrumentType.SEDOL);
         allocationReport.setInstrument(instrument());
         allocationReport.setTradeSide(TradeSide.BUY);
 
@@ -20,7 +18,6 @@ class TestData {
         allocationReport.setTradeDate(tradeDate);
 
         allocationReport.setQuantity(10);
-        allocationReport.setStatus(AllocationStatus.RECEIVED);
         allocationReport.setPrice(BigDecimal.valueOf(7.89));
 
         allocationReport.setExchange(exchange());
@@ -30,7 +27,7 @@ class TestData {
         return allocationReport;
     }
 
-    private static Instrument instrument() {
+    static Instrument instrument() {
         Instrument instrument = new Instrument();
 
         instrument.setCurrency("USD");
@@ -41,13 +38,12 @@ class TestData {
         return instrument;
     }
 
-    private static Exchange exchange() {
+    static Exchange exchange() {
         Exchange exchange = new Exchange();
 
         exchange.setAcronym("NASDAQ");
         exchange.setCity("NEW YORK");
         exchange.setCountry("UNITED STATES OF AMERICA");
-        exchange.setComments("Comment");
         exchange.setCountryCode("US");
         exchange.setName("NASDAQ - ALL MARKETS");
         exchange.setMic("XNAS");
@@ -63,7 +59,7 @@ class TestData {
         return party;
     }
 
-    private static Party executingParty() {
+    static Party executingParty() {
         Party party = new Party();
         party.setId("TROF");
         party.setName("Trading Office Ltd.");

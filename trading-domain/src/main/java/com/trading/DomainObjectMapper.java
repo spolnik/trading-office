@@ -27,10 +27,6 @@ class DomainObjectMapper {
         return OBJECT_MAPPER.readValue(json, Confirmation.class);
     }
 
-    public InstrumentDetails toInstrumentDetails(String json) throws IOException {
-        return OBJECT_MAPPER.readValue(json, InstrumentDetails.class);
-    }
-
     public Instrument toInstrument(String json) throws IOException {
         return OBJECT_MAPPER.readValue(json, Instrument.class);
     }

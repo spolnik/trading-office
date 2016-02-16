@@ -32,7 +32,7 @@ class ConfirmationMessageListener {
         this.confirmationApi = confirmationApi;
     }
 
-    @JmsListener(destination = Queues.ENRICHED_JSON_ALLOCATION_REPORT_QUEUE)
+    @JmsListener(destination = "enriched.json.allocation.report")
     public void onMessage(String message) throws IOException {
         AllocationReport allocationReport = objectMapper().toAllocationReport(message);
         LOG.info("Received: " + allocationReport);

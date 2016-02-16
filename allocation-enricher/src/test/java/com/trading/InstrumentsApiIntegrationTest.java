@@ -14,7 +14,7 @@ public class InstrumentsApiIntegrationTest {
     @Test
     public void returns_instrument_details_for_given_sedol_id() throws Exception {
         InstrumentDetails instrumentDetails = instrumentsApi.getInstrumentDetails(
-                "2000019", InstrumentType.SEDOL
+                "2000019"
         );
 
         assertThat(instrumentDetails).isEqualToComparingFieldByField(instrumentDetails());

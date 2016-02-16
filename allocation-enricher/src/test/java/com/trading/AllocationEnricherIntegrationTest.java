@@ -65,12 +65,12 @@ public class AllocationEnricherIntegrationTest {
         JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory());
 
         jmsTemplate.send(
-                Queues.RECEIVED_JSON_ALLOCATION_REPORT_QUEUE,
+                "received.json.allocation.report",
                 session -> session.createTextMessage(allocationReportAsJson)
         );
 
         return (String) jmsTemplate.receiveAndConvert(
-                Queues.ENRICHED_JSON_ALLOCATION_REPORT_QUEUE
+                "enriched.json.allocation.report"
         );
     }
 

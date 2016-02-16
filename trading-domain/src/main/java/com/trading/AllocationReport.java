@@ -9,14 +9,11 @@ import java.time.ZonedDateTime;
 public class AllocationReport implements Serializable {
 
     private String allocationId;
-    private TransactionType transactionType;
     private String securityId;
-    private InstrumentType instrumentType;
     private Instrument instrument;
     private TradeSide tradeSide;
     private ZonedDateTime tradeDate;
     private int quantity;
-    private AllocationStatus status;
     private BigDecimal price;
     private Party counterparty;
     private Party executingParty;
@@ -30,28 +27,12 @@ public class AllocationReport implements Serializable {
         this.allocationId = allocationId;
     }
 
-    public TransactionType getTransactionType() {
-        return transactionType;
-    }
-
-    public void setTransactionType(TransactionType transactionType) {
-        this.transactionType = transactionType;
-    }
-
     public String getSecurityId() {
         return securityId;
     }
 
     public void setSecurityId(String securityId) {
         this.securityId = securityId;
-    }
-
-    public InstrumentType getInstrumentType() {
-        return instrumentType;
-    }
-
-    public void setInstrumentType(InstrumentType instrumentType) {
-        this.instrumentType = instrumentType;
     }
 
     public Instrument getInstrument() {
@@ -84,14 +65,6 @@ public class AllocationReport implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public AllocationStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(AllocationStatus status) {
-        this.status = status;
     }
 
     public BigDecimal getPrice() {
@@ -130,14 +103,11 @@ public class AllocationReport implements Serializable {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("allocationId", allocationId)
-                .add("transactionType", transactionType)
                 .add("securityId", securityId)
-                .add("instrumentType", instrumentType)
                 .add("instrument", instrument)
                 .add("tradeSide", tradeSide)
                 .add("tradeDate", tradeDate)
                 .add("quantity", quantity)
-                .add("status", status)
                 .add("price", price)
                 .add("exchange", exchange)
                 .add("counterparty", counterparty)

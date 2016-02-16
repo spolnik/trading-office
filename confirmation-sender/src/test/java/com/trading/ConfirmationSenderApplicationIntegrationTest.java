@@ -46,7 +46,7 @@ public class ConfirmationSenderApplicationIntegrationTest {
 
         JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory());
         jmsTemplate.send(
-                Queues.ENRICHED_JSON_ALLOCATION_REPORT_QUEUE,
+                "enriched.json.allocation.report",
                 session -> session.createTextMessage(allocationReportAsJson)
         );
 

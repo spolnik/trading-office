@@ -1,13 +1,14 @@
 package com.trading
 
+import groovyx.net.http.RESTClient
 import org.apache.activemq.ActiveMQConnectionFactory
 import org.apache.activemq.transport.InactivityIOException
 import org.slf4j.LoggerFactory
 import org.springframework.jms.connection.SingleConnectionFactory
 import org.springframework.jms.core.JmsTemplate
 import org.springframework.jms.core.MessageCreator
-import org.springframework.web.client.RestTemplate
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import javax.jms.JMSException
 import javax.jms.Message
@@ -20,10 +21,12 @@ class TradingOfficeSpecification extends Specification {
 
     def allocationReportId = UUID.randomUUID().toString()
 
-    def restTemplate = new RestTemplate()
+    def confirmationServiceClient = new RESTClient("http://confirmation-service.herokuapp.com/")
+
+    def jmsTemplate = new JmsTemplate(connectionFactory())
 
     def setup() {
-        healthCheck(herokuApp("allocation-message-translator"))
+        healthCheck(herokuApp("allocation-message-receiver"))
         healthCheck(herokuApp("allocation-enricher"))
         healthCheck(herokuApp("confirmation-sender"))
         healthCheck(herokuApp("confirmation-service"))
@@ -33,25 +36,27 @@ class TradingOfficeSpecification extends Specification {
     }
 
     def herokuApp(String name) {
-        "http://" + name + ".herokuapp.com/health"
+        "http://${name}.herokuapp.com/"
     }
 
     def healthCheck(String url) {
-        log.info(url + ":")
-        def status = restTemplate.getForObject(url, String.class)
-        log.info(status)
+
+        def status = new RESTClient(url)
+                .get(path: "health")
+                .responseData.diskSpace.status.toString()
+
+        log.info("$url - $status")
     }
 
-    def "For new trade we generate confirmation as pdf"() {
+    @Unroll
+    def "For new trade with exchange mic as #micCode, we generate confirmation as #confirmationType"(String micCode, String confirmationType) {
         given: "A new trade with FIXML representation"
-        def fixmlAllocationMessage = String.format(fixmlAllocationMessage(), allocationReportId)
+        def fixmlAllocationMessage = String.format(fixmlAllocationMessage(), allocationReportId, micCode)
 
         when: "We receive FIXML message describing allocation for a trade"
 
-        def jmsTemplate = new JmsTemplate(connectionFactory())
-
         jmsTemplate.send(
-                Queues.INCOMING_FIXML_ALLOCATION_REPORT_QUEUE,
+                "incoming.fixml.allocation.report",
                 messageCreator(fixmlAllocationMessage)
         )
 
@@ -60,23 +65,29 @@ class TradingOfficeSpecification extends Specification {
         then: "New confirmation is generated as PDF"
 
         try {
-            assertConfirmation()
+            assertConfirmation(confirmationType)
         } catch (InactivityIOException ex) {
-            log.warn(ex.getMessage())
-            log.warn("Retry")
+            log.error(ex.getMessage())
+            log.info("Retry")
             TimeUnit.SECONDS.sleep(5)
-            assertConfirmation()
+            assertConfirmation(confirmationType)
         }
+
+        where:
+        micCode | confirmationType
+        "XNAS"  | "EMAIL"
+        "XLON"  | "SWIFT"
     }
 
-    private void assertConfirmation() {
-        def confirmation = restTemplate.getForObject(
-                "http://confirmation-service.herokuapp.com/api/confirmation?id=" + allocationReportId,
-                Confirmation.class
-        );
+    def assertConfirmation(String confirmationType) {
 
-        confirmation.getContent().size() > 100
-        confirmation.id() == allocationReportId
+        def confirmation = confirmationServiceClient.get(path: "api/confirmation/" + allocationReportId).responseData
+
+        log.info("Confirmation data: ${new String((byte[]) confirmation.content)}")
+
+        confirmation.content.size() > 100
+        confirmation.allocationReport.allocationId == allocationReportId
+        confirmation.confirmationType == confirmationType
     }
 
     def messageCreator(String fixmlAllocationMessage) {
@@ -90,7 +101,6 @@ class TradingOfficeSpecification extends Specification {
             }
         }
     }
-
 
     def connectionFactory() {
 
@@ -115,7 +125,7 @@ class TradingOfficeSpecification extends Specification {
         <Instrmt ID="2000019" Src="2"/>
 
         <Pty R="1" Src="D" ID="TROF" />
-        <Pty R="22" Src="G" ID="XNAS" />
+        <Pty R="22" Src="G" ID="%s" />
         <Pty R="3" Src="D" ID="CUSTUS" />
         <Amt Typ="CRES"
              Amt="10.93" Ccy="EUR"/>

@@ -1,8 +1,8 @@
 ext {
     libs = libsMap(
-            slf4j_api: 'org.slf4j:slf4j-api:1.7.14',
+            slf4j_api: 'org.slf4j:slf4j-api:1.7.16',
             log4j: 'log4j:log4j:1.2.17',
-            slf4j_log4j12: 'org.slf4j:slf4j-log4j12:1.7.14',
+            slf4j_log4j12: 'org.slf4j:slf4j-log4j12:1.7.16',
             jaxen: 'jaxen:jaxen:1.1.6',
             jdom: 'jdom:jdom:1.1',
             jackson: 'com.fasterxml.jackson.core:jackson-core:2.6.3',
@@ -25,20 +25,24 @@ ext {
             test: [
                     junit: 'junit:junit:4.12',
                     assertj: 'org.assertj:assertj-core:3.3.0',
-                    mockito: 'org.mockito:mockito-core:2.0.41-beta'
+                    mockito: 'org.mockito:mockito-core:2.0.42-beta'
             ],
             jasperreports: dependencies.create('net.sf.jasperreports:jasperreports:6.2.0') {
                 exclude group: 'org.olap4j', module: 'olap4j'
             },
             itext: 'com.lowagie:itext:2.1.7',
             finance_yahoo: 'com.yahoofinance-api:YahooFinanceAPI:2.0.1',
-            okhttp: 'com.squareup.okhttp3:okhttp:3.0.1',
+            okhttp: 'com.squareup.okhttp3:okhttp:3.1.2',
             swift: dependencies.create('com.prowidesoftware:pw-swift-core:SRU2015-7.7') {
                 exclude group: 'javax.xml', module: 'jaxb-api'
                 exclude group: 'javax.xml', module: 'jaxb-impl'
             },
             jaxb: 'javax.xml.bind:jaxb-api:2.2.12',
-            csveed: 'org.csveed:csveed:0.4.2'
+            csveed: 'org.csveed:csveed:0.4.2',
+            springfox: [
+                    swagger_ui: 'io.springfox:springfox-swagger-ui:2.3.1',
+                    swagger2: 'io.springfox:springfox-swagger2:2.3.1'
+            ]
     )
 }
 
