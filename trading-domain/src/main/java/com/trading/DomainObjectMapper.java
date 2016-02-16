@@ -2,7 +2,6 @@ package com.trading;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.IOException;
 
@@ -13,10 +12,6 @@ class DomainObjectMapper {
 
     private DomainObjectMapper() {
         // empty
-    }
-
-    static {
-        OBJECT_MAPPER.registerModule(new JavaTimeModule());
     }
 
     public AllocationReport toAllocationReport(String json) throws IOException {

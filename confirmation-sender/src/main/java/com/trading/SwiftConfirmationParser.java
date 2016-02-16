@@ -4,6 +4,7 @@ import com.prowidesoftware.swift.model.field.*;
 import com.prowidesoftware.swift.model.mt.mt5xx.MT518;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
@@ -72,7 +73,13 @@ public class SwiftConfirmationParser implements ConfirmationParser {
 
     private static Field98A tradeDate(AllocationReport allocationReport) {
         Field98A f98a = new Field98A();
-        f98a.setDate(allocationReport.getTradeDate().format(formatter));
+
+        LocalDate tradeDate = LocalDate.parse(
+                allocationReport.getTradeDate(),
+                DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        );
+
+        f98a.setDate(tradeDate.format(formatter));
         f98a.setQualifier(MT518.TRAD);
         return f98a;
     }

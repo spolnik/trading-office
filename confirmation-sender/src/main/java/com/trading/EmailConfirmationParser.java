@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Locale;
@@ -60,7 +61,13 @@ class EmailConfirmationParser implements ConfirmationParser {
         map.put("QUANTITY", Integer.toString(allocationReport.getQuantity()));
         map.put("PRICE", allocationReport.getPrice().toString());
         map.put("SIDE", allocationReport.getTradeSide().toString());
-        map.put("TRADE_DATE", allocationReport.getTradeDate().format(DATE_TIME_FORMATTER));
+
+        LocalDate tradeDate = LocalDate.parse(
+                allocationReport.getTradeDate(),
+                DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        );
+
+        map.put("TRADE_DATE", tradeDate.format(DATE_TIME_FORMATTER));
 
         return map;
     }

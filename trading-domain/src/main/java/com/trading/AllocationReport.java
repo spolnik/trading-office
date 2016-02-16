@@ -4,7 +4,6 @@ import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
 
 public class AllocationReport implements Serializable {
 
@@ -12,7 +11,7 @@ public class AllocationReport implements Serializable {
     private String securityId;
     private Instrument instrument;
     private TradeSide tradeSide;
-    private ZonedDateTime tradeDate;
+    private String tradeDate;
     private int quantity;
     private BigDecimal price;
     private Party counterparty;
@@ -51,11 +50,11 @@ public class AllocationReport implements Serializable {
         this.tradeSide = tradeSide;
     }
 
-    public ZonedDateTime getTradeDate() {
+    public String getTradeDate() {
         return tradeDate;
     }
 
-    public void setTradeDate(ZonedDateTime tradeDate) {
+    public void setTradeDate(String tradeDate) {
         this.tradeDate = tradeDate;
     }
 

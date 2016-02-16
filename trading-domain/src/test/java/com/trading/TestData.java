@@ -1,8 +1,6 @@
 package com.trading;
 
 import java.math.BigDecimal;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
 public class TestData {
 
@@ -13,9 +11,7 @@ public class TestData {
         allocationReport.setSecurityId("54321");
         allocationReport.setInstrument(instrument());
         allocationReport.setTradeSide(TradeSide.BUY);
-
-        ZonedDateTime tradeDate = ZonedDateTime.of(2016, 1, 10, 10, 10, 10, 0, ZoneId.of("GMT"));
-        allocationReport.setTradeDate(tradeDate);
+        allocationReport.setTradeDate("2016-06-03");
 
         allocationReport.setQuantity(10);
         allocationReport.setPrice(BigDecimal.valueOf(7.89));
