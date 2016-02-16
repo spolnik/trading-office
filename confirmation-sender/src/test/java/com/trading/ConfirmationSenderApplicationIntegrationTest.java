@@ -1,5 +1,6 @@
 package com.trading;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.broker.BrokerService;
 import org.junit.After;
@@ -13,13 +14,14 @@ import javax.jms.ConnectionFactory;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import static com.trading.DomainObjectMapper.objectMapper;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Configuration
 public class ConfirmationSenderApplicationIntegrationTest {
 
     private BrokerService brokerService;
+
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private static final String DUMMY_ALLOCATION_ID = UUID.randomUUID().toString();
 
@@ -42,7 +44,7 @@ public class ConfirmationSenderApplicationIntegrationTest {
 
         AllocationReport allocationReport = TestData.allocationReport(DUMMY_ALLOCATION_ID);
 
-        String allocationReportAsJson = objectMapper().toJson(allocationReport);
+        String allocationReportAsJson = OBJECT_MAPPER.writeValueAsString(allocationReport);
 
         JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory());
         jmsTemplate.send(

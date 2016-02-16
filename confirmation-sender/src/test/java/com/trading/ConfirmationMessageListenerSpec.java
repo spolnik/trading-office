@@ -1,18 +1,20 @@
 package com.trading;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.trading.DomainObjectMapper.objectMapper;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 
 public class ConfirmationMessageListenerSpec {
+
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private ConfirmationMessageListener listener;
 
@@ -65,7 +67,7 @@ public class ConfirmationMessageListenerSpec {
     }
 
     private String allocationReportAsJson() throws JsonProcessingException {
-        return objectMapper().toJson(TestData.allocationReport(UUID.randomUUID().toString()));
+        return OBJECT_MAPPER.writeValueAsString(TestData.allocationReport(UUID.randomUUID().toString()));
     }
 
     private void setupParser(ConfirmationParser parser) {
