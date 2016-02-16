@@ -16,13 +16,13 @@ public class InstrumentsServiceIntegrationTest {
     @Test
     public void service_returns_instrument_details_for_given_sedol_id() throws Exception {
         RestTemplate restTemplate = new RestTemplate();
-        InstrumentDetails instrumentDetails = restTemplate.getForObject(
+        OpenFigiResponse instrumentDetails = restTemplate.getForObject(
                 "http://localhost:9005/api/instruments/sedol/2000019",
-                InstrumentDetails.class
+                OpenFigiResponse.class
         );
 
         assertThat(instrumentDetails).isEqualToComparingFieldByField(
-                TestData.instrumentDetails()
+                TestData.openFigiResponse()
         );
     }
 }

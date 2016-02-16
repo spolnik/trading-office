@@ -33,10 +33,10 @@ public class InstrumentsControllerSpec {
     @Test
     public void returns_instrument_based_on_sedol() throws Exception {
 
-        InstrumentDetails instrumentDetails = mock(InstrumentDetails.class);
+        OpenFigiResponse instrumentDetails = mock(OpenFigiResponse.class);
         when(instrumentRepository.queryBySedol(DUMMY)).thenReturn(instrumentDetails);
 
-        InstrumentDetails result = controller.getInstrumentDetailsBySedol(DUMMY);
+        OpenFigiResponse result = controller.getInstrumentDetailsBySedol(DUMMY);
 
         assertThat(result).isEqualTo(instrumentDetails);
     }

@@ -36,7 +36,9 @@ class FixmlMessageParser {
     private static final String EXCHANGE_MIC_CODE_XPATH = "/FIXML/AllocRpt/Pty[@R=\"22\" and @Src=\"G\"]/@ID";
     private static final String COUNTERPARTY_ID_XPATH = "/FIXML/AllocRpt/Pty[@R=\"3\" and @Src=\"D\"]/@ID";
     private static final String EXECUTING_PARTY_ID_XPATH = "/FIXML/AllocRpt/Pty[@R=\"1\" and @Src=\"D\"]/@ID";
-    private static final String SEDOL_FIX_SOURCE_ID = "2";
+    private static final String FIX_SEDOL_SOURCE_ID = "2";
+    private static final String FIX_RECEIVED_ALLOCATION_STATUS = "3";
+    private static final String FIX_NEW_TRANSACTION_TYPE = "0";
 
     public AllocationReport parse(String message) throws FixmlParserException {
 
@@ -47,12 +49,12 @@ class FixmlMessageParser {
             AllocationReport allocationReport = new AllocationReport();
 
             setId(fixmlMessage, allocationReport);
-            setTransactionType(fixmlMessage, allocationReport);
+            checkTransactionType(fixmlMessage);
             setSecurityId(fixmlMessage, allocationReport);
             checkSecurityIdSource(fixmlMessage);
             setTradeSide(fixmlMessage, allocationReport);
             setQuantity(fixmlMessage, allocationReport);
-            setStatus(fixmlMessage);
+            checkStatus(fixmlMessage);
             setPrice(fixmlMessage, allocationReport);
             setTradeDate(fixmlMessage, allocationReport);
             setExchange(fixmlMessage, allocationReport);
@@ -109,12 +111,12 @@ class FixmlMessageParser {
         allocationReport.setPrice(new BigDecimal(price.get().getValue()));
     }
 
-    private static void setStatus(Document fixmlMessage) throws JaxenException, FixmlParserException {
+    private static void checkStatus(Document fixmlMessage) throws JaxenException, FixmlParserException {
         Optional<Attribute> status = getAttribute(fixmlMessage, ALLOCATION_STATUS_XPATH);
 
         String value = status.get().getValue();
 
-        if (!"3".equals(value)) {
+        if (!FIX_RECEIVED_ALLOCATION_STATUS.equals(value)) {
             throw new FixmlParserException("Only allocations with Received status are allowed");
         }
     }
@@ -134,7 +136,7 @@ class FixmlMessageParser {
 
         String value = instrumentIdSource.get().getValue();
 
-        if (!SEDOL_FIX_SOURCE_ID.equals(value)) {
+        if (!FIX_SEDOL_SOURCE_ID.equals(value)) {
             throw new FixmlParserException("Only SEDOL security id is supported");
         }
     }
@@ -149,19 +151,19 @@ class FixmlMessageParser {
         allocationReport.setAllocationId(id.get().getValue());
     }
 
-    private static void setTransactionType(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+    private static void checkTransactionType(Document fixmlMessage) throws JaxenException, FixmlParserException {
         Optional<Attribute> transactionType = getAttribute(fixmlMessage, TRANSACTION_TYPE_XPATH);
-        allocationReport.setTransactionType(deriveTransactionType(transactionType));
+
+        String value = transactionType.get().getValue();
+
+        if (!FIX_NEW_TRANSACTION_TYPE.equals(value)) {
+            throw new FixmlParserException("Only NEW Transaction Type is allowed.");
+        }
     }
 
     private static TradeSide deriveTradeSide(Optional<Attribute> side) {
         String value = side.get().getValue();
         return TradeSide.getTradeSide(value);
-    }
-
-    private static TransactionType deriveTransactionType(Optional<Attribute> transactionType) {
-        String value = transactionType.get().getValue();
-        return TransactionType.getTransactionType(value);
     }
 
     @SuppressWarnings("all")

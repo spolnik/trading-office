@@ -1,13 +1,13 @@
 package com.trading;
 
 class TestData {
-    static InstrumentDetails instrumentDetails() {
-        InstrumentDetails instrumentDetails = new InstrumentDetails();
+    static OpenFigiResponse openFigiResponse() {
+        OpenFigiResponse openFigiResponse = new OpenFigiResponse();
 
-        instrumentDetails.setTicker("AMZN");
-        instrumentDetails.setName("AMAZON.COM INC");
-        instrumentDetails.setSecurityType("Common Stock");
+        openFigiResponse.setTicker("AMZN");
+        openFigiResponse.setName("AMAZON.COM INC");
+        openFigiResponse.setSecurityType("Common Stock");
 
-        return instrumentDetails;
+        return openFigiResponse;
     }
 }

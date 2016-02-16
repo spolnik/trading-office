@@ -21,14 +21,13 @@ public class OpenFigiInstrumentsRepository implements InstrumentsRepository {
     private final OkHttpClient client = new OkHttpClient();
 
     @Override
-    public InstrumentDetails queryBySedol(String sedol) {
+    public OpenFigiResponse queryBySedol(String sedol) {
 
         String requestAsJson = request(sedol);
 
         try {
             String responseAsJson = post(requestAsJson);
-            OpenFigiResponse response = parseResponse(responseAsJson);
-            return response.toInstrumentDetails();
+            return parseResponse(responseAsJson);
         } catch (IOException ioe) {
             LOG.error(ioe.getMessage(), ioe);
         }

@@ -22,7 +22,7 @@ class InstrumentsController {
 
     @ApiOperation(value = "getInstrumentDetails", nickname = "getInstrumentDetails")
     @RequestMapping(value = "/instruments/sedol/{id}", method = RequestMethod.GET)
-    public InstrumentDetails getInstrumentDetailsBySedol(
+    public OpenFigiResponse getInstrumentDetailsBySedol(
             @ApiParam(name = "id", value = "Sedol id", defaultValue = "2000019", required = true)
             @PathVariable String id
     ) {

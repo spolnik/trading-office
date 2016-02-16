@@ -9,7 +9,6 @@ import java.time.ZonedDateTime;
 public class AllocationReport implements Serializable {
 
     private String allocationId;
-    private TransactionType transactionType;
     private String securityId;
     private Instrument instrument;
     private TradeSide tradeSide;
@@ -26,14 +25,6 @@ public class AllocationReport implements Serializable {
 
     public void setAllocationId(String allocationId) {
         this.allocationId = allocationId;
-    }
-
-    public TransactionType getTransactionType() {
-        return transactionType;
-    }
-
-    public void setTransactionType(TransactionType transactionType) {
-        this.transactionType = transactionType;
     }
 
     public String getSecurityId() {
@@ -112,7 +103,6 @@ public class AllocationReport implements Serializable {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("allocationId", allocationId)
-                .add("transactionType", transactionType)
                 .add("securityId", securityId)
                 .add("instrument", instrument)
                 .add("tradeSide", tradeSide)

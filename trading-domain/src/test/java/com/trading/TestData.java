@@ -10,7 +10,6 @@ public class TestData {
         AllocationReport allocationReport = new AllocationReport();
 
         allocationReport.setAllocationId("12345");
-        allocationReport.setTransactionType(TransactionType.NEW);
         allocationReport.setSecurityId("54321");
         allocationReport.setInstrument(instrument());
         allocationReport.setTradeSide(TradeSide.BUY);

@@ -19,7 +19,7 @@ public class AllocationMessageReceiverListenerSpec {
         listener = new AllocationMessageReceiverListener();
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test(expected = FixmlParserException.class)
     public void rejects_replace_transactions_as_unsupported() throws Exception {
         String allocationReportMessageWithReplaceTransaction =
                 fixmlAllocationReportMessage(TRANSACTION_TYPE_REPLACE, SECURITY_SOURCE_ID_SEDOL);
@@ -27,7 +27,7 @@ public class AllocationMessageReceiverListenerSpec {
         listener.processAllocationReport(allocationReportMessageWithReplaceTransaction);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test(expected = FixmlParserException.class)
     public void rejects_cancel_transactions_as_unsupported() throws Exception {
         String allocationReportMessageWithCancelTransaction =
                 fixmlAllocationReportMessage(TRANSACTION_TYPE_CANCEL, SECURITY_SOURCE_ID_SEDOL);

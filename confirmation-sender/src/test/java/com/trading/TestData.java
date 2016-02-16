@@ -15,7 +15,6 @@ class TestData {
         AllocationReport allocationReport = new AllocationReport();
 
         allocationReport.setAllocationId(allocationId);
-        allocationReport.setTransactionType(TransactionType.NEW);
         allocationReport.setSecurityId("2000019");
 
         allocationReport.setPrice(BigDecimal.valueOf(45.124));

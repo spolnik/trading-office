@@ -40,11 +40,6 @@ public class FixmlMessageParserSpec {
     }
 
     @Test
-    public void parses_transaction_type() throws Exception {
-        assertThat(allocationReport.getTransactionType()).isEqualTo(TransactionType.NEW);
-    }
-
-    @Test
     public void parses_security_id() throws Exception {
         assertThat(allocationReport.getSecurityId()).isEqualTo("2000019");
     }
