@@ -50,6 +50,8 @@ Heroku: http://allocation-enricher.herokuapp.com/health
 
 Heroku: http://confirmation-sender.herokuapp.com/health
 
+![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/confirmation_sender.png)
+
 ## Instruments Service
 - spring boot web application
 - exposes REST endpoints for instrument data
