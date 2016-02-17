@@ -15,7 +15,6 @@
   <graph edgedefault="directed" id="G">
     <data key="d0"/>
     <node id="n0">
-      <data key="d5"/>
       <data key="d6">
         <y:SVGNode>
           <y:Geometry height="32.483882904052734" width="58.16804885864258" x="47.91597557067871" y="143.75805854797363"/>
@@ -36,7 +35,6 @@
       </data>
     </node>
     <node id="n1">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.bpmn.Artifact.withShadow">
           <y:Geometry height="24.0" width="35.0" x="194.5" y="148.0"/>
@@ -60,7 +58,6 @@
     </node>
     <node id="n2" yfiles.foldertype="group">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -89,7 +86,6 @@
       </data>
       <graph edgedefault="directed" id="n2:">
         <node id="n2::n0">
-          <data key="d5"/>
           <data key="d6">
             <y:SVGNode>
               <y:Geometry height="41.72100067138672" width="41.71900177001953" x="381.14049911499023" y="139.13949966430664"/>
@@ -110,7 +106,6 @@
           </data>
         </node>
         <node id="n2::n1">
-          <data key="d5"/>
           <data key="d6">
             <y:SVGNode>
               <y:Geometry height="41.72100067138672" width="41.71900177001953" x="381.14049911499023" y="245.27899932861328"/>
@@ -131,7 +126,6 @@
           </data>
         </node>
         <node id="n2::n2">
-          <data key="d5"/>
           <data key="d6">
             <y:SVGNode>
               <y:Geometry height="41.72100067138672" width="41.71900177001953" x="381.14049911499023" y="351.4184989929199"/>
@@ -155,7 +149,6 @@
     </node>
     <node id="n3">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
           <y:Geometry height="28.0" width="126.0" x="149.0" y="472.0601005554199"/>
@@ -177,7 +170,6 @@
     </node>
     <node id="n4" yfiles.foldertype="group">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -206,14 +198,12 @@
       </data>
       <graph edgedefault="directed" id="n4:">
         <node id="n4::n0">
-          <data key="d5"/>
           <data key="d6">
             <y:GenericNode configuration="BevelNode3">
               <y:Geometry height="58.0" width="238.0" x="596.5" y="129.75"/>
               <y:Fill color="#FF9900" transparent="false"/>
               <y:BorderStyle hasColor="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="16" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="41.6875" modelName="custom" textColor="#000000" visible="true" width="207.609375" x="15.1953125" y="8.15625">Allocation Report Receiver
-Jms Listener<y:LabelModel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="16" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="22.84375" modelName="custom" textColor="#000000" visible="true" width="207.609375" x="15.1953125" y="17.578125">Allocation Report Receiver<y:LabelModel>
                   <y:SmartNodeLabelModel distance="4.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -224,14 +214,12 @@ Jms Listener<y:LabelModel>
           </data>
         </node>
         <node id="n4::n1">
-          <data key="d5"/>
           <data key="d6">
             <y:GenericNode configuration="BevelNode3">
               <y:Geometry height="58.0" width="238.0" x="596.5" y="236.12289810180664"/>
               <y:Fill color="#FF9900" transparent="false"/>
               <y:BorderStyle hasColor="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="16" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="41.6875" modelName="custom" textColor="#000000" visible="true" width="206.4609375" x="15.76953125" y="8.15625">Allocation Report Enricher
-Jms Listener<y:LabelModel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="16" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="22.84375" modelName="custom" textColor="#000000" visible="true" width="206.4609375" x="15.76953125" y="17.578125">Allocation Report Enricher<y:LabelModel>
                   <y:SmartNodeLabelModel distance="4.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -242,14 +230,12 @@ Jms Listener<y:LabelModel>
           </data>
         </node>
         <node id="n4::n2">
-          <data key="d5"/>
           <data key="d6">
             <y:GenericNode configuration="BevelNode3">
               <y:Geometry height="58.0" width="238.0" x="596.5" y="342.0289993286133"/>
               <y:Fill color="#FF9900" transparent="false"/>
               <y:BorderStyle hasColor="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="16" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="41.6875" modelName="custom" textColor="#000000" visible="true" width="164.078125" x="36.9609375" y="8.15625">Confirmation Sender
-Jms Listener<y:LabelModel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="16" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="22.84375" modelName="custom" textColor="#000000" visible="true" width="164.078125" x="36.9609375" y="17.578125">Confirmation Sender<y:LabelModel>
                   <y:SmartNodeLabelModel distance="4.0"/>
                 </y:LabelModel>
                 <y:ModelParameter>
@@ -260,7 +246,6 @@ Jms Listener<y:LabelModel>
           </data>
         </node>
         <node id="n4::n3">
-          <data key="d5"/>
           <data key="d6">
             <y:GenericNode configuration="ShinyPlateNodeWithShadow">
               <y:Geometry height="73.75" width="238.0" x="596.5" y="447.9351005554199"/>
@@ -280,7 +265,6 @@ Rest Service<y:LabelModel>
       </graph>
     </node>
     <edge id="e0" source="n0" target="n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -291,7 +275,6 @@ Rest Service<y:LabelModel>
       </data>
     </edge>
     <edge id="e1" source="n1" target="n2::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -310,7 +293,6 @@ Rest Service<y:LabelModel>
       </data>
     </edge>
     <edge id="e2" source="n3" target="n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -329,7 +311,6 @@ Rest Service<y:LabelModel>
       </data>
     </edge>
     <edge id="e3" source="n2::n0" target="n4::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -348,7 +329,6 @@ Rest Service<y:LabelModel>
       </data>
     </edge>
     <edge id="e4" source="n4::n0" target="n2::n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -367,7 +347,6 @@ Rest Service<y:LabelModel>
       </data>
     </edge>
     <edge id="e5" source="n2::n1" target="n4::n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -386,7 +365,6 @@ Rest Service<y:LabelModel>
       </data>
     </edge>
     <edge id="e6" source="n4::n1" target="n2::n2">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -405,7 +383,6 @@ Rest Service<y:LabelModel>
       </data>
     </edge>
     <edge id="e7" source="n2::n2" target="n4::n2">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -424,7 +401,6 @@ Rest Service<y:LabelModel>
       </data>
     </edge>
     <edge id="n4::e0" source="n4::n2" target="n4::n3">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -443,7 +419,6 @@ Rest Service<y:LabelModel>
       </data>
     </edge>
     <edge id="e8" source="n4::n3" target="n3">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
