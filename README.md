@@ -56,9 +56,11 @@ Heroku: http://confirmation-sender.herokuapp.com/health
 - spring boot web application
 - exposes REST endpoints for instrument data
 - works in readonly mode
-- data consumed from instruments.json file
+- data consumed from [OpenFigi Api](https://openfigi.com/api)
 
 Heroku: http://instruments-service.herokuapp.com/swagger-ui.html
+
+![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/instruments_service.png)
 
 ## Financial Data Service
 - spring boot web application
@@ -81,6 +83,8 @@ Heroku: http://confirmation-service.herokuapp.com/swagger-ui.html
 - exposes REST endpoint to query Party data based on custom id
 
 Heroku: http://counterparty-service.herokuapp.com/swagger-ui.html
+
+![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/counterparty_service.png)
 
 ## Trading Domain
 - library, containing all domain specific entities
