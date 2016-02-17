@@ -70,6 +70,8 @@ Heroku: http://instruments-service.herokuapp.com/swagger-ui.html
 
 Heroku: http://financial-data-service.herokuapp.com/swagger-ui.html
 
+![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/financial_data_service.png)
+
 ## Confirmation Service
 - spring boot web application (rest service)
 - exposes REST endpoint api to store and retrieve confirmations
