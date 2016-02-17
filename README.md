@@ -30,6 +30,8 @@ Trading Office is reference implementation of microservices architecture, based 
 
 Heroku: http://allocation-message-receiver.herokuapp.com/swagger-ui.html
 
+![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/allocation_message_receiver.png)
+
 ## Allocation Enricher
 - spring boot application
 - subscribes to jms looking for tranlated allocation report messages (json)
@@ -37,6 +39,8 @@ Heroku: http://allocation-message-receiver.herokuapp.com/swagger-ui.html
 - finally, it sends enriched allocation as json into ActiveMQ
 
 Heroku: http://allocation-enricher.herokuapp.com/health
+
+![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/allocation_enricher.png)
 
 ## Confirmation Sender
 - spring boot application
