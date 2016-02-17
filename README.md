@@ -79,6 +79,8 @@ Heroku: http://financial-data-service.herokuapp.com/swagger-ui.html
 
 Heroku: http://confirmation-service.herokuapp.com/swagger-ui.html
 
+![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/confirmation_service.png)
+
 ## Counterparty Service
 - spring boot web application (rest service)
 - exposes REST endpoint to query Exchange data based on mic code
