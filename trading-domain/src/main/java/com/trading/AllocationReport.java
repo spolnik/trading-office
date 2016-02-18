@@ -4,7 +4,6 @@ import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
 
 public class AllocationReport implements Serializable {
 
@@ -12,11 +11,13 @@ public class AllocationReport implements Serializable {
     private String securityId;
     private Instrument instrument;
     private TradeSide tradeSide;
-    private ZonedDateTime tradeDate;
+    private String tradeDate;
     private int quantity;
     private BigDecimal price;
-    private Party counterparty;
-    private Party executingParty;
+    private String counterpartyId;
+    private String counterpartyName;
+    private String executingPartyId;
+    private String executingPartyName;
     private Exchange exchange;
 
     public String getAllocationId() {
@@ -51,11 +52,11 @@ public class AllocationReport implements Serializable {
         this.tradeSide = tradeSide;
     }
 
-    public ZonedDateTime getTradeDate() {
+    public String getTradeDate() {
         return tradeDate;
     }
 
-    public void setTradeDate(ZonedDateTime tradeDate) {
+    public void setTradeDate(String tradeDate) {
         this.tradeDate = tradeDate;
     }
 
@@ -75,20 +76,36 @@ public class AllocationReport implements Serializable {
         this.price = price;
     }
 
-    public Party getCounterparty() {
-        return counterparty;
+    public String getCounterpartyId() {
+        return counterpartyId;
     }
 
-    public void setCounterparty(Party counterparty) {
-        this.counterparty = counterparty;
+    public void setCounterpartyId(String counterpartyId) {
+        this.counterpartyId = counterpartyId;
     }
 
-    public Party getExecutingParty() {
-        return executingParty;
+    public String getCounterpartyName() {
+        return counterpartyName;
     }
 
-    public void setExecutingParty(Party executingParty) {
-        this.executingParty = executingParty;
+    public void setCounterpartyName(String counterpartyName) {
+        this.counterpartyName = counterpartyName;
+    }
+
+    public String getExecutingPartyId() {
+        return executingPartyId;
+    }
+
+    public void setExecutingPartyId(String executingPartyId) {
+        this.executingPartyId = executingPartyId;
+    }
+
+    public String getExecutingPartyName() {
+        return executingPartyName;
+    }
+
+    public void setExecutingPartyName(String executingPartyName) {
+        this.executingPartyName = executingPartyName;
     }
 
     public Exchange getExchange() {
@@ -110,8 +127,10 @@ public class AllocationReport implements Serializable {
                 .add("quantity", quantity)
                 .add("price", price)
                 .add("exchange", exchange)
-                .add("counterparty", counterparty)
-                .add("executingParty", executingParty)
+                .add("counterpartyId", counterpartyId)
+                .add("counterpartyName", counterpartyName)
+                .add("executingPartyId", executingPartyId)
+                .add("executingPartyName", executingPartyName)
                 .toString();
     }
 }

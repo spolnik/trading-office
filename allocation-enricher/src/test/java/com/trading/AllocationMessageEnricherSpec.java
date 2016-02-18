@@ -21,6 +21,9 @@ public class AllocationMessageEnricherSpec {
     public void setUp() throws Exception {
         instrumentsApi = mock(InstrumentsApi.class);
         counterpartyApi = mock(CounterpartyApi.class);
+
+        when(counterpartyApi.getPartyName(any())).thenReturn("DUMMY");
+
         enricher = new AllocationReportEnricher(instrumentsApi, counterpartyApi);
     }
 
@@ -59,7 +62,7 @@ public class AllocationMessageEnricherSpec {
         setupInstrumentsApi();
 
         enricher.process(TestData.allocationReport());
-        verify(counterpartyApi).getParty("CUSTUS");
+        verify(counterpartyApi).getPartyName("CUSTUS");
     }
 
     @Test
@@ -67,7 +70,7 @@ public class AllocationMessageEnricherSpec {
         setupInstrumentsApi();
 
         enricher.process(TestData.allocationReport());
-        verify(counterpartyApi).getParty("TROF");
+        verify(counterpartyApi).getPartyName("TROF");
     }
 
     private void setupInstrumentsApi() {

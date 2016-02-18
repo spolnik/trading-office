@@ -1,5 +1,6 @@
 package com.trading;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.broker.BrokerService;
 import org.junit.After;
@@ -11,12 +12,13 @@ import org.springframework.jms.core.JmsTemplate;
 import javax.jms.ConnectionFactory;
 import java.util.UUID;
 
-import static com.trading.DomainObjectMapper.objectMapper;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AllocationMessageReceiverIntegrationTest {
 
     private BrokerService brokerService;
+
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     @Before
     public void setUp() throws Exception {
@@ -47,7 +49,7 @@ public class AllocationMessageReceiverIntegrationTest {
                 "received.json.allocation.report"
         );
 
-        AllocationReport allocationReport = objectMapper().toAllocationReport(message);
+        AllocationReport allocationReport = OBJECT_MAPPER.readValue(message, AllocationReport.class);
 
         AllocationReport expected = TestData.allocationReport();
         expected.setAllocationId(allocationReportId);

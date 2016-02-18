@@ -4,8 +4,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -78,9 +76,7 @@ public class FixmlMessageParserSpec {
 
     @Test
     public void parses_trade_date() throws Exception {
-        assertThat(allocationReport.getTradeDate()).isEqualTo(
-                ZonedDateTime.of(2016, 6, 3, 0, 0, 0, 0, ZoneId.of("GMT"))
-        );
+        assertThat(allocationReport.getTradeDate()).isEqualTo("2016-06-03");
     }
 
     @Test
@@ -92,14 +88,14 @@ public class FixmlMessageParserSpec {
 
     @Test
     public void parses_counterparty_id() throws Exception {
-        assertThat(allocationReport.getCounterparty().getId()).isEqualTo(
+        assertThat(allocationReport.getCounterpartyId()).isEqualTo(
                 "CUSTUS"
         );
     }
 
     @Test
     public void parses_executing_party_id() throws Exception {
-        assertThat(allocationReport.getExecutingParty().getId()).isEqualTo(
+        assertThat(allocationReport.getExecutingPartyId()).isEqualTo(
                 "TROF"
         );
     }

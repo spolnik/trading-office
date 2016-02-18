@@ -30,6 +30,8 @@ Trading Office is reference implementation of microservices architecture, based 
 
 Heroku: http://allocation-message-receiver.herokuapp.com/swagger-ui.html
 
+![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/allocation_message_receiver.png)
+
 ## Allocation Enricher
 - spring boot application
 - subscribes to jms looking for tranlated allocation report messages (json)
@@ -37,6 +39,8 @@ Heroku: http://allocation-message-receiver.herokuapp.com/swagger-ui.html
 - finally, it sends enriched allocation as json into ActiveMQ
 
 Heroku: http://allocation-enricher.herokuapp.com/health
+
+![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/allocation_enricher.png)
 
 ## Confirmation Sender
 - spring boot application
@@ -46,13 +50,17 @@ Heroku: http://allocation-enricher.herokuapp.com/health
 
 Heroku: http://confirmation-sender.herokuapp.com/health
 
+![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/confirmation_sender.png)
+
 ## Instruments Service
 - spring boot web application
 - exposes REST endpoints for instrument data
 - works in readonly mode
-- data consumed from instruments.json file
+- data consumed from [OpenFigi Api](https://openfigi.com/api)
 
 Heroku: http://instruments-service.herokuapp.com/swagger-ui.html
+
+![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/instruments_service.png)
 
 ## Financial Data Service
 - spring boot web application
@@ -62,6 +70,8 @@ Heroku: http://instruments-service.herokuapp.com/swagger-ui.html
 
 Heroku: http://financial-data-service.herokuapp.com/swagger-ui.html
 
+![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/financial_data_service.png)
+
 ## Confirmation Service
 - spring boot web application (rest service)
 - exposes REST endpoint api to store and retrieve confirmations
@@ -69,12 +79,16 @@ Heroku: http://financial-data-service.herokuapp.com/swagger-ui.html
 
 Heroku: http://confirmation-service.herokuapp.com/swagger-ui.html
 
+![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/confirmation_service.png)
+
 ## Counterparty Service
 - spring boot web application (rest service)
 - exposes REST endpoint to query Exchange data based on mic code
 - exposes REST endpoint to query Party data based on custom id
 
 Heroku: http://counterparty-service.herokuapp.com/swagger-ui.html
+
+![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/counterparty_service.png)
 
 ## Trading Domain
 - library, containing all domain specific entities

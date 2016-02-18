@@ -19,10 +19,8 @@ public class CounterpartyApiIntegrationTest {
 
     @Test
     public void returns_trading_office_ltd_when_queried_by_TROF_party_id() throws Exception {
-        Party executingParty = counterpartyApi.getParty("TROF");
+        String executingParty = counterpartyApi.getPartyName("TROF");
 
-        assertThat(executingParty).isEqualToComparingFieldByField(
-                TestData.executingParty()
-        );
+        assertThat(executingParty).isEqualTo("Trading Office Ltd.");
     }
 }

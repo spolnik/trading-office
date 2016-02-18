@@ -8,7 +8,6 @@ ext {
             jackson: 'com.fasterxml.jackson.core:jackson-core:2.6.3',
             jackson_databind: 'com.fasterxml.jackson.core:jackson-databind:2.6.3',
             jackson_annotations: 'com.fasterxml.jackson.core:jackson-annotations:2.6.3',
-            jackson_datatype_jsr310: 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.3',
             guava: 'com.google.guava:guava:19.0',
             activemq: 'org.apache.activemq:activemq-broker',
             activemq_kahadb: 'org.apache.activemq:activemq-kahadb-store',

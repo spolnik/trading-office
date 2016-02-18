@@ -15,7 +15,7 @@ class CsvPartyRepository implements PartyRepository {
 
     private static final Logger LOG = LoggerFactory.getLogger(CsvPartyRepository.class);
 
-    private final Map<String, Party> parties = new ConcurrentHashMap<>();
+    private final Map<String, String> parties = new ConcurrentHashMap<>();
 
     public CsvPartyRepository() {
 
@@ -24,15 +24,15 @@ class CsvPartyRepository implements PartyRepository {
 
         Reader reader = new InputStreamReader(resourceAsStream, StandardCharsets.UTF_8);
 
-        CsvClientImpl<Party> csvClient = new CsvClientImpl<>(reader, Party.class);
+        CsvClientImpl<CsvParty> csvClient = new CsvClientImpl<>(reader, CsvParty.class);
         csvClient.readBeans()
                 .stream()
-                .forEach(counterparty -> parties.put(counterparty.getId(), counterparty));
+                .forEach(counterparty -> parties.put(counterparty.getId(), counterparty.getName()));
         LOG.info("Successfully load all parties.");
     }
 
     @Override
-    public Party getById(String id) {
-        return parties.getOrDefault(id, new Party());
+    public String getName(String id) {
+        return parties.getOrDefault(id, "");
     }
 }

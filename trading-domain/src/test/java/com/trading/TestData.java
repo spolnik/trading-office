@@ -1,8 +1,6 @@
 package com.trading;
 
 import java.math.BigDecimal;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
 public class TestData {
 
@@ -13,16 +11,14 @@ public class TestData {
         allocationReport.setSecurityId("54321");
         allocationReport.setInstrument(instrument());
         allocationReport.setTradeSide(TradeSide.BUY);
-
-        ZonedDateTime tradeDate = ZonedDateTime.of(2016, 1, 10, 10, 10, 10, 0, ZoneId.of("GMT"));
-        allocationReport.setTradeDate(tradeDate);
+        allocationReport.setTradeDate("2016-06-03");
 
         allocationReport.setQuantity(10);
         allocationReport.setPrice(BigDecimal.valueOf(7.89));
 
         allocationReport.setExchange(exchange());
-        allocationReport.setCounterparty(counterparty());
-        allocationReport.setExecutingParty(executingParty());
+        allocationReport.setCounterpartyId("CUSTUK");
+        allocationReport.setExecutingPartyId("TROF");
 
         return allocationReport;
     }
@@ -50,19 +46,5 @@ public class TestData {
         exchange.setWebsite("WWW.NASDAQ.COM");
 
         return exchange;
-    }
-
-    private static Party counterparty() {
-        Party party = new Party();
-        party.setId("CUSTAU");
-        party.setName("Customer Australia Pty Ltd.");
-        return party;
-    }
-
-    static Party executingParty() {
-        Party party = new Party();
-        party.setId("TROF");
-        party.setName("Trading Office Ltd.");
-        return party;
     }
 }

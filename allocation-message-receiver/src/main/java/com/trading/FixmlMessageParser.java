@@ -14,8 +14,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.StringReader;
 import java.math.BigDecimal;
-import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 class FixmlMessageParser {
@@ -72,16 +70,12 @@ class FixmlMessageParser {
 
     private static void setExecutingParty(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
         Optional<Attribute> executingPartyId = getAttribute(fixmlMessage, EXECUTING_PARTY_ID_XPATH);
-        Party executingParty = new Party();
-        executingParty.setId(executingPartyId.get().getValue());
-        allocationReport.setExecutingParty(executingParty);
+        allocationReport.setExecutingPartyId(executingPartyId.get().getValue());
     }
 
     private static void setCounterparty(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
         Optional<Attribute> counterpartyId = getAttribute(fixmlMessage, COUNTERPARTY_ID_XPATH);
-        Party counterparty = new Party();
-        counterparty.setId(counterpartyId.get().getValue());
-        allocationReport.setCounterparty(counterparty);
+        allocationReport.setCounterpartyId(counterpartyId.get().getValue());
     }
 
     private static void setExchange(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
@@ -93,17 +87,7 @@ class FixmlMessageParser {
 
     private static void setTradeDate(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
         Optional<Attribute> tradeDate = getAttribute(fixmlMessage, TRADE_DATE_XPATH);
-        allocationReport.setTradeDate(deriveTradeDate(tradeDate));
-    }
-
-    private static ZonedDateTime deriveTradeDate(Optional<Attribute> tradeDate) {
-        String value = tradeDate.get().getValue();
-
-        LocalDate localDate = LocalDate.parse(
-                value, DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        );
-
-        return localDate.atStartOfDay(ZoneId.of("GMT"));
+        allocationReport.setTradeDate(tradeDate.get().getValue());
     }
 
     private static void setPrice(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {

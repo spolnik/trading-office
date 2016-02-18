@@ -1,5 +1,6 @@
 package com.trading;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jms.annotation.JmsListener;
@@ -7,11 +8,11 @@ import org.springframework.jms.annotation.JmsListener;
 import java.io.IOException;
 import java.util.Optional;
 
-import static com.trading.DomainObjectMapper.objectMapper;
-
 class ConfirmationMessageListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConfirmationMessageListener.class);
+
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private final ConfirmationSender confirmationSender;
     private final ConfirmationParser emailConfirmationParser;
@@ -34,7 +35,7 @@ class ConfirmationMessageListener {
 
     @JmsListener(destination = "enriched.json.allocation.report")
     public void onMessage(String message) throws IOException {
-        AllocationReport allocationReport = objectMapper().toAllocationReport(message);
+        AllocationReport allocationReport = OBJECT_MAPPER.readValue(message, AllocationReport.class);
         LOG.info("Received: " + allocationReport);
 
         ConfirmationType confirmationType = confirmationApi.confirmationTypeFor(allocationReport.getExchange().getMic());

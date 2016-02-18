@@ -21,15 +21,10 @@ public class CounterpartyControllerSpec {
     @Before
     public void setUp() throws Exception {
 
-        Party executingParty = mock(Party.class);
-        when(executingParty.getName()).thenReturn(TRADING_OFFICE_LTD_PARTY_NAME);
-
-        Party counterparty = mock(Party.class);
-        when(counterparty.getName()).thenReturn(CUSTOMER_UK_LTD_PARTY_NAME);
-
         partyRepository = mock(PartyRepository.class);
-        when(partyRepository.getById(TROF_PARTY_ID)).thenReturn(executingParty);
-        when(partyRepository.getById(CUSTUK_PARTY_ID)).thenReturn(counterparty);
+
+        when(partyRepository.getName(TROF_PARTY_ID)).thenReturn(TRADING_OFFICE_LTD_PARTY_NAME);
+        when(partyRepository.getName(CUSTUK_PARTY_ID)).thenReturn(CUSTOMER_UK_LTD_PARTY_NAME);
 
         controller = new CounterpartyController(partyRepository);
     }
@@ -37,16 +32,16 @@ public class CounterpartyControllerSpec {
     @Test
     public void returns_Trading_Office_Ltd_counterparty_for_TROF_id() throws Exception {
 
-        Party party = controller.getParty(TROF_PARTY_ID);
+        String partyName = controller.getPartyName(TROF_PARTY_ID);
 
-        assertThat(party.getName()).isEqualTo(TRADING_OFFICE_LTD_PARTY_NAME);
+        assertThat(partyName).isEqualTo(TRADING_OFFICE_LTD_PARTY_NAME);
     }
 
     @Test
     public void returns_Customer_UK_Ltd_counterparty_for_CUSTUK_id() throws Exception {
-        Party party = controller.getParty(CUSTUK_PARTY_ID);
+        String partyName = controller.getPartyName(CUSTUK_PARTY_ID);
 
-        assertThat(party.getName()).isEqualTo(CUSTOMER_UK_LTD_PARTY_NAME);
+        assertThat(partyName).isEqualTo(CUSTOMER_UK_LTD_PARTY_NAME);
     }
 
     @Test
@@ -54,8 +49,8 @@ public class CounterpartyControllerSpec {
 
         String dummyId = "DUMMY";
 
-        controller.getParty(dummyId);
+        controller.getPartyName(dummyId);
 
-        verify(partyRepository).getById(dummyId);
+        verify(partyRepository).getName(dummyId);
     }
 }
