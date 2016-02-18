@@ -40,11 +40,4 @@ class TestData {
 
         return exchange;
     }
-
-    static PartyResponse executingParty() {
-        PartyResponse party = new PartyResponse();
-        party.setId("TROF");
-        party.setName("Trading Office Ltd.");
-        return party;
-    }
 }

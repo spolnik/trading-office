@@ -19,12 +19,12 @@ class CounterpartyController {
         this.partyRepository = partyRepository;
     }
 
-    @ApiOperation(value = "getParty", nickname = "getParty")
+    @ApiOperation(value = "getPartyName", nickname = "getPartyName")
     @RequestMapping(value = "party/{id}", method = RequestMethod.GET)
-    public Party getParty(
+    public String getPartyName(
             @ApiParam(name = "id", value = "Party id (Custom)", defaultValue = "CUSTUK", required = true)
             @PathVariable String id
     ) {
-        return partyRepository.getById(id);
+        return partyRepository.getName(id);
     }
 }

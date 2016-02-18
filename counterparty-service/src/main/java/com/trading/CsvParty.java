@@ -2,7 +2,7 @@ package com.trading;
 
 import java.io.Serializable;
 
-public class PartyResponse implements Serializable {
+public class CsvParty implements Serializable {
 
     private String id;
     private String name;
