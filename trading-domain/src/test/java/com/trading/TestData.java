@@ -17,8 +17,8 @@ public class TestData {
         allocationReport.setPrice(BigDecimal.valueOf(7.89));
 
         allocationReport.setExchange(exchange());
-        allocationReport.setCounterparty(counterparty());
-        allocationReport.setExecutingParty(executingParty());
+        allocationReport.setCounterpartyId("CUSTUK");
+        allocationReport.setExecutingPartyId("TROF");
 
         return allocationReport;
     }
@@ -46,19 +46,5 @@ public class TestData {
         exchange.setWebsite("WWW.NASDAQ.COM");
 
         return exchange;
-    }
-
-    private static Party counterparty() {
-        Party party = new Party();
-        party.setId("CUSTAU");
-        party.setName("Customer Australia Pty Ltd.");
-        return party;
-    }
-
-    static Party executingParty() {
-        Party party = new Party();
-        party.setId("TROF");
-        party.setName("Trading Office Ltd.");
-        return party;
     }
 }

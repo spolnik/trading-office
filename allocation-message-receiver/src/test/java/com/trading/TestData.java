@@ -15,8 +15,8 @@ class TestData {
         allocationReport.setPrice(BigDecimal.valueOf(57.5054673));
         allocationReport.setTradeDate("2016-06-03");
         allocationReport.setExchange(exchange());
-        allocationReport.setCounterparty(counterparty());
-        allocationReport.setExecutingParty(executingParty());
+        allocationReport.setCounterpartyId("CUSTUS");
+        allocationReport.setExecutingPartyId("TROF");
 
         return allocationReport;
     }
@@ -26,19 +26,5 @@ class TestData {
         exchange.setMic("XNAS");
 
         return exchange;
-    }
-
-    private static Party counterparty() {
-        Party counterparty = new Party();
-        counterparty.setId("CUSTUS");
-
-        return counterparty;
-    }
-
-    private static Party executingParty() {
-        Party executingParty = new Party();
-        executingParty.setId("TROF");
-
-        return executingParty;
     }
 }

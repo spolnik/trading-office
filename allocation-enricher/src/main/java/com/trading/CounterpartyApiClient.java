@@ -25,10 +25,10 @@ class CounterpartyApiClient implements CounterpartyApi {
     }
 
     @Override
-    public Party getParty(String id) {
+    public PartyResponse getParty(String id) {
         String url = String.format("%s/api/party/%s", counterpartyServiceUrl, id);
         LOG.info("Getting party from: " + url);
 
-        return restTemplate.getForObject(url, Party.class);
+        return restTemplate.getForObject(url, PartyResponse.class);
     }
 }

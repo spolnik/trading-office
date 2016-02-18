@@ -21,6 +21,11 @@ public class AllocationMessageEnricherSpec {
     public void setUp() throws Exception {
         instrumentsApi = mock(InstrumentsApi.class);
         counterpartyApi = mock(CounterpartyApi.class);
+
+        PartyResponse partyResponse = new PartyResponse();
+        partyResponse.setName("DUMMY");
+        when(counterpartyApi.getParty(any())).thenReturn(partyResponse);
+
         enricher = new AllocationReportEnricher(instrumentsApi, counterpartyApi);
     }
 

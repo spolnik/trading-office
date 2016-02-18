@@ -6,14 +6,8 @@ class TestData {
 
         allocationReport.setAllocationId("1234567");
         allocationReport.setSecurityId("2000019");
-
-        Party counterparty = new Party();
-        counterparty.setId("CUSTUS");
-        allocationReport.setCounterparty(counterparty);
-
-        Party executingParty = new Party();
-        executingParty.setId("TROF");
-        allocationReport.setExecutingParty(executingParty);
+        allocationReport.setCounterpartyId("CUSTUS");
+        allocationReport.setExecutingPartyId("TROF");
 
         Exchange exchange = new Exchange();
         exchange.setMic("XNAS");
@@ -47,8 +41,8 @@ class TestData {
         return exchange;
     }
 
-    static Party executingParty() {
-        Party party = new Party();
+    static PartyResponse executingParty() {
+        PartyResponse party = new PartyResponse();
         party.setId("TROF");
         party.setName("Trading Office Ltd.");
         return party;

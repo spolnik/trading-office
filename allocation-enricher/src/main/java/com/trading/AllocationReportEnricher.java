@@ -52,18 +52,18 @@ public class AllocationReportEnricher {
     }
 
     private void enrichWithCounterparty(AllocationReport allocationReport) {
-        Party counterparty = counterpartyApi.getParty(
-                allocationReport.getCounterparty().getId()
+        PartyResponse counterparty = counterpartyApi.getParty(
+                allocationReport.getCounterpartyId()
         );
 
-        allocationReport.setCounterparty(counterparty);
+        allocationReport.setCounterpartyName(counterparty.getName());
     }
 
     private void enrichWithExecutingParty(AllocationReport allocationReport) {
-        Party executingParty = counterpartyApi.getParty(
-                allocationReport.getExecutingParty().getId()
+        PartyResponse executingParty = counterpartyApi.getParty(
+                allocationReport.getExecutingPartyId()
         );
 
-        allocationReport.setExecutingParty(executingParty);
+        allocationReport.setExecutingPartyName(executingParty.getName());
     }
 }
