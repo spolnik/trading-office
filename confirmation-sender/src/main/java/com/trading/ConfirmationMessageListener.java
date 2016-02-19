@@ -12,25 +12,24 @@ class ConfirmationMessageListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConfirmationMessageListener.class);
 
+    private static final String LONDON_STOCK_EXCHANGE_MIC_CODE = "XLON";
+
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private final ConfirmationSender confirmationSender;
     private final ConfirmationParser emailConfirmationParser;
-    private final ConfirmationParser swiftConfirmationParser;
 
-    private final ConfirmationApi confirmationApi;
+    private final ConfirmationParser swiftConfirmationParser;
 
     public ConfirmationMessageListener(
             ConfirmationSender confirmationSender,
             ConfirmationParser emailConfirmationParser,
-            ConfirmationParser swiftConfirmationParser,
-            ConfirmationApi confirmationApi
+            ConfirmationParser swiftConfirmationParser
     ) {
 
         this.confirmationSender = confirmationSender;
         this.emailConfirmationParser = emailConfirmationParser;
         this.swiftConfirmationParser = swiftConfirmationParser;
-        this.confirmationApi = confirmationApi;
     }
 
     @JmsListener(destination = "enriched.json.allocation.report")
@@ -38,20 +37,15 @@ class ConfirmationMessageListener {
         AllocationReport allocationReport = OBJECT_MAPPER.readValue(message, AllocationReport.class);
         LOG.info("Received: " + allocationReport);
 
-        ConfirmationType confirmationType = confirmationApi.confirmationTypeFor(allocationReport.getExchange().getMic());
-        Optional<Confirmation> confirmation = confirmationParserFor(confirmationType).parse(allocationReport);
+        Optional<Confirmation> confirmation = confirmationParserFor(allocationReport.getExchange().getMic()).parse(allocationReport);
 
         confirmationSender.send(confirmation.get());
     }
 
-    private ConfirmationParser confirmationParserFor(ConfirmationType confirmationType) {
-        ConfirmationParser confirmationParser;
+    private ConfirmationParser confirmationParserFor(String micCode) {
 
-        if (ConfirmationType.EMAIL.equals(confirmationType)) {
-            confirmationParser = emailConfirmationParser;
-        } else {
-            confirmationParser = swiftConfirmationParser;
-        }
-        return confirmationParser;
+        return LONDON_STOCK_EXCHANGE_MIC_CODE.equals(micCode)
+                ? swiftConfirmationParser
+                : emailConfirmationParser;
     }
 }

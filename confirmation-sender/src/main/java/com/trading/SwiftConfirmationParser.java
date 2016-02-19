@@ -24,7 +24,7 @@ public class SwiftConfirmationParser implements ConfirmationParser {
 
         byte[] data = confirmation.message().getBytes(StandardCharsets.UTF_8);
 
-        return Optional.of(new Confirmation(allocationReport, data, ConfirmationType.SWIFT));
+        return Optional.of(new Confirmation(allocationReport, data, Confirmation.SWIFT));
     }
 
     private static MT518.SequenceB sequenceB(AllocationReport allocationReport) {

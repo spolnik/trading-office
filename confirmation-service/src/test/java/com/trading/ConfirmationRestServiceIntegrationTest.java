@@ -33,27 +33,6 @@ public class ConfirmationRestServiceIntegrationTest {
         assertThat(confirmation.getContent()).isEqualTo(DUMMY_CONFIRMATION.getBytes(StandardCharsets.UTF_8));
     }
 
-    @Test
-    public void returns_email_confirmation_type_for_exchange_other_than_london_stack_exchange() throws Exception {
-
-        ConfirmationType confirmationType = restTemplate.getForObject(
-                "http://localhost:9003/api/confirmation/type/XNAS",
-                ConfirmationType.class
-        );
-
-        assertThat(confirmationType).isEqualTo(ConfirmationType.EMAIL);
-    }
-
-    @Test
-    public void returns_swift_confirmation_type_for_london_stack_exchange() throws Exception {
-        ConfirmationType confirmationType = restTemplate.getForObject(
-                "http://localhost:9003/api/confirmation/type/XLON",
-                ConfirmationType.class
-        );
-
-        assertThat(confirmationType).isEqualTo(ConfirmationType.SWIFT);
-    }
-
     private Confirmation confirmation() {
         AllocationReport allocationReport = new AllocationReport();
 

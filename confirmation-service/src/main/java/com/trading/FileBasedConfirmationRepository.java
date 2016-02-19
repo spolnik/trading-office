@@ -19,7 +19,7 @@ public class FileBasedConfirmationRepository implements ConfirmationRepository {
 
     @Override
     public Confirmation queryById(String id) {
-        return confirmations.getOrDefault(id, Confirmation.EMPTY_CONFIRMATION);
+        return confirmations.getOrDefault(id, new Confirmation());
     }
 
     @Override

@@ -13,8 +13,6 @@ class ConfirmationController {
 
     private final ConfirmationRepository confirmationRepository;
 
-    private static final String LONDON_STOCK_EXCHANGE_MIC_CODE = "XLON";
-
     @Autowired
     public ConfirmationController(ConfirmationRepository confirmationRepository) {
         this.confirmationRepository = confirmationRepository;
@@ -38,16 +36,5 @@ class ConfirmationController {
         confirmationRepository.save(confirmation);
 
         return new ResponseEntity<>(null, HttpStatus.CREATED);
-    }
-
-    @ApiOperation(value = "getConfirmationType", nickname = "getConfirmationType")
-    @RequestMapping(value = "confirmation/type/{micCode}", method = RequestMethod.GET)
-    public ConfirmationType getConfirmationType(
-            @ApiParam(name = "micCode", value = "Exchange Mic Code", required = true, defaultValue = "XLON", example = "XNAS")
-            @PathVariable String micCode
-    ) {
-        return LONDON_STOCK_EXCHANGE_MIC_CODE.equals(micCode)
-                ? ConfirmationType.SWIFT
-                : ConfirmationType.EMAIL;
     }
 }

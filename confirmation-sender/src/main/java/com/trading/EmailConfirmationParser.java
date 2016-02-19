@@ -37,7 +37,7 @@ class EmailConfirmationParser implements ConfirmationParser {
             );
 
             return Optional.of(
-                    new Confirmation(allocationReport, data, ConfirmationType.EMAIL)
+                    new Confirmation(allocationReport, data, Confirmation.EMAIL)
             );
         } catch (JRException e) {
             LOG.error(e.getMessage(), e);
