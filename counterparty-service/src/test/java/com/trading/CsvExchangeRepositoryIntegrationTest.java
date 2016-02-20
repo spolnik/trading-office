@@ -10,13 +10,13 @@ public class CsvExchangeRepositoryIntegrationTest {
     public void returns_exchange_from_underlying_csv_file() throws Exception {
         CsvExchangeRepository repository = new CsvExchangeRepository();
 
-        Exchange nasdaq = repository.getByMicCode("XNAS");
+        CsvExchange nasdaq = repository.getByMicCode("XNAS");
 
         assertThat(nasdaq).isEqualToComparingFieldByField(exchange());
     }
 
-    private static Exchange exchange() {
-        Exchange exchange = new Exchange();
+    private static CsvExchange exchange() {
+        CsvExchange exchange = new CsvExchange();
 
         exchange.setAcronym("NASDAQ");
         exchange.setCity("NEW YORK");

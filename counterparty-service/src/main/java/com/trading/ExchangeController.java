@@ -21,7 +21,7 @@ class ExchangeController {
 
     @ApiOperation(value = "getExchange", nickname = "getExchange")
     @RequestMapping(value = "exchange/mic/{micCode}", method = RequestMethod.GET)
-    public Exchange getExchange(
+    public CsvExchange getExchange(
             @ApiParam(name = "micCode", value = "Exchange Mic Code", defaultValue = "XLON", required = true)
             @PathVariable String micCode
     ) {

@@ -30,9 +30,9 @@ public class CounterpartyServiceIntegrationTest {
 
     @Test
     public void service_returns_exchange() throws Exception {
-        Exchange exchange = restTemplate.getForObject(
+        CsvExchange exchange = restTemplate.getForObject(
                 "http://localhost:9008/api/exchange/mic/XNAS",
-                Exchange.class
+                CsvExchange.class
         );
 
         assertThat(exchange.getName()).isEqualTo(

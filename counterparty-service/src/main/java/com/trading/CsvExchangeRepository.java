@@ -15,7 +15,7 @@ class CsvExchangeRepository implements ExchangeRepository {
 
     private static final Logger LOG = LoggerFactory.getLogger(CsvExchangeRepository.class);
 
-    private final Map<String, Exchange> exchanges = new ConcurrentHashMap<>();
+    private final Map<String, CsvExchange> exchanges = new ConcurrentHashMap<>();
 
     public CsvExchangeRepository() {
         InputStream resourceAsStream = CounterpartyController.class
@@ -23,7 +23,7 @@ class CsvExchangeRepository implements ExchangeRepository {
 
         Reader reader = new InputStreamReader(resourceAsStream, StandardCharsets.UTF_8);
 
-        CsvClientImpl<Exchange> csvClient = new CsvClientImpl<>(reader, Exchange.class);
+        CsvClientImpl<CsvExchange> csvClient = new CsvClientImpl<>(reader, CsvExchange.class);
         csvClient.readBeans()
                 .stream()
                 .forEach(exchange -> exchanges.put(exchange.getMic(), exchange));
@@ -31,7 +31,7 @@ class CsvExchangeRepository implements ExchangeRepository {
     }
 
     @Override
-    public Exchange getByMicCode(String micCode) {
-        return exchanges.getOrDefault(micCode, new Exchange());
+    public CsvExchange getByMicCode(String micCode) {
+        return exchanges.getOrDefault(micCode, new CsvExchange());
     }
 }
