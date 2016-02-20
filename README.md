@@ -6,7 +6,7 @@ Trading Office is reference implementation of microservices architecture, based 
 - [Allocation Message Receiver](#allocation-message-receiver)
 - [Allocation Enricher](#allocation-enricher)
 - [Confirmation Sender](#confirmation-sender)
-- [Financial Data Service](#financial-data-service)
+- [Market Data Service](#market-data-service)
 - [Confirmation Service](#confirmation-service)
 - [Counterparty Service](#counterparty-service)
 - [E2E Test](#e2e-test)
@@ -32,8 +32,8 @@ Heroku: http://allocation-message-receiver.herokuapp.com/swagger-ui.html
 
 ## Allocation Enricher
 - spring boot application
-- subscribes to jms looking for tranlated allocation report messages (json)
-- after receiving message, it enriches it with instrument data (using Intrument Service, and Finance Data Service)
+- subscribes to jms looking for translated allocation report messages (json)
+- after receiving message, it enriches it with instrument data and then with counterparty data
 - finally, it sends enriched allocation as json into ActiveMQ
 
 Heroku: http://allocation-enricher.herokuapp.com/health
@@ -50,7 +50,7 @@ Heroku: http://confirmation-sender.herokuapp.com/health
 
 ![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/confirmation_sender.png)
 
-## Financial Data Service
+## Market Data Service
 - spring boot web application
 - exposes REST endpoint for financial data (using Yahoo Finance Api)
 - exposes REST endpoints for instrument data (data consumed from [OpenFigi Api](https://openfigi.com/api))
