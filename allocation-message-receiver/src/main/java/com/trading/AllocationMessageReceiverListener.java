@@ -25,11 +25,13 @@ class AllocationMessageReceiverListener {
     }
 
     private static String toJson(AllocationReport allocationReport) throws FixmlParserException {
+        LOG.info("Received: " + allocationReport.getAllocationId());
         try {
             String allocationReportAsJson = OBJECT_MAPPER.writeValueAsString(allocationReport);
-            LOG.info("Sending Allocation Report #" + allocationReport.getAllocationId());
+            LOG.info("Sending Allocation Report: " + allocationReport.getAllocationId());
             return allocationReportAsJson;
         } catch (JsonProcessingException ex) {
+            LOG.error(ex.getMessage(), ex);
             throw new FixmlParserException(ex);
         }
     }
