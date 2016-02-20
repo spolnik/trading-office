@@ -4,7 +4,7 @@ include 'e2e-test'
 include 'confirmation-sender'
 include 'allocation-message-receiver'
 include 'confirmation-service'
-include 'financial-data-service'
+include 'market-data-service'
 include 'allocation-enricher'
 include 'counterparty-service'
 
