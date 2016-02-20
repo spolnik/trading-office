@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-class FinancialDataController {
+class MarketDataController {
 
     private final YahooApi yahooApi;
 
     @Autowired
-    public FinancialDataController(YahooApi yahooApi) {
+    public MarketDataController(YahooApi yahooApi) {
         this.yahooApi = yahooApi;
     }
 

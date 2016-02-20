@@ -13,7 +13,7 @@ git merge origin/master
 
 refresh heroku-counterparty-service
 refresh heroku-confirmation-service
-refresh heroku-financial-data-service
+refresh heroku-market-data-service
 refresh heroku-allocation-message-receiver
 refresh heroku-allocation-enricher
 refresh heroku-confirmation-sender

@@ -14,6 +14,6 @@ dependencies {
 }
 
 jar {
-    baseName = 'trading-office-financial-data-service'
+    baseName = 'trading-office-market-data-service'
     version = '1.0.0'
 }

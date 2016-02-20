@@ -10,7 +10,7 @@ import java.io.IOException;
 
 class YahooApiClient implements YahooApi {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FinancialDataController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MarketDataController.class);
 
     private final Converter<Stock, Instrument> stockToInstrumentConverter;
 

@@ -15,10 +15,10 @@ import static springfox.documentation.builders.PathSelectors.regex;
 
 @SpringBootApplication
 @EnableSwagger2
-public class FinancialDataApplication {
+public class MarketDataApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FinancialDataApplication.class, args);
+        SpringApplication.run(MarketDataApplication.class, args);
     }
 
     @Bean
@@ -32,19 +32,19 @@ public class FinancialDataApplication {
     }
 
     @Bean
-    public Docket financialDataApi() {
+    public Docket marketDataApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("financial-data")
+                .groupName("market-data")
                 .apiInfo(apiInfo())
                 .select()
-                .paths(regex("/api/instrument.*"))
+                .paths(regex("/api.*"))
                 .build();
     }
 
     private static ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Financial Data REST Service")
-                .description("Financial Data REST Service")
+                .title("Market Data REST Service")
+                .description("Market Data REST Service")
                 .contact("Jacek Spólnik")
                 .license("Apache License Version 2.0")
                 .version("1.0")

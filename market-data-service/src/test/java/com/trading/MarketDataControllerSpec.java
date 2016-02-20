@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class FinancialDataControllerSpec {
+public class MarketDataControllerSpec {
 
     private static final String SYMBOL = "AMZN";
 
@@ -13,7 +13,7 @@ public class FinancialDataControllerSpec {
     public void uses_yahoo_api_to_query_for_instrument() throws Exception {
 
         YahooApi yahooApi = mock(YahooApi.class);
-        FinancialDataController controller = new FinancialDataController(yahooApi);
+        MarketDataController controller = new MarketDataController(yahooApi);
 
         controller.getInstrument(SYMBOL);
 

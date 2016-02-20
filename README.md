@@ -52,14 +52,14 @@ Heroku: http://confirmation-sender.herokuapp.com/health
 
 ## Market Data Service
 - spring boot web application
-- exposes REST endpoint for financial data (using Yahoo Finance Api)
+- exposes REST endpoint for market data (using Yahoo Finance Api)
 - exposes REST endpoints for instrument data (data consumed from [OpenFigi Api](https://openfigi.com/api))
 - based on a given symbol, downloads instrument data with actual price
 - works in readonly mode
 
-Heroku: http://financial-data-service.herokuapp.com/swagger-ui.html
+Heroku: http://market-data-service.herokuapp.com/swagger-ui.html
 
-![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/financial_data_service.png)
+![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/market_data_service.png)
 
 ## Confirmation Service
 - spring boot web application (rest service)
