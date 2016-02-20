@@ -103,6 +103,13 @@ Heroku: http://counterparty-service.herokuapp.com/swagger-ui.html
 - TravisCI - https://travis-ci.org/spolnik/trading-office
 - Coverity (Static code analysis) - https://scan.coverity.com/projects/spolnik-trading-office
 
+## Domain
+
+- Swift - http://www.iso15022.org/uhb/uhb/finmt518.htm
+- FIXML - http://btobits.com/fixopaedia/fixdic50-sp2-ep/index.html (Allocation Report message)
+
+![Trade Lifecycle](https://raw.githubusercontent.com/spolnik/trading-office/master/design/trade_lifecycle.jpg)
+
 ## Notes
 - to have access to OpenShift activemq web console - run rhc port-forward activemq (only if you have admin access)
 - checking if [dependencies are up to date](https://www.versioneye.com/user/projects/56ad39427e03c7003ba41427)
