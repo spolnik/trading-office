@@ -24,8 +24,8 @@ public class AllocationEnricherApplication {
     @Value("${counterpartyServiceUrl}")
     private String counterpartyServiceUrl;
 
-    @Value("${financeDataServiceUrl}")
-    private String financeDataServiceUrl;
+    @Value("${marketDataServiceUrl}")
+    private String marketDataServiceUrl;
 
     @Bean
     ConnectionFactory connectionFactory() {
@@ -50,7 +50,7 @@ public class AllocationEnricherApplication {
 
     @Bean
     InstrumentsApi instrumentsApi() {
-        return new InstrumentsApiClient(financeDataServiceUrl);
+        return new InstrumentsApiClient(marketDataServiceUrl);
     }
 
     @Bean
