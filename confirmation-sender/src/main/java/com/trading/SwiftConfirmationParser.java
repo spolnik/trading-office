@@ -57,7 +57,7 @@ public class SwiftConfirmationParser implements ConfirmationParser {
         Field11A f11a = new Field11A();
         f11a.setCurrency(allocationReport.getInstrument().getCurrency());
         f11a.setQualifier(
-                allocationReport.getTradeSide() == TradeSide.BUY ? MT518.FXIB : MT518.FXIS
+                "BUY".equals(allocationReport.getTradeSide()) ? MT518.FXIB : MT518.FXIS
         );
 
         return f11a;
@@ -67,7 +67,7 @@ public class SwiftConfirmationParser implements ConfirmationParser {
         return String.format(
                 ":%s/%s",
                 MT518.BUSE,
-                allocationReport.getTradeSide() == TradeSide.BUY ? "BUYI" : "SELL"
+                "BUY".equals(allocationReport.getTradeSide()) ? "BUYI" : "SELL"
         );
     }
 

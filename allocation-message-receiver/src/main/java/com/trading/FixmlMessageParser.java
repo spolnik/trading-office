@@ -37,6 +37,8 @@ class FixmlMessageParser {
     private static final String FIX_SEDOL_SOURCE_ID = "2";
     private static final String FIX_RECEIVED_ALLOCATION_STATUS = "3";
     private static final String FIX_NEW_TRANSACTION_TYPE = "0";
+    private static final String FIX_TRADE_SIDE_SELL = "2";
+    private static final String FIX_TRADE_SIDE_BUY = "1";
 
     public AllocationReport parse(String message) throws FixmlParserException {
 
@@ -80,9 +82,7 @@ class FixmlMessageParser {
 
     private static void setExchange(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
         Optional<Attribute> exchangeMicCode = getAttribute(fixmlMessage, EXCHANGE_MIC_CODE_XPATH);
-        Exchange exchange = new Exchange();
-        exchange.setMic(exchangeMicCode.get().getValue());
-        allocationReport.setExchange(exchange);
+        allocationReport.setMicCode(exchangeMicCode.get().getValue());
     }
 
     private static void setTradeDate(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
@@ -145,9 +145,16 @@ class FixmlMessageParser {
         }
     }
 
-    private static TradeSide deriveTradeSide(Optional<Attribute> side) {
+    private static String deriveTradeSide(Optional<Attribute> side) {
         String value = side.get().getValue();
-        return TradeSide.getTradeSide(value);
+
+        if (FIX_TRADE_SIDE_BUY.equals(value)) {
+            return AllocationReport.BUY;
+        } else if (FIX_TRADE_SIDE_SELL.equals(value)){
+            return AllocationReport.SELL;
+        }
+
+        throw new UnsupportedOperationException("Trade Side is unsupported: " + value);
     }
 
     @SuppressWarnings("all")

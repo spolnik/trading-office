@@ -5,11 +5,10 @@ import java.math.BigDecimal;
 class TestData {
 
     static AllocationReport allocationReport(String allocationId) {
-        TradeSide tradeSide = TradeSide.BUY;
-        return allocationReport(allocationId, tradeSide);
+        return allocationReport(allocationId, "BUY");
     }
 
-    static AllocationReport allocationReport(String allocationId, TradeSide tradeSide) {
+    static AllocationReport allocationReport(String allocationId, String tradeSide) {
         AllocationReport allocationReport = new AllocationReport();
 
         allocationReport.setAllocationId(allocationId);

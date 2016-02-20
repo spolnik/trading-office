@@ -118,14 +118,14 @@ public class SwiftConfirmationParserSpec {
 
     private MT518 confirmation_for_buy() throws IOException {
         AllocationReport allocationReportBuy = TestData.allocationReport(
-                UUID.randomUUID().toString(), TradeSide.BUY
+                UUID.randomUUID().toString(), "BUY"
         );
         return mt518(allocationReportBuy);
     }
 
     private MT518 confirmation_for_sell() throws IOException {
         AllocationReport allocationReportSell = TestData.allocationReport(
-                UUID.randomUUID().toString(), TradeSide.SELL
+                UUID.randomUUID().toString(), "SELL"
         );
         return mt518(allocationReportSell);
     }

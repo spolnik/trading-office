@@ -10,21 +10,14 @@ class TestData {
 
         allocationReport.setAllocationId("1234567");
         allocationReport.setSecurityId("2000019");
-        allocationReport.setTradeSide(TradeSide.BUY);
+        allocationReport.setTradeSide(AllocationReport.BUY);
         allocationReport.setQuantity(200);
         allocationReport.setPrice(BigDecimal.valueOf(57.5054673));
         allocationReport.setTradeDate("2016-06-03");
-        allocationReport.setExchange(exchange());
+        allocationReport.setMicCode("XNAS");
         allocationReport.setCounterpartyId("CUSTUS");
         allocationReport.setExecutingPartyId("TROF");
 
         return allocationReport;
-    }
-
-    private static Exchange exchange() {
-        Exchange exchange = new Exchange();
-        exchange.setMic("XNAS");
-
-        return exchange;
     }
 }

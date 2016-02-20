@@ -7,9 +7,11 @@ import java.math.BigDecimal;
 
 public class AllocationReport implements Serializable {
 
+    public static final String BUY = "BUY";
+    public static final String SELL = "SELL";
+
     private String allocationId;
     private String securityId;
-    private Instrument instrument;
     private String tradeSide;
     private String tradeDate;
     private int quantity;
@@ -18,7 +20,7 @@ public class AllocationReport implements Serializable {
     private String counterpartyName;
     private String executingPartyId;
     private String executingPartyName;
-    private Exchange exchange;
+    private String micCode;
 
     public String getAllocationId() {
         return allocationId;
@@ -34,14 +36,6 @@ public class AllocationReport implements Serializable {
 
     public void setSecurityId(String securityId) {
         this.securityId = securityId;
-    }
-
-    public Instrument getInstrument() {
-        return instrument;
-    }
-
-    public void setInstrument(Instrument instrument) {
-        this.instrument = instrument;
     }
 
     public String getTradeSide() {
@@ -108,12 +102,8 @@ public class AllocationReport implements Serializable {
         this.executingPartyName = executingPartyName;
     }
 
-    public Exchange getExchange() {
-        return exchange;
-    }
-
-    public void setExchange(Exchange exchange) {
-        this.exchange = exchange;
+    public void setMicCode(String micCode) {
+        this.micCode = micCode;
     }
 
     @Override
@@ -121,16 +111,19 @@ public class AllocationReport implements Serializable {
         return MoreObjects.toStringHelper(this)
                 .add("allocationId", allocationId)
                 .add("securityId", securityId)
-                .add("instrument", instrument)
                 .add("tradeSide", tradeSide)
                 .add("tradeDate", tradeDate)
                 .add("quantity", quantity)
                 .add("price", price)
-                .add("exchange", exchange)
                 .add("counterpartyId", counterpartyId)
                 .add("counterpartyName", counterpartyName)
                 .add("executingPartyId", executingPartyId)
                 .add("executingPartyName", executingPartyName)
+                .add("micCode", micCode)
                 .toString();
+    }
+
+    public String getMicCode() {
+        return micCode;
     }
 }
