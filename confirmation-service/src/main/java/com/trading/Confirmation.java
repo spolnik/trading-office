@@ -33,6 +33,7 @@ public class Confirmation implements Serializable {
     private String instrumentCurrency;
     private String instrumentExchange;
     private BigDecimal price;
+    private BigDecimal instrumentPrice;
 
     public String getInstrumentSymbol() {
         return instrumentSymbol;
@@ -193,6 +194,14 @@ public class Confirmation implements Serializable {
 
     public String getMicCode() {
         return micCode;
+    }
+
+    public BigDecimal getInstrumentPrice() {
+        return instrumentPrice;
+    }
+
+    public void setInstrumentPrice(BigDecimal instrumentPrice) {
+        this.instrumentPrice = instrumentPrice;
     }
 
     private void checkIfConfirmationTypeIsValid(String confirmationType) {
