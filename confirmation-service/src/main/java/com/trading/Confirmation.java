@@ -204,14 +204,6 @@ public class Confirmation implements Serializable {
         this.instrumentPrice = instrumentPrice;
     }
 
-    private void checkIfConfirmationTypeIsValid(String confirmationType) {
-        if ("SWIFT".equals(confirmationType) || "EMAIL".equals(confirmationType)) {
-            return;
-        }
-
-        throw new UnsupportedOperationException("Confirmation type unsupported: " + confirmationType);
-    }
-
     public byte[] getContent() {
         return content;
     }
@@ -225,7 +217,6 @@ public class Confirmation implements Serializable {
     }
 
     public void setConfirmationType(String confirmationType) {
-        checkIfConfirmationTypeIsValid(confirmationType);
         this.confirmationType = confirmationType;
     }
 
