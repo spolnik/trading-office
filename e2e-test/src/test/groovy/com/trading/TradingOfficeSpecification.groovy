@@ -52,6 +52,7 @@ class TradingOfficeSpecification extends Specification {
     def "For new trade with exchange mic as #micCode, we generate confirmation as #confirmationType"(String micCode, String confirmationType) {
         given: "A new trade with FIXML representation"
         def fixmlAllocationMessage = String.format(fixmlAllocationMessage(), allocationReportId, micCode)
+        log.info("Processing: " + allocationReportId)
 
         when: "We receive FIXML message describing allocation for a trade"
 

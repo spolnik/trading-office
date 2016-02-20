@@ -45,7 +45,7 @@ public class AllocationReportEnricher {
 
     private void enrichWithExchange(AllocationReport allocationReport) {
         Exchange exchange = counterpartyApi.getExchange(
-                allocationReport.getExchange().getMic()
+                allocationReport.getMicCode()
         );
 
         allocationReport.setExchange(exchange);

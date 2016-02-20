@@ -106,6 +106,10 @@ public class AllocationReport implements Serializable {
         this.micCode = micCode;
     }
 
+    public String getMicCode() {
+        return micCode;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -121,9 +125,5 @@ public class AllocationReport implements Serializable {
                 .add("executingPartyName", executingPartyName)
                 .add("micCode", micCode)
                 .toString();
-    }
-
-    public String getMicCode() {
-        return micCode;
     }
 }

@@ -13,12 +13,12 @@ public class ExchangeControllerSpec {
     private static final String NASDAQ_MIC_CODE = "XNAS";
 
     private ExchangeController controller;
-    private Exchange exchange;
+    private CsvExchange exchange;
     private ExchangeRepository exchangeRepository;
 
     @Before
     public void setUp() throws Exception {
-        exchange = mock(Exchange.class);
+        exchange = mock(CsvExchange.class);
 
         exchangeRepository = mock(ExchangeRepository.class);
         when(exchangeRepository.getByMicCode(NASDAQ_MIC_CODE)).thenReturn(exchange);
@@ -29,7 +29,7 @@ public class ExchangeControllerSpec {
     @Test
     public void returns_exchange_for_given_mic_code() throws Exception {
 
-        Exchange nasdaq = controller.getExchange(NASDAQ_MIC_CODE);
+        CsvExchange nasdaq = controller.getExchange(NASDAQ_MIC_CODE);
 
         assertThat(nasdaq).isEqualTo(exchange);
     }

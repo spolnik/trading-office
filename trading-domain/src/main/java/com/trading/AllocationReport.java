@@ -19,6 +19,7 @@ public class AllocationReport implements Serializable {
     private String executingPartyId;
     private String executingPartyName;
     private Exchange exchange;
+    private String micCode;
 
     public String getAllocationId() {
         return allocationId;
@@ -116,6 +117,14 @@ public class AllocationReport implements Serializable {
         this.exchange = exchange;
     }
 
+    public void setMicCode(String micCode) {
+        this.micCode = micCode;
+    }
+
+    public String getMicCode() {
+        return micCode;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -131,6 +140,7 @@ public class AllocationReport implements Serializable {
                 .add("counterpartyName", counterpartyName)
                 .add("executingPartyId", executingPartyId)
                 .add("executingPartyName", executingPartyName)
+                .add("micCode", micCode)
                 .toString();
     }
 }

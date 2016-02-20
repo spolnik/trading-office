@@ -8,10 +8,7 @@ class TestData {
         allocationReport.setSecurityId("2000019");
         allocationReport.setCounterpartyId("CUSTUS");
         allocationReport.setExecutingPartyId("TROF");
-
-        Exchange exchange = new Exchange();
-        exchange.setMic("XNAS");
-        allocationReport.setExchange(exchange);
+        allocationReport.setMicCode("XNAS");
 
         return allocationReport;
     }
