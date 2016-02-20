@@ -1,10 +1,17 @@
 package com.trading;
 
+import com.google.common.base.MoreObjects;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class AllocationReport implements Serializable {
+public class Confirmation implements Serializable {
 
+    public static final String EMAIL = "EMAIL";
+    public static final String SWIFT = "SWIFT";
+
+    private byte[] content;
+    private String confirmationType;
     private String allocationId;
     private String securityId;
     private String tradeSide;
@@ -186,5 +193,58 @@ public class AllocationReport implements Serializable {
 
     public String getMicCode() {
         return micCode;
+    }
+
+    private void checkIfConfirmationTypeIsValid(String confirmationType) {
+        if ("SWIFT".equals(confirmationType) || "EMAIL".equals(confirmationType)) {
+            return;
+        }
+
+        throw new UnsupportedOperationException("Confirmation type unsupported: " + confirmationType);
+    }
+
+    public byte[] getContent() {
+        return content;
+    }
+
+    public void setContent(byte[] content) {
+        this.content = content;
+    }
+
+    public String getConfirmationType() {
+        return confirmationType;
+    }
+
+    public void setConfirmationType(String confirmationType) {
+        checkIfConfirmationTypeIsValid(confirmationType);
+        this.confirmationType = confirmationType;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("content", content)
+                .add("confirmationType", confirmationType)
+                .add("allocationId", allocationId)
+                .add("securityId", securityId)
+                .add("tradeSide", tradeSide)
+                .add("tradeDate", tradeDate)
+                .add("quantity", quantity)
+                .add("counterpartyId", counterpartyId)
+                .add("counterpartyName", counterpartyName)
+                .add("executingPartyId", executingPartyId)
+                .add("executingPartyName", executingPartyName)
+                .add("micCode", micCode)
+                .add("country", country)
+                .add("countryCode", countryCode)
+                .add("exchangeName", exchangeName)
+                .add("exchangeAcronym", exchangeAcronym)
+                .add("exchangeCity", exchangeCity)
+                .add("instrumentSymbol", instrumentSymbol)
+                .add("instrumentName", instrumentName)
+                .add("instrumentCurrency", instrumentCurrency)
+                .add("instrumentExchange", instrumentExchange)
+                .add("price", price)
+                .toString();
     }
 }

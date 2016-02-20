@@ -3,7 +3,6 @@ apply plugin: 'spring-boot'
 dependencies {
     compile libs.spring.boot_web,
             libs.spring.boot_actuator,
-            project(':trading-domain'),
             libs.jasperreports,
             libs.itext,
             libs.spring.jms,
@@ -13,7 +12,8 @@ dependencies {
             libs.jackson_databind,
             libs.jackson_annotations,
             libs.swift,
-            libs.jaxb
+            libs.jaxb,
+            libs.guava
 
     testCompile libs.test.assertj,
             libs.test.mockito,

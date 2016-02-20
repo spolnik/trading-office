@@ -25,21 +25,18 @@ public class ConfirmationRestServiceIntegrationTest {
         restTemplate.postForObject("http://localhost:9003/api/confirmation", confirmation(), Object.class);
 
         Confirmation confirmation = restTemplate.getForObject(
-                "http://localhost:9003/api/confirmation/" + confirmation().id(),
+                "http://localhost:9003/api/confirmation/" + confirmation().getAllocationId(),
                 Confirmation.class
         );
 
-        assertThat(confirmation.id()).isEqualTo(DUMMY_ALLOCATION_ID);
-        assertThat(confirmation.getContent()).isEqualTo(DUMMY_CONFIRMATION.getBytes(StandardCharsets.UTF_8));
+        assertThat(confirmation).isEqualToComparingFieldByField(confirmation());
     }
 
     private Confirmation confirmation() {
-        AllocationReport allocationReport = new AllocationReport();
-
-        allocationReport.setAllocationId(DUMMY_ALLOCATION_ID);
 
         Confirmation confirmation = new Confirmation();
-        confirmation.setAllocationReport(allocationReport);
+        confirmation.setAllocationId(DUMMY_ALLOCATION_ID);
+        confirmation.setConfirmationType(Confirmation.EMAIL);
         confirmation.setContent(DUMMY_CONFIRMATION.getBytes(StandardCharsets.UTF_8));
 
         return confirmation;
