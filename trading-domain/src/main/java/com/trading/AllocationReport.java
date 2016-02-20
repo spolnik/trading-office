@@ -1,7 +1,5 @@
 package com.trading;
 
-import com.google.common.base.MoreObjects;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -18,8 +16,54 @@ public class AllocationReport implements Serializable {
     private String counterpartyName;
     private String executingPartyId;
     private String executingPartyName;
-    private Exchange exchange;
     private String micCode;
+    private String country;
+    private String countryCode;
+
+    private String exchangeName;
+    private String exchangeAcronym;
+    private String exchangeCity;
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+
+    public String getExchangeName() {
+        return exchangeName;
+    }
+
+    public void setExchangeName(String exchangeName) {
+        this.exchangeName = exchangeName;
+    }
+
+    public String getExchangeAcronym() {
+        return exchangeAcronym;
+    }
+
+    public void setExchangeAcronym(String exchangeAcronym) {
+        this.exchangeAcronym = exchangeAcronym;
+    }
+
+    public String getExchangeCity() {
+        return exchangeCity;
+    }
+
+    public void setExchangeCity(String exchangeCity) {
+        this.exchangeCity = exchangeCity;
+    }
 
     public String getAllocationId() {
         return allocationId;
@@ -109,38 +153,11 @@ public class AllocationReport implements Serializable {
         this.executingPartyName = executingPartyName;
     }
 
-    public Exchange getExchange() {
-        return exchange;
-    }
-
-    public void setExchange(Exchange exchange) {
-        this.exchange = exchange;
-    }
-
     public void setMicCode(String micCode) {
         this.micCode = micCode;
     }
 
     public String getMicCode() {
         return micCode;
-    }
-
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("allocationId", allocationId)
-                .add("securityId", securityId)
-                .add("instrument", instrument)
-                .add("tradeSide", tradeSide)
-                .add("tradeDate", tradeDate)
-                .add("quantity", quantity)
-                .add("price", price)
-                .add("exchange", exchange)
-                .add("counterpartyId", counterpartyId)
-                .add("counterpartyName", counterpartyName)
-                .add("executingPartyId", executingPartyId)
-                .add("executingPartyName", executingPartyName)
-                .add("micCode", micCode)
-                .toString();
     }
 }

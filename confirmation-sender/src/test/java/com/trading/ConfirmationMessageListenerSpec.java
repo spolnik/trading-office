@@ -66,7 +66,7 @@ public class ConfirmationMessageListenerSpec {
     private String allocationReportAsJson(String micCode) throws JsonProcessingException {
 
         AllocationReport allocationReport = TestData.allocationReport(UUID.randomUUID().toString());
-        allocationReport.getExchange().setMic(micCode);
+        allocationReport.setMicCode(micCode);
 
         return OBJECT_MAPPER.writeValueAsString(allocationReport);
     }

@@ -37,7 +37,7 @@ class ConfirmationMessageListener {
         AllocationReport allocationReport = OBJECT_MAPPER.readValue(message, AllocationReport.class);
         LOG.info("Received: " + allocationReport);
 
-        Optional<Confirmation> confirmation = confirmationParserFor(allocationReport.getExchange().getMic()).parse(allocationReport);
+        Optional<Confirmation> confirmation = confirmationParserFor(allocationReport.getMicCode()).parse(allocationReport);
 
         confirmationSender.send(confirmation.get());
     }
