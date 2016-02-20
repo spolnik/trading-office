@@ -5,7 +5,6 @@ include 'confirmation-sender'
 include 'allocation-message-receiver'
 include 'confirmation-service'
 include 'financial-data-service'
-include 'instruments-service'
 include 'allocation-enricher'
 include 'counterparty-service'
 

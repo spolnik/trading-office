@@ -51,19 +51,10 @@ Heroku: http://confirmation-sender.herokuapp.com/health
 
 ![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/confirmation_sender.png)
 
-## Instruments Service
-- spring boot web application
-- exposes REST endpoints for instrument data
-- works in readonly mode
-- data consumed from [OpenFigi Api](https://openfigi.com/api)
-
-Heroku: http://instruments-service.herokuapp.com/swagger-ui.html
-
-![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/instruments_service.png)
-
 ## Financial Data Service
 - spring boot web application
 - exposes REST endpoint for financial data (using Yahoo Finance Api)
+- exposes REST endpoints for instrument data (data consumed from [OpenFigi Api](https://openfigi.com/api))
 - based on a given symbol, downloads instrument data with actual price
 - works in readonly mode
 
@@ -107,6 +98,7 @@ Heroku: http://counterparty-service.herokuapp.com/swagger-ui.html
 
 - Swift - http://www.iso15022.org/uhb/uhb/finmt518.htm
 - FIXML - http://btobits.com/fixopaedia/fixdic50-sp2-ep/index.html (Allocation Report message)
+- Trade Lifecycle - http://thisweekfinance.blogspot.com/2011/10/trade-life-cycle.html
 
 ![Trade Lifecycle](https://raw.githubusercontent.com/spolnik/trading-office/master/design/trade_lifecycle.jpg)
 
