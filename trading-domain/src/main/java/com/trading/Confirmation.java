@@ -4,27 +4,31 @@ import java.io.Serializable;
 
 public class Confirmation implements Serializable {
 
+    public static final String EMAIL = "EMAIL";
+    public static final String SWIFT = "SWIFT";
+
     private AllocationReport allocationReport;
     private byte[] content;
-    private ConfirmationType confirmationType;
-
-    public static final Confirmation EMPTY_CONFIRMATION = new Confirmation();
-
-    static {
-        AllocationReport allocationReport = new AllocationReport();
-        allocationReport.setAllocationId("#empty");
-
-        EMPTY_CONFIRMATION.setAllocationReport(allocationReport);
-    }
+    private String confirmationType;
 
     public Confirmation() {
         // empty
     }
 
-    public Confirmation(AllocationReport allocationReport, byte[] content, ConfirmationType confirmationType) {
+    public Confirmation(AllocationReport allocationReport, byte[] content, String confirmationType) {
+
+        checkIfConfirmationTypeIsValid(confirmationType);
         this.allocationReport = allocationReport;
         this.content = content;
         this.confirmationType = confirmationType;
+    }
+
+    private void checkIfConfirmationTypeIsValid(String confirmationType) {
+        if ("SWIFT".equals(confirmationType) || "EMAIL".equals(confirmationType)) {
+            return;
+        }
+
+        throw new UnsupportedOperationException("Confirmation type unsupported: " + confirmationType);
     }
 
     public AllocationReport getAllocationReport() {
@@ -43,11 +47,11 @@ public class Confirmation implements Serializable {
         this.content = content;
     }
 
-    public ConfirmationType getConfirmationType() {
+    public String getConfirmationType() {
         return confirmationType;
     }
 
-    public void setConfirmationType(ConfirmationType confirmationType) {
+    public void setConfirmationType(String confirmationType) {
         this.confirmationType = confirmationType;
     }
 

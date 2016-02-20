@@ -21,14 +21,12 @@ public class ConfirmationMessageListenerSpec {
     private ConfirmationSender confirmationSender;
     private ConfirmationParser emailConfirmationParser;
     private ConfirmationParser swiftConfirmationParser;
-    private ConfirmationApi confirmationApi;
 
     @Before
     public void setUp() throws Exception {
         confirmationSender = mock(ConfirmationSender.class);
         emailConfirmationParser = mock(ConfirmationParser.class);
         swiftConfirmationParser = mock(ConfirmationParser.class);
-        confirmationApi = mock(ConfirmationApi.class);
 
         setupParser(emailConfirmationParser);
         setupParser(swiftConfirmationParser);
@@ -36,15 +34,12 @@ public class ConfirmationMessageListenerSpec {
         listener = new ConfirmationMessageListener(
                 confirmationSender,
                 emailConfirmationParser,
-                swiftConfirmationParser,
-                confirmationApi
+                swiftConfirmationParser
         );
     }
 
     @Test
     public void uses_email_confirmation_parser_to_parse_incoming_message_with_email_confirmation_type() throws Exception {
-
-        when(confirmationApi.confirmationTypeFor("XNAS")).thenReturn(ConfirmationType.EMAIL);
 
         listener.onMessage(allocationReportAsJson());
         verify(emailConfirmationParser).parse(any(AllocationReport.class));
@@ -53,9 +48,7 @@ public class ConfirmationMessageListenerSpec {
     @Test
     public void uses_swift_confirmation_parser_to_parse_incoming_message_with_london_stock_exchange_mic_code() throws Exception {
 
-        when(confirmationApi.confirmationTypeFor("XNAS")).thenReturn(ConfirmationType.SWIFT);
-
-        listener.onMessage(allocationReportAsJson());
+        listener.onMessage(allocationReportAsJson("XLON"));
         verify(swiftConfirmationParser).parse(any(AllocationReport.class));
     }
 
@@ -68,6 +61,14 @@ public class ConfirmationMessageListenerSpec {
 
     private String allocationReportAsJson() throws JsonProcessingException {
         return OBJECT_MAPPER.writeValueAsString(TestData.allocationReport(UUID.randomUUID().toString()));
+    }
+
+    private String allocationReportAsJson(String micCode) throws JsonProcessingException {
+
+        AllocationReport allocationReport = TestData.allocationReport(UUID.randomUUID().toString());
+        allocationReport.getExchange().setMic(micCode);
+
+        return OBJECT_MAPPER.writeValueAsString(allocationReport);
     }
 
     private void setupParser(ConfirmationParser parser) {

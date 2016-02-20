@@ -44,7 +44,7 @@ public class FixmlMessageParserSpec {
 
     @Test
     public void parses_transaction_buy_side() throws Exception {
-        assertThat(allocationReport.getTradeSide()).isEqualTo(TradeSide.BUY);
+        assertThat(allocationReport.getTradeSide()).isEqualTo(AllocationReport.BUY);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class FixmlMessageParserSpec {
         allocationReport = parser.parse(
                 String.format(FIXML_ALLOCATION_REPORT_MESSAGE, ALLOCATION_REPORT_ID, SELL_SIDE)
         );
-        assertThat(allocationReport.getTradeSide()).isEqualTo(TradeSide.SELL);
+        assertThat(allocationReport.getTradeSide()).isEqualTo(AllocationReport.SELL);
     }
 
     @Test(expected = UnsupportedOperationException.class)
@@ -81,7 +81,7 @@ public class FixmlMessageParserSpec {
 
     @Test
     public void parses_exchange_mic_code() throws Exception {
-        assertThat(allocationReport.getExchange().getMic()).isEqualTo(
+        assertThat(allocationReport.getMicCode()).isEqualTo(
                 "XNAS"
         );
     }

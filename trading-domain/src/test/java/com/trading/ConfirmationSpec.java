@@ -38,6 +38,23 @@ public class ConfirmationSpec {
         );
     }
 
+    @Test
+    public void can_be_email_confirmation() throws Exception {
+        assertThat(new Confirmation(null, null, Confirmation.EMAIL).getConfirmationType())
+                .isEqualTo(Confirmation.EMAIL);
+    }
+
+    @Test
+    public void can_be_swift_confirmation() throws Exception {
+        assertThat(new Confirmation(null, null, Confirmation.SWIFT).getConfirmationType())
+                .isEqualTo(Confirmation.SWIFT);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void throws_exception_if_unsupported_confirmation_type() throws Exception {
+        new Confirmation(null, null, "DUMMY");
+    }
+
     private Confirmation confirmation() {
         Confirmation confirmation = new Confirmation();
         confirmation.setAllocationReport(TestData.allocationReport());

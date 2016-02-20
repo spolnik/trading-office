@@ -46,7 +46,7 @@ public class PdfConfirmationGenerationIntegrationTest {
 
         map.put("QUANTITY", "10");
         map.put("PRICE", "1234.56");
-        map.put("SIDE", TradeSide.SELL.toString());
+        map.put("SIDE", "SELL");
 
         DateTimeFormatter format = DateTimeFormatter.ofPattern("MMM d yyyy", Locale.US);
         ZonedDateTime tradeDate = ZonedDateTime.of(2016, 6, 3, 0, 0, 0, 0, ZoneId.of("GMT"));

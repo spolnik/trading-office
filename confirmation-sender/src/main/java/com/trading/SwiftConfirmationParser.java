@@ -24,7 +24,7 @@ public class SwiftConfirmationParser implements ConfirmationParser {
 
         byte[] data = confirmation.message().getBytes(StandardCharsets.UTF_8);
 
-        return Optional.of(new Confirmation(allocationReport, data, ConfirmationType.SWIFT));
+        return Optional.of(new Confirmation(allocationReport, data, Confirmation.SWIFT));
     }
 
     private static MT518.SequenceB sequenceB(AllocationReport allocationReport) {
@@ -57,7 +57,7 @@ public class SwiftConfirmationParser implements ConfirmationParser {
         Field11A f11a = new Field11A();
         f11a.setCurrency(allocationReport.getInstrument().getCurrency());
         f11a.setQualifier(
-                allocationReport.getTradeSide() == TradeSide.BUY ? MT518.FXIB : MT518.FXIS
+                "BUY".equals(allocationReport.getTradeSide()) ? MT518.FXIB : MT518.FXIS
         );
 
         return f11a;
@@ -67,7 +67,7 @@ public class SwiftConfirmationParser implements ConfirmationParser {
         return String.format(
                 ":%s/%s",
                 MT518.BUSE,
-                allocationReport.getTradeSide() == TradeSide.BUY ? "BUYI" : "SELL"
+                "BUY".equals(allocationReport.getTradeSide()) ? "BUYI" : "SELL"
         );
     }
 
