@@ -30,6 +30,7 @@ class AllocationMessageEnrichmentListener {
     public String processAllocationReport(String message) throws IOException {
 
         AllocationReport allocationReport = fromJson(message);
+        LOG.info("Received: " + allocationReport.getAllocationId());
         AllocationReport enrichedAllocationReport = enricher.process(allocationReport);
 
         return toJson(enrichedAllocationReport);
