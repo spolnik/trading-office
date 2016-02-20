@@ -1,8 +1,7 @@
 apply plugin: 'spring-boot'
 
 dependencies {
-    compile project(":trading-domain"),
-            libs.spring.boot_web,
+    compile libs.spring.boot_web,
             libs.spring.boot_actuator,
             libs.spring.jms,
             libs.activemq,

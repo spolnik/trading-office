@@ -29,22 +29,22 @@ class AllocationMessageEnrichmentListener {
     @SendTo("enriched.json.allocation.report")
     public String processAllocationReport(String message) throws IOException {
 
-        AllocationReport allocationReport = fromJson(message);
-        LOG.info("Received: " + allocationReport.getAllocationId());
-        AllocationReport enrichedAllocationReport = enricher.process(allocationReport);
+        EnrichedAllocation allocation = fromJson(message);
+        LOG.info("Received: " + allocation.getAllocationId());
+        EnrichedAllocation enrichedAllocation = enricher.process(allocation);
 
-        return toJson(enrichedAllocationReport);
+        return toJson(enrichedAllocation);
     }
 
-    private static String toJson(AllocationReport allocationReport) throws JsonProcessingException {
-        String allocationReportAsJson = OBJECT_MAPPER.writeValueAsString(allocationReport);
-        LOG.info("Sending: " + allocationReportAsJson);
-        return allocationReportAsJson;
+    private static String toJson(EnrichedAllocation allocation) throws JsonProcessingException {
+        String allocationAsJson = OBJECT_MAPPER.writeValueAsString(allocation);
+        LOG.info("Sending: " + allocationAsJson);
+        return allocationAsJson;
     }
 
-    private static AllocationReport fromJson(String message) throws IOException {
-        AllocationReport allocationReport = OBJECT_MAPPER.readValue(message, AllocationReport.class);
-        LOG.info("Received: " + allocationReport);
-        return allocationReport;
+    private static EnrichedAllocation fromJson(String message) throws IOException {
+        EnrichedAllocation allocation = OBJECT_MAPPER.readValue(message, EnrichedAllocation.class);
+        LOG.info("Received: " + allocation);
+        return allocation;
     }
 }

@@ -19,20 +19,12 @@ class TestData {
         allocationReport.setTradeDate("2016-06-03");
         allocationReport.setTradeSide(tradeSide);
 
-        allocationReport.setInstrument(instrument());
+        allocationReport.setInstrumentCurrency("USD");
+        allocationReport.setInstrumentExchange("XNAS");
+        allocationReport.setInstrumentName("AMAZON STOCKS");
+        allocationReport.setInstrumentSymbol("AMZN");
         allocationReport.setMicCode("XNAS");
 
         return allocationReport;
-    }
-
-    private static Instrument instrument() {
-        Instrument instrument = new Instrument();
-
-        instrument.setCurrency("USD");
-        instrument.setExchange("XNAS");
-        instrument.setName("AMAZON STOCKS");
-        instrument.setSymbol("AMZN");
-
-        return instrument;
     }
 }

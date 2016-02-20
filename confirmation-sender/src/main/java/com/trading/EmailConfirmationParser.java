@@ -53,14 +53,13 @@ class EmailConfirmationParser implements ConfirmationParser {
         map.put("INST_ID_TYPE", "SEDOL");
         map.put("INST_ID", allocationReport.getSecurityId());
 
-        Instrument instrument = allocationReport.getInstrument();
-        map.put("ALLOC_INSTR_NAME", instrument.getName());
-        map.put("CURRENCY", instrument.getCurrency());
-        map.put("EXCHANGE", instrument.getExchange());
+        map.put("ALLOC_INSTR_NAME", allocationReport.getInstrumentName());
+        map.put("CURRENCY", allocationReport.getInstrumentCurrency());
+        map.put("EXCHANGE", allocationReport.getInstrumentExchange());
 
         map.put("QUANTITY", Integer.toString(allocationReport.getQuantity()));
         map.put("PRICE", allocationReport.getPrice().toString());
-        map.put("SIDE", allocationReport.getTradeSide().toString());
+        map.put("SIDE", allocationReport.getTradeSide());
 
         LocalDate tradeDate = LocalDate.parse(
                 allocationReport.getTradeDate(),

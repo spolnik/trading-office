@@ -12,7 +12,7 @@ public class AllocationReportEnricher {
         this.counterpartyApi = counterpartyApi;
     }
 
-    public AllocationReport process(AllocationReport allocationReport) throws IOException {
+    public EnrichedAllocation process(EnrichedAllocation allocationReport) throws IOException {
 
         enrichWithInstrument(allocationReport);
         enrichWithExchange(allocationReport);
@@ -22,13 +22,17 @@ public class AllocationReportEnricher {
         return allocationReport;
     }
 
-    private void enrichWithInstrument(AllocationReport allocationReport) throws IOException {
+    private void enrichWithInstrument(EnrichedAllocation allocationReport) throws IOException {
         InstrumentDetails instrumentDetails = requestInstrumentDetails(
                 allocationReport.getSecurityId()
         );
 
         Instrument instrument = instrumentsApi.getInstrument(instrumentDetails.getTicker());
-        allocationReport.setInstrument(instrument);
+        allocationReport.setInstrumentName(instrument.getName());
+        allocationReport.setInstrumentCurrency(instrument.getCurrency());
+        allocationReport.setInstrumentExchange(instrument.getExchange());
+        allocationReport.setInstrumentSymbol(instrument.getSymbol());
+        allocationReport.setInstrumentPrice(instrument.getPrice());
     }
 
     private InstrumentDetails requestInstrumentDetails(
@@ -43,7 +47,7 @@ public class AllocationReportEnricher {
         return instrumentDetails;
     }
 
-    private void enrichWithExchange(AllocationReport allocationReport) {
+    private void enrichWithExchange(EnrichedAllocation allocationReport) {
         Exchange exchange = counterpartyApi.getExchange(
                 allocationReport.getMicCode()
         );
@@ -55,7 +59,7 @@ public class AllocationReportEnricher {
         allocationReport.setExchangeName(exchange.getName());
     }
 
-    private void enrichWithCounterparty(AllocationReport allocationReport) {
+    private void enrichWithCounterparty(EnrichedAllocation allocationReport) {
         String counterparty = counterpartyApi.getPartyName(
                 allocationReport.getCounterpartyId()
         );
@@ -63,7 +67,7 @@ public class AllocationReportEnricher {
         allocationReport.setCounterpartyName(counterparty);
     }
 
-    private void enrichWithExecutingParty(AllocationReport allocationReport) {
+    private void enrichWithExecutingParty(EnrichedAllocation allocationReport) {
         String executingParty = counterpartyApi.getPartyName(
                 allocationReport.getExecutingPartyId()
         );

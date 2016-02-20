@@ -25,6 +25,13 @@ public class AllocationMessageEnricherSpec {
         when(counterpartyApi.getPartyName(any())).thenReturn("DUMMY");
         when(counterpartyApi.getExchange(any())).thenReturn(TestData.exchange());
 
+        InstrumentDetails instrumentDetails = mock(InstrumentDetails.class);
+
+        when(instrumentDetails.getTicker()).thenReturn("AMZN");
+
+        when(instrumentsApi.getInstrumentDetails(any())).thenReturn(instrumentDetails);
+        when(instrumentsApi.getInstrument("AMZN")).thenReturn(TestData.instrument());
+
         enricher = new AllocationReportEnricher(instrumentsApi, counterpartyApi);
     }
 
@@ -36,7 +43,6 @@ public class AllocationMessageEnricherSpec {
 
     @Test
     public void uses_instruments_api_to_get_instrument_details() throws Exception {
-        setupInstrumentsApi();
 
         enricher.process(TestData.allocationReport());
         verify(instrumentsApi).getInstrumentDetails("2000019");
@@ -44,7 +50,6 @@ public class AllocationMessageEnricherSpec {
 
     @Test
     public void uses_instruments_api_to_get_instrument() throws Exception {
-        setupInstrumentsApi();
 
         enricher.process(TestData.allocationReport());
         verify(instrumentsApi).getInstrument("AMZN");
@@ -52,7 +57,6 @@ public class AllocationMessageEnricherSpec {
 
     @Test
     public void uses_counterparty_api_to_get_exchange() throws Exception {
-        setupInstrumentsApi();
 
         enricher.process(TestData.allocationReport());
         verify(counterpartyApi).getExchange("XNAS");
@@ -60,7 +64,6 @@ public class AllocationMessageEnricherSpec {
 
     @Test
     public void uses_counterparty_api_to_get_counterparty() throws Exception {
-        setupInstrumentsApi();
 
         enricher.process(TestData.allocationReport());
         verify(counterpartyApi).getPartyName("CUSTUS");
@@ -68,17 +71,8 @@ public class AllocationMessageEnricherSpec {
 
     @Test
     public void uses_counterparty_api_to_get_executing_party() throws Exception {
-        setupInstrumentsApi();
 
         enricher.process(TestData.allocationReport());
         verify(counterpartyApi).getPartyName("TROF");
-    }
-
-    private void setupInstrumentsApi() {
-        InstrumentDetails instrumentDetails = mock(InstrumentDetails.class);
-
-        when(instrumentDetails.getTicker()).thenReturn("AMZN");
-
-        when(instrumentsApi.getInstrumentDetails(any())).thenReturn(instrumentDetails);
     }
 }

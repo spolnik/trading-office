@@ -3,7 +3,7 @@ package com.trading;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class AllocationReport implements Serializable {
+public class EnrichedAllocation implements Serializable {
 
     private String allocationId;
     private String securityId;
@@ -26,6 +26,7 @@ public class AllocationReport implements Serializable {
     private String instrumentCurrency;
     private String instrumentExchange;
     private BigDecimal price;
+    private BigDecimal instrumentPrice;
 
     public String getInstrumentSymbol() {
         return instrumentSymbol;
@@ -186,5 +187,13 @@ public class AllocationReport implements Serializable {
 
     public String getMicCode() {
         return micCode;
+    }
+
+    public void setInstrumentPrice(BigDecimal instrumentPrice) {
+        this.instrumentPrice = instrumentPrice;
+    }
+
+    public BigDecimal getInstrumentPrice() {
+        return instrumentPrice;
     }
 }

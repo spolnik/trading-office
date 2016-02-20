@@ -9,7 +9,10 @@ public class TestData {
 
         allocationReport.setAllocationId("12345");
         allocationReport.setSecurityId("54321");
-        allocationReport.setInstrument(instrument());
+        allocationReport.setInstrumentCurrency("USD");
+        allocationReport.setInstrumentExchange("NASDAQ");
+        allocationReport.setInstrumentName("AMAZON STOCKS");
+        allocationReport.setInstrumentSymbol("AMZN");
         allocationReport.setTradeSide("BUY");
         allocationReport.setTradeDate("2016-06-03");
 
@@ -26,16 +29,5 @@ public class TestData {
         allocationReport.setExecutingPartyId("TROF");
 
         return allocationReport;
-    }
-
-    static Instrument instrument() {
-        Instrument instrument = new Instrument();
-
-        instrument.setCurrency("USD");
-        instrument.setExchange("NASDAQ");
-        instrument.setName("AMAZON STOCKS");
-        instrument.setSymbol("AMZN");
-
-        return instrument;
     }
 }

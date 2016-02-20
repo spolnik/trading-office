@@ -41,11 +41,13 @@ public class AllocationEnricherIntegrationTest {
 
         String message = sendAndReceive(allocationReportAsJson());
 
-        AllocationReport enrichedAllocationReport = fromJson(message);
-        Instrument instrument = enrichedAllocationReport.getInstrument();
+        EnrichedAllocation enrichedAllocation = fromJson(message);
 
-        assertThat(instrument).isEqualToIgnoringGivenFields(TestData.instrument(), "price");
-        assertThat(enrichedAllocationReport.getExchangeName()).isEqualTo(
+        assertThat(enrichedAllocation.getInstrumentName()).isEqualTo(
+                TestData.instrument().getName()
+        );
+
+        assertThat(enrichedAllocation.getExchangeName()).isEqualTo(
                 TestData.exchange().getName()
         );
     }
@@ -58,8 +60,8 @@ public class AllocationEnricherIntegrationTest {
         );
     }
 
-    private AllocationReport fromJson(String message) throws java.io.IOException {
-        return OBJECT_MAPPER.readValue(message, AllocationReport.class);
+    private EnrichedAllocation fromJson(String message) throws java.io.IOException {
+        return OBJECT_MAPPER.readValue(message, EnrichedAllocation.class);
     }
 
     private String sendAndReceive(String allocationReportAsJson) {
@@ -76,8 +78,8 @@ public class AllocationEnricherIntegrationTest {
         );
     }
 
-    private AllocationReport allocationReportToEnrich(String allocationReportId) {
-        AllocationReport allocationReportToEnrich = TestData.allocationReport();
+    private EnrichedAllocation allocationReportToEnrich(String allocationReportId) {
+        EnrichedAllocation allocationReportToEnrich = TestData.allocationReport();
         allocationReportToEnrich.setAllocationId(allocationReportId);
         return allocationReportToEnrich;
     }

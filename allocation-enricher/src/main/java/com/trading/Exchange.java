@@ -1,9 +1,6 @@
 package com.trading;
 
-import com.google.common.base.MoreObjects;
-
 import java.io.Serializable;
-import java.util.Objects;
 
 public class Exchange implements Serializable {
 
@@ -78,37 +75,5 @@ public class Exchange implements Serializable {
 
     public void setComments(String comments) {
         this.comments = comments;
-    }
-
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("country", country)
-                .add("countryCode", countryCode)
-                .add("mic", mic)
-                .add("name", name)
-                .add("acronym", acronym)
-                .add("city", city)
-                .add("website", website)
-                .add("comments", comments)
-                .toString();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Exchange that = (Exchange) o;
-
-        return Objects.equals(mic, that.mic);
-
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(mic);
     }
 }

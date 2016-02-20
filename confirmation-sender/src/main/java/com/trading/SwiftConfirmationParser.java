@@ -41,7 +41,7 @@ public class SwiftConfirmationParser implements ConfirmationParser {
 
     private static Field35B instrument(AllocationReport allocationReport) {
         Field35B field35B = new Field35B();
-        field35B.setDescription(allocationReport.getInstrument().getName());
+        field35B.setDescription(allocationReport.getInstrumentName());
         return field35B;
     }
 
@@ -55,7 +55,7 @@ public class SwiftConfirmationParser implements ConfirmationParser {
 
     private static Field11A currency(AllocationReport allocationReport) {
         Field11A f11a = new Field11A();
-        f11a.setCurrency(allocationReport.getInstrument().getCurrency());
+        f11a.setCurrency(allocationReport.getInstrumentCurrency());
         f11a.setQualifier(
                 "BUY".equals(allocationReport.getTradeSide()) ? MT518.FXIB : MT518.FXIS
         );
