@@ -7,7 +7,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class InstrumentsApiIntegrationTest {
 
     private InstrumentsApiClient instrumentsApi = new InstrumentsApiClient(
-            "http://instruments-service.herokuapp.com",
             "http://financial-data-service.herokuapp.com"
     );
 

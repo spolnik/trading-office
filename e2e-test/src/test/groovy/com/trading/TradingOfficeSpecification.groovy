@@ -31,7 +31,6 @@ class TradingOfficeSpecification extends Specification {
         healthCheck(herokuApp("confirmation-sender"))
         healthCheck(herokuApp("confirmation-service"))
         healthCheck(herokuApp("financial-data-service"))
-        healthCheck(herokuApp("instruments-service"))
         healthCheck(herokuApp("counterparty-service"))
     }
 

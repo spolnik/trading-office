@@ -6,7 +6,6 @@ Trading Office is reference implementation of microservices architecture, based 
 - [Allocation Message Receiver](#allocation-message-receiver)
 - [Allocation Enricher](#allocation-enricher)
 - [Confirmation Sender](#confirmation-sender)
-- [Instruments Service](#instruments-service)
 - [Financial Data Service](#financial-data-service)
 - [Confirmation Service](#confirmation-service)
 - [Counterparty Service](#counterparty-service)

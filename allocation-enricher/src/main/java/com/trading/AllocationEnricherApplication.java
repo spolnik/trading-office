@@ -24,9 +24,6 @@ public class AllocationEnricherApplication {
     @Value("${counterpartyServiceUrl}")
     private String counterpartyServiceUrl;
 
-    @Value("${instrumentServiceUrl}")
-    private String instrumentServiceUrl;
-
     @Value("${financeDataServiceUrl}")
     private String financeDataServiceUrl;
 
@@ -53,7 +50,7 @@ public class AllocationEnricherApplication {
 
     @Bean
     InstrumentsApi instrumentsApi() {
-        return new InstrumentsApiClient(instrumentServiceUrl, financeDataServiceUrl);
+        return new InstrumentsApiClient(financeDataServiceUrl);
     }
 
     @Bean

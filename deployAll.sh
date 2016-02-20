@@ -11,7 +11,6 @@ function refresh {
 git checkout master
 git merge origin/master
 
-refresh heroku-instruments-service
 refresh heroku-counterparty-service
 refresh heroku-confirmation-service
 refresh heroku-financial-data-service

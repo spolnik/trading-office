@@ -10,19 +10,16 @@ class InstrumentsApiClient implements InstrumentsApi {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    private String instrumentServiceUrl;
+    private String marketDataServiceUrl;
 
-    private String financeDataServiceUrl;
-
-    public InstrumentsApiClient(String instrumentServiceUrl, String financeDataServiceUrl) {
-        this.instrumentServiceUrl = instrumentServiceUrl;
-        this.financeDataServiceUrl = financeDataServiceUrl;
+    public InstrumentsApiClient(String marketDataServiceUrl) {
+        this.marketDataServiceUrl = marketDataServiceUrl;
     }
 
     @Override
     public InstrumentDetails getInstrumentDetails(String securityId) {
 
-        String url = String.format("%s/api/instruments/sedol/%s", instrumentServiceUrl, securityId);
+        String url = String.format("%s/api/instruments/sedol/%s", marketDataServiceUrl, securityId);
         LOG.info("Getting instrument details from: " + url);
 
         return restTemplate.getForObject(url, InstrumentDetails.class);
@@ -30,7 +27,7 @@ class InstrumentsApiClient implements InstrumentsApi {
 
     @Override
     public Instrument getInstrument(String ticker) {
-        String url = String.format("%s/api/instrument/%s", financeDataServiceUrl, ticker);
+        String url = String.format("%s/api/instrument/%s", marketDataServiceUrl, ticker);
         LOG.info("Getting instrument from: " + url);
 
         return restTemplate.getForObject(url, Instrument.class);
