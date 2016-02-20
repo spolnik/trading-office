@@ -20,10 +20,7 @@ class TestData {
         allocationReport.setTradeSide(tradeSide);
 
         allocationReport.setInstrument(instrument());
-
-        Exchange exchange = new Exchange();
-        exchange.setMic("XNAS");
-        allocationReport.setExchange(exchange);
+        allocationReport.setMicCode("XNAS");
 
         return allocationReport;
     }

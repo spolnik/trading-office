@@ -48,7 +48,11 @@ public class AllocationReportEnricher {
                 allocationReport.getMicCode()
         );
 
-        allocationReport.setExchange(exchange);
+        allocationReport.setCountry(exchange.getCountry());
+        allocationReport.setCountryCode(exchange.getCountryCode());
+        allocationReport.setExchangeAcronym(exchange.getAcronym());
+        allocationReport.setExchangeCity(exchange.getCity());
+        allocationReport.setExchangeName(exchange.getName());
     }
 
     private void enrichWithCounterparty(AllocationReport allocationReport) {

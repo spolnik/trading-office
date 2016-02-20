@@ -16,7 +16,12 @@ public class TestData {
         allocationReport.setQuantity(10);
         allocationReport.setPrice(BigDecimal.valueOf(7.89));
 
-        allocationReport.setExchange(exchange());
+        allocationReport.setExchangeAcronym("NASDAQ");
+        allocationReport.setExchangeCity("NEW YORK");
+        allocationReport.setCountry("UNITED STATES OF AMERICA");
+        allocationReport.setCountryCode("US");
+        allocationReport.setExchangeName("NASDAQ - ALL MARKETS");
+        allocationReport.setMicCode("XNAS");
         allocationReport.setCounterpartyId("CUSTUK");
         allocationReport.setExecutingPartyId("TROF");
 
@@ -32,19 +37,5 @@ public class TestData {
         instrument.setSymbol("AMZN");
 
         return instrument;
-    }
-
-    static Exchange exchange() {
-        Exchange exchange = new Exchange();
-
-        exchange.setAcronym("NASDAQ");
-        exchange.setCity("NEW YORK");
-        exchange.setCountry("UNITED STATES OF AMERICA");
-        exchange.setCountryCode("US");
-        exchange.setName("NASDAQ - ALL MARKETS");
-        exchange.setMic("XNAS");
-        exchange.setWebsite("WWW.NASDAQ.COM");
-
-        return exchange;
     }
 }

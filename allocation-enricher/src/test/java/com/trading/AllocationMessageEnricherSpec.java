@@ -23,6 +23,7 @@ public class AllocationMessageEnricherSpec {
         counterpartyApi = mock(CounterpartyApi.class);
 
         when(counterpartyApi.getPartyName(any())).thenReturn("DUMMY");
+        when(counterpartyApi.getExchange(any())).thenReturn(TestData.exchange());
 
         enricher = new AllocationReportEnricher(instrumentsApi, counterpartyApi);
     }
