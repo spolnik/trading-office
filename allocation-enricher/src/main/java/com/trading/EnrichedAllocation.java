@@ -3,15 +3,13 @@ package com.trading;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class AllocationReport implements Serializable {
+public class EnrichedAllocation implements Serializable {
 
     private String allocationId;
     private String securityId;
-    private Instrument instrument;
     private String tradeSide;
     private String tradeDate;
     private int quantity;
-    private BigDecimal price;
     private String counterpartyId;
     private String counterpartyName;
     private String executingPartyId;
@@ -19,10 +17,56 @@ public class AllocationReport implements Serializable {
     private String micCode;
     private String country;
     private String countryCode;
-
     private String exchangeName;
+
     private String exchangeAcronym;
     private String exchangeCity;
+    private String instrumentSymbol;
+    private String instrumentName;
+    private String instrumentCurrency;
+    private String instrumentExchange;
+    private BigDecimal price;
+    private BigDecimal instrumentPrice;
+
+    public String getInstrumentSymbol() {
+        return instrumentSymbol;
+    }
+
+    public void setInstrumentSymbol(String instrumentSymbol) {
+        this.instrumentSymbol = instrumentSymbol;
+    }
+
+    public String getInstrumentName() {
+        return instrumentName;
+    }
+
+    public void setInstrumentName(String instrumentName) {
+        this.instrumentName = instrumentName;
+    }
+
+    public String getInstrumentCurrency() {
+        return instrumentCurrency;
+    }
+
+    public void setInstrumentCurrency(String instrumentCurrency) {
+        this.instrumentCurrency = instrumentCurrency;
+    }
+
+    public String getInstrumentExchange() {
+        return instrumentExchange;
+    }
+
+    public void setInstrumentExchange(String instrumentExchange) {
+        this.instrumentExchange = instrumentExchange;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 
     public String getCountry() {
         return country;
@@ -81,14 +125,6 @@ public class AllocationReport implements Serializable {
         this.securityId = securityId;
     }
 
-    public Instrument getInstrument() {
-        return instrument;
-    }
-
-    public void setInstrument(Instrument instrument) {
-        this.instrument = instrument;
-    }
-
     public String getTradeSide() {
         return tradeSide;
     }
@@ -111,14 +147,6 @@ public class AllocationReport implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 
     public String getCounterpartyId() {
@@ -159,5 +187,13 @@ public class AllocationReport implements Serializable {
 
     public String getMicCode() {
         return micCode;
+    }
+
+    public void setInstrumentPrice(BigDecimal instrumentPrice) {
+        this.instrumentPrice = instrumentPrice;
+    }
+
+    public BigDecimal getInstrumentPrice() {
+        return instrumentPrice;
     }
 }

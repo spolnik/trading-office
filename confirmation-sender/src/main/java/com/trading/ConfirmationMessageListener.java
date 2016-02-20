@@ -34,7 +34,7 @@ class ConfirmationMessageListener {
 
     @JmsListener(destination = "enriched.json.allocation.report")
     public void onMessage(String message) throws IOException {
-        AllocationReport allocationReport = OBJECT_MAPPER.readValue(message, AllocationReport.class);
+        Confirmation allocationReport = OBJECT_MAPPER.readValue(message, Confirmation.class);
         LOG.info("Received: " + allocationReport);
 
         Optional<Confirmation> confirmation = confirmationParserFor(allocationReport.getMicCode()).parse(allocationReport);

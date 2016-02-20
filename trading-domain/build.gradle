@@ -1,8 +1,0 @@
-dependencies {
-    compile libs.guava,
-            libs.jackson,
-            libs.jackson_databind
-
-    testCompile libs.test.junit,
-            libs.test.assertj
-}

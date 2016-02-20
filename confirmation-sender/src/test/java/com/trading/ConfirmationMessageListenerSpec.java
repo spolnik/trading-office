@@ -42,14 +42,14 @@ public class ConfirmationMessageListenerSpec {
     public void uses_email_confirmation_parser_to_parse_incoming_message_with_email_confirmation_type() throws Exception {
 
         listener.onMessage(allocationReportAsJson());
-        verify(emailConfirmationParser).parse(any(AllocationReport.class));
+        verify(emailConfirmationParser).parse(any(Confirmation.class));
     }
 
     @Test
     public void uses_swift_confirmation_parser_to_parse_incoming_message_with_london_stock_exchange_mic_code() throws Exception {
 
         listener.onMessage(allocationReportAsJson("XLON"));
-        verify(swiftConfirmationParser).parse(any(AllocationReport.class));
+        verify(swiftConfirmationParser).parse(any(Confirmation.class));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class ConfirmationMessageListenerSpec {
 
     private String allocationReportAsJson(String micCode) throws JsonProcessingException {
 
-        AllocationReport allocationReport = TestData.allocationReport(UUID.randomUUID().toString());
+        Confirmation allocationReport = TestData.allocationReport(UUID.randomUUID().toString());
         allocationReport.setMicCode(micCode);
 
         return OBJECT_MAPPER.writeValueAsString(allocationReport);

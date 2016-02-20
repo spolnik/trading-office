@@ -29,16 +29,17 @@ class EmailConfirmationParser implements ConfirmationParser {
     }
 
     @Override
-    public Optional<Confirmation> parse(AllocationReport allocationReport) {
+    public Optional<Confirmation> parse(Confirmation confirmation) {
 
         try {
             byte[] data = JasperRunManager.runReportToPdf(
-                    jasperReport, parameters(allocationReport), new JREmptyDataSource()
+                    jasperReport, parameters(confirmation), new JREmptyDataSource()
             );
 
-            return Optional.of(
-                    new Confirmation(allocationReport, data, Confirmation.EMAIL)
-            );
+            confirmation.setContent(data);
+            confirmation.setConfirmationType(Confirmation.EMAIL);
+
+            return Optional.of(confirmation);
         } catch (JRException e) {
             LOG.error(e.getMessage(), e);
         }
@@ -46,21 +47,20 @@ class EmailConfirmationParser implements ConfirmationParser {
         return Optional.empty();
     }
 
-    private static Map<String, Object> parameters(AllocationReport allocationReport) {
+    private static Map<String, Object> parameters(Confirmation allocationReport) {
         Map<String, Object> map = new HashMap<>();
         map.put("ALLOC_RPT_ID", allocationReport.getAllocationId());
         map.put("TRANS_TYPE", "NEW");
         map.put("INST_ID_TYPE", "SEDOL");
         map.put("INST_ID", allocationReport.getSecurityId());
 
-        Instrument instrument = allocationReport.getInstrument();
-        map.put("ALLOC_INSTR_NAME", instrument.getName());
-        map.put("CURRENCY", instrument.getCurrency());
-        map.put("EXCHANGE", instrument.getExchange());
+        map.put("ALLOC_INSTR_NAME", allocationReport.getInstrumentName());
+        map.put("CURRENCY", allocationReport.getInstrumentCurrency());
+        map.put("EXCHANGE", allocationReport.getInstrumentExchange());
 
         map.put("QUANTITY", Integer.toString(allocationReport.getQuantity()));
         map.put("PRICE", allocationReport.getPrice().toString());
-        map.put("SIDE", allocationReport.getTradeSide().toString());
+        map.put("SIDE", allocationReport.getTradeSide());
 
         LocalDate tradeDate = LocalDate.parse(
                 allocationReport.getTradeDate(),

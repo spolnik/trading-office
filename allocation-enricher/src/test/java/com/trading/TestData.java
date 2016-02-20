@@ -1,8 +1,8 @@
 package com.trading;
 
 class TestData {
-    static AllocationReport allocationReport() {
-        AllocationReport allocationReport = new AllocationReport();
+    static EnrichedAllocation allocationReport() {
+        EnrichedAllocation allocationReport = new EnrichedAllocation();
 
         allocationReport.setAllocationId("1234567");
         allocationReport.setSecurityId("2000019");

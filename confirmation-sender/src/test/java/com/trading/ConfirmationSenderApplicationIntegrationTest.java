@@ -42,7 +42,7 @@ public class ConfirmationSenderApplicationIntegrationTest {
     public void consumes_incoming_message_and_send_confirmation() throws Exception {
         ConfirmationSenderApplication.main(new String[0]);
 
-        AllocationReport allocationReport = TestData.allocationReport(DUMMY_ALLOCATION_ID);
+        Confirmation allocationReport = TestData.allocationReport(DUMMY_ALLOCATION_ID);
 
         String allocationReportAsJson = OBJECT_MAPPER.writeValueAsString(allocationReport);
 
@@ -56,8 +56,7 @@ public class ConfirmationSenderApplicationIntegrationTest {
 
         Confirmation confirmation = FakeConfirmationSender.getConfirmation();
 
-        assertThat(confirmation.getAllocationReport())
-                .isEqualToComparingFieldByField(allocationReport);
+        assertThat(confirmation).isEqualToIgnoringGivenFields(allocationReport, "content", "confirmationType");
     }
 
     private ConnectionFactory connectionFactory() {

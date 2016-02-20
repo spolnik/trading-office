@@ -27,7 +27,7 @@ public class FileBasedConfirmationRepository implements ConfirmationRepository {
         savePdfConfirmation(confirmation);
 
         confirmations.computeIfAbsent(
-                confirmation.getAllocationReport().getAllocationId(),
+                confirmation.getAllocationId(),
                 key -> confirmation
         );
     }
@@ -45,6 +45,6 @@ public class FileBasedConfirmationRepository implements ConfirmationRepository {
     }
 
     private static Path buildConfirmationFilePath(@RequestBody Confirmation confirmation) {
-        return Paths.get("confirmations/Confirmation-" + confirmation.id() + ".pdf");
+        return Paths.get("confirmations/Confirmation-" + confirmation.getAllocationId() + ".pdf");
     }
 }

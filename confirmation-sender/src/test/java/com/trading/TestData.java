@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 
 class TestData {
 
-    static AllocationReport allocationReport(String allocationId) {
+    static Confirmation allocationReport(String allocationId) {
         return allocationReport(allocationId, "BUY");
     }
 
-    static AllocationReport allocationReport(String allocationId, String tradeSide) {
-        AllocationReport allocationReport = new AllocationReport();
+    static Confirmation allocationReport(String allocationId, String tradeSide) {
+        Confirmation allocationReport = new Confirmation();
 
         allocationReport.setAllocationId(allocationId);
         allocationReport.setSecurityId("2000019");
@@ -19,20 +19,12 @@ class TestData {
         allocationReport.setTradeDate("2016-06-03");
         allocationReport.setTradeSide(tradeSide);
 
-        allocationReport.setInstrument(instrument());
+        allocationReport.setInstrumentCurrency("USD");
+        allocationReport.setInstrumentExchange("XNAS");
+        allocationReport.setInstrumentName("AMAZON STOCKS");
+        allocationReport.setInstrumentSymbol("AMZN");
         allocationReport.setMicCode("XNAS");
 
         return allocationReport;
-    }
-
-    private static Instrument instrument() {
-        Instrument instrument = new Instrument();
-
-        instrument.setCurrency("USD");
-        instrument.setExchange("XNAS");
-        instrument.setName("AMAZON STOCKS");
-        instrument.setSymbol("AMZN");
-
-        return instrument;
     }
 }

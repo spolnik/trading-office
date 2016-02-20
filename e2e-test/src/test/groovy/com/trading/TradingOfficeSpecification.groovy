@@ -84,10 +84,8 @@ class TradingOfficeSpecification extends Specification {
 
         def confirmation = confirmationServiceClient.get(path: "api/confirmation/" + allocationReportId).responseData
 
-        log.info("Confirmation data: ${new String((byte[]) confirmation.content)}")
-
         confirmation.content.size() > 100
-        confirmation.allocationReport.allocationId == allocationReportId
+        confirmation.allocationId == allocationReportId
         confirmation.confirmationType == confirmationType
     }
 

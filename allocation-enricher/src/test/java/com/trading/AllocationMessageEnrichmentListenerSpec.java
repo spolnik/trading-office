@@ -18,7 +18,7 @@ public class AllocationMessageEnrichmentListenerSpec {
         AllocationMessageEnrichmentListener listener = new AllocationMessageEnrichmentListener(enricher);
 
         listener.processAllocationReport(allocationReportAsJson());
-        verify(enricher).process(any(AllocationReport.class));
+        verify(enricher).process(any(EnrichedAllocation.class));
     }
 
     private String allocationReportAsJson() throws JsonProcessingException {
