@@ -8,8 +8,6 @@ class OpenFigiRequest {
     private String idType;
     private String idValue;
     private String exchCode;
-    private String micCode;
-    private String currency;
 
     public String getIdType() {
         return idType;
@@ -33,21 +31,5 @@ class OpenFigiRequest {
 
     public void setExchCode(String exchCode) {
         this.exchCode = exchCode;
-    }
-
-    public String getMicCode() {
-        return micCode;
-    }
-
-    public void setMicCode(String micCode) {
-        this.micCode = micCode;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
     }
 }
