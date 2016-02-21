@@ -20,7 +20,7 @@ public class ConfirmationServiceClientIntegrationTest {
         client.send(confirmationToSave);
 
         Confirmation confirmation = restTemplate.getForObject(
-                CONFIRMATION_SERVICE_URL + "/api/counterparty/" + confirmationToSave.getAllocationId(),
+                CONFIRMATION_SERVICE_URL + "/api/confirmation/" + confirmationToSave.getAllocationId(),
                 Confirmation.class
         );
 
