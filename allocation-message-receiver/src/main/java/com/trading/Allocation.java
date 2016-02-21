@@ -5,7 +5,7 @@ import com.google.common.base.MoreObjects;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class AllocationReport implements Serializable {
+public class Allocation implements Serializable {
 
     public static final String BUY = "BUY";
     public static final String SELL = "SELL";
@@ -17,9 +17,7 @@ public class AllocationReport implements Serializable {
     private int quantity;
     private BigDecimal price;
     private String counterpartyId;
-    private String counterpartyName;
     private String executingPartyId;
-    private String executingPartyName;
     private String micCode;
 
     public String getAllocationId() {
@@ -78,28 +76,12 @@ public class AllocationReport implements Serializable {
         this.counterpartyId = counterpartyId;
     }
 
-    public String getCounterpartyName() {
-        return counterpartyName;
-    }
-
-    public void setCounterpartyName(String counterpartyName) {
-        this.counterpartyName = counterpartyName;
-    }
-
     public String getExecutingPartyId() {
         return executingPartyId;
     }
 
     public void setExecutingPartyId(String executingPartyId) {
         this.executingPartyId = executingPartyId;
-    }
-
-    public String getExecutingPartyName() {
-        return executingPartyName;
-    }
-
-    public void setExecutingPartyName(String executingPartyName) {
-        this.executingPartyName = executingPartyName;
     }
 
     public void setMicCode(String micCode) {
@@ -120,9 +102,7 @@ public class AllocationReport implements Serializable {
                 .add("quantity", quantity)
                 .add("price", price)
                 .add("counterpartyId", counterpartyId)
-                .add("counterpartyName", counterpartyName)
                 .add("executingPartyId", executingPartyId)
-                .add("executingPartyName", executingPartyName)
                 .add("micCode", micCode)
                 .toString();
     }

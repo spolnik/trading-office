@@ -49,11 +49,11 @@ public class AllocationMessageReceiverIntegrationTest {
                 "received.json.allocation.report"
         );
 
-        AllocationReport allocationReport = OBJECT_MAPPER.readValue(message, AllocationReport.class);
+        Allocation allocation = OBJECT_MAPPER.readValue(message, Allocation.class);
 
-        AllocationReport expected = TestData.allocationReport();
+        Allocation expected = TestData.allocationReport();
         expected.setAllocationId(allocationReportId);
-        assertThat(allocationReport).isEqualToComparingFieldByField(expected);
+        assertThat(allocation).isEqualToComparingFieldByField(expected);
     }
 
     private ConnectionFactory connectionFactory() {

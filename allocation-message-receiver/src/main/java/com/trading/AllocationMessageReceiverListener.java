@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
@@ -15,28 +16,30 @@ class AllocationMessageReceiverListener {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    private final FixmlMessageParser parser = new FixmlMessageParser();
+    private final FixmlMessageParser parser;
+
+    @Autowired
+    public AllocationMessageReceiverListener(FixmlMessageParser parser) {
+        this.parser = parser;
+    }
 
     @JmsListener(destination = "incoming.fixml.allocation.report")
     @SendTo("received.json.allocation.report")
-    public String processAllocationReport(String message) throws FixmlParserException {
+    public String processAllocationReport(String message) throws FixmlParserException, JsonProcessingException { // NOSONAR
 
         return toJson(toAllocationReport(message));
     }
 
-    private static String toJson(AllocationReport allocationReport) throws FixmlParserException {
-        LOG.info("Received: " + allocationReport.getAllocationId());
-        try {
-            String allocationReportAsJson = OBJECT_MAPPER.writeValueAsString(allocationReport);
-            LOG.info("Sending Allocation Report: " + allocationReport.getAllocationId());
-            return allocationReportAsJson;
-        } catch (JsonProcessingException ex) {
-            LOG.error(ex.getMessage(), ex);
-            throw new FixmlParserException(ex);
-        }
+    private static String toJson(Allocation allocation) throws FixmlParserException, JsonProcessingException {
+        LOG.info("Received: " + allocation.getAllocationId());
+
+        String allocationReportAsJson = OBJECT_MAPPER.writeValueAsString(allocation);
+        LOG.info("Sending Allocation Report: " + allocation.getAllocationId());
+        return allocationReportAsJson;
+
     }
 
-    private AllocationReport toAllocationReport(String message) throws FixmlParserException {
+    private Allocation toAllocationReport(String message) throws FixmlParserException {
 
         return parser.parse(message);
     }

@@ -59,6 +59,11 @@ public class AllocationMessageReceiverApplication {
                 .build();
     }
 
+    @Bean
+    FixmlMessageParser fixmlMessageParser() {
+        return new FixmlMessageParser();
+    }
+
     private static ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Allocation Message Receiver REST Service")

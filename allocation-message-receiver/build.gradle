@@ -16,7 +16,8 @@ dependencies {
 
     testCompile libs.test.junit,
             libs.test.assertj,
-            libs.activemq_kahadb
+            libs.activemq_kahadb,
+            libs.test.mockito
 }
 
 jar {
