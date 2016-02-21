@@ -60,12 +60,12 @@ public class ConfirmationMessageListenerSpec {
     }
 
     private String allocationReportAsJson() throws JsonProcessingException {
-        return OBJECT_MAPPER.writeValueAsString(TestData.allocationReport(UUID.randomUUID().toString()));
+        return OBJECT_MAPPER.writeValueAsString(TestData.confirmation(UUID.randomUUID().toString()));
     }
 
     private String allocationReportAsJson(String micCode) throws JsonProcessingException {
 
-        Confirmation allocationReport = TestData.allocationReport(UUID.randomUUID().toString());
+        Confirmation allocationReport = TestData.confirmation(UUID.randomUUID().toString());
         allocationReport.setMicCode(micCode);
 
         return OBJECT_MAPPER.writeValueAsString(allocationReport);

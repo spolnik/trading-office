@@ -42,7 +42,7 @@ public class ConfirmationSenderApplicationIntegrationTest {
     public void consumes_incoming_message_and_send_confirmation() throws Exception {
         ConfirmationSenderApplication.main(new String[0]);
 
-        Confirmation allocationReport = TestData.allocationReport(DUMMY_ALLOCATION_ID);
+        Confirmation allocationReport = TestData.confirmation(DUMMY_ALLOCATION_ID);
 
         String allocationReportAsJson = OBJECT_MAPPER.writeValueAsString(allocationReport);
 

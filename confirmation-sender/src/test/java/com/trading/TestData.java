@@ -4,11 +4,11 @@ import java.math.BigDecimal;
 
 class TestData {
 
-    static Confirmation allocationReport(String allocationId) {
-        return allocationReport(allocationId, "BUY");
+    static Confirmation confirmation(String allocationId) {
+        return confirmation(allocationId, "BUY");
     }
 
-    static Confirmation allocationReport(String allocationId, String tradeSide) {
+    static Confirmation confirmation(String allocationId, String tradeSide) {
         Confirmation allocationReport = new Confirmation();
 
         allocationReport.setAllocationId(allocationId);
