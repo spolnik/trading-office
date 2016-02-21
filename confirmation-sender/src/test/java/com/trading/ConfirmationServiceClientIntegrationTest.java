@@ -16,6 +16,7 @@ public class ConfirmationServiceClientIntegrationTest {
 
         Confirmation confirmationToSave = TestData.confirmation("DUMMY_ID_123");
         confirmationToSave.setContent("DUMMY".getBytes());
+        confirmationToSave.setConfirmationType(Confirmation.SWIFT);
         client.send(confirmationToSave);
 
         Confirmation confirmation = restTemplate.getForObject(

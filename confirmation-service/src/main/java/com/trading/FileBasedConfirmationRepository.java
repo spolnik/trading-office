@@ -40,7 +40,12 @@ public class FileBasedConfirmationRepository implements ConfirmationRepository {
         LOG.info("Confirmation content saved: " + confirmationPath.toAbsolutePath().toString());
     }
 
-    private static Path buildConfirmationFilePath(Confirmation confirmation) {
+    private static Path buildConfirmationFilePath(Confirmation confirmation) throws IOException {
+        Path confirmationsDir = Paths.get("confirmations");
+        if (!Files.exists(confirmationsDir)) {
+            Files.createDirectory(confirmationsDir);
+        }
+
         return Paths.get("confirmations/Confirmation-" + confirmation.getAllocationId() + getFileType(confirmation.getConfirmationType()));
     }
 
