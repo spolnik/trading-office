@@ -2,7 +2,6 @@ package com.trading;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,7 +22,7 @@ public class FileBasedConfirmationRepository implements ConfirmationRepository {
     }
 
     @Override
-    public void save(Confirmation confirmation) {
+    public void save(Confirmation confirmation) throws IOException {
         savePdfConfirmation(confirmation);
 
         confirmations.computeIfAbsent(
@@ -32,19 +31,20 @@ public class FileBasedConfirmationRepository implements ConfirmationRepository {
         );
     }
 
-    private static void savePdfConfirmation(@RequestBody Confirmation confirmation) {
-        try {
-            Path confirmationPath = Files.write(
-                    buildConfirmationFilePath(confirmation),
-                    confirmation.getContent()
-            );
-            LOG.info("Confirmation PDF saved: " + confirmationPath.toAbsolutePath().toString());
-        } catch (IOException e) {
-            LOG.error(e.getMessage(), e);
-        }
+    private static void savePdfConfirmation(Confirmation confirmation) throws IOException {
+
+        Path confirmationPath = Files.write(
+                buildConfirmationFilePath(confirmation),
+                confirmation.getContent()
+        );
+        LOG.info("Confirmation content saved: " + confirmationPath.toAbsolutePath().toString());
     }
 
-    private static Path buildConfirmationFilePath(@RequestBody Confirmation confirmation) {
-        return Paths.get("confirmations/Confirmation-" + confirmation.getAllocationId() + ".pdf");
+    private static Path buildConfirmationFilePath(Confirmation confirmation) {
+        return Paths.get("confirmations/Confirmation-" + confirmation.getAllocationId() + getFileType(confirmation.getConfirmationType()));
+    }
+
+    private static String getFileType(String confirmationType) {
+        return "SWIFT".equals(confirmationType) ? ".swift" : ".pdf";
     }
 }
