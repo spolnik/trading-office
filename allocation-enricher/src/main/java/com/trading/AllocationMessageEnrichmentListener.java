@@ -18,10 +18,10 @@ class AllocationMessageEnrichmentListener {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    private final AllocationReportEnricher enricher;
+    private final AllocationEnricher enricher;
 
     @Autowired
-    public AllocationMessageEnrichmentListener(AllocationReportEnricher enricher) {
+    public AllocationMessageEnrichmentListener(AllocationEnricher enricher) {
         this.enricher = enricher;
     }
 

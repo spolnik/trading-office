@@ -1,5 +1,7 @@
 package com.trading;
 
+import java.math.BigDecimal;
+
 class TestData {
     static EnrichedAllocation allocationReport() {
         EnrichedAllocation allocationReport = new EnrichedAllocation();
@@ -20,6 +22,7 @@ class TestData {
         instrument.setCurrency("USD");
         instrument.setExchange("NMS");
         instrument.setSymbol("AMZN");
+        instrument.setPrice(BigDecimal.valueOf(2.12));
 
         return instrument;
     }
@@ -32,8 +35,6 @@ class TestData {
         exchange.setCountry("UNITED STATES OF AMERICA");
         exchange.setCountryCode("US");
         exchange.setName("NASDAQ - ALL MARKETS");
-        exchange.setMic("XNAS");
-        exchange.setWebsite("WWW.NASDAQ.COM");
 
         return exchange;
     }

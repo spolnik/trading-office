@@ -54,8 +54,8 @@ public class AllocationEnricherApplication {
     }
 
     @Bean
-    AllocationReportEnricher allocationReportEnricher(InstrumentsApi instrumentsApi, CounterpartyApi counterpartyApi) {
-        return new AllocationReportEnricher(instrumentsApi, counterpartyApi);
+    AllocationEnricher allocationReportEnricher(InstrumentsApi instrumentsApi, CounterpartyApi counterpartyApi) {
+        return new AllocationEnricher(instrumentsApi, counterpartyApi);
     }
 
     public static void main(String[] args) {

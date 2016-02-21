@@ -14,7 +14,7 @@ public class AllocationMessageEnrichmentListenerSpec {
 
     @Test
     public void uses_allocation_report_enricher_for_message_enrichment() throws Exception {
-        AllocationReportEnricher enricher = mock(AllocationReportEnricher.class);
+        AllocationEnricher enricher = mock(AllocationEnricher.class);
         AllocationMessageEnrichmentListener listener = new AllocationMessageEnrichmentListener(enricher);
 
         listener.processAllocationReport(allocationReportAsJson());

@@ -2,12 +2,12 @@ package com.trading;
 
 import java.io.IOException;
 
-public class AllocationReportEnricher {
+public class AllocationEnricher {
 
     private final InstrumentsApi instrumentsApi;
     private final CounterpartyApi counterpartyApi;
 
-    public AllocationReportEnricher(InstrumentsApi instrumentsApi, CounterpartyApi counterpartyApi) {
+    public AllocationEnricher(InstrumentsApi instrumentsApi, CounterpartyApi counterpartyApi) {
         this.instrumentsApi = instrumentsApi;
         this.counterpartyApi = counterpartyApi;
     }
