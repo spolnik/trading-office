@@ -2,6 +2,7 @@ package com.trading;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.convert.converter.Converter;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -14,6 +15,7 @@ import yahoofinance.Stock;
 import static springfox.documentation.builders.PathSelectors.regex;
 
 @SpringBootApplication
+@EnableEurekaClient
 @EnableSwagger2
 public class MarketDataApplication {
 
