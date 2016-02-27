@@ -7,4 +7,5 @@ include 'confirmation-service'
 include 'market-data-service'
 include 'allocation-enricher'
 include 'counterparty-service'
+include 'eureka-server'
 

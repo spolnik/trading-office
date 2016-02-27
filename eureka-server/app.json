@@ -1,0 +1,12 @@
+{
+  "name": "Eureka Server",
+  "description": "Trading Office Eureka Server project.",
+  "website": "https://github.com/spolnik/trading-office",
+  "success_url": "/",
+  "env": {
+    "EUREKA_USER_PASSWORD": {
+      "description": "Password for the admin interface.",
+      "generator": "secret"
+    }
+  }
+}
