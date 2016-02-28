@@ -15,12 +15,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.PropertySource;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.net.URISyntaxException;
 
+import static springfox.documentation.builders.PathSelectors.regex;
+
 @SpringBootApplication
-@PropertySource("classpath:app.properties")
+@EnableSwagger2
 public class AllocationMessageReceiverApplication {
 
     private static final String INCOMING_QUEUE = "incoming.fixml.allocation.report";
@@ -86,5 +92,25 @@ public class AllocationMessageReceiverApplication {
     @Bean
     MessageListenerAdapter listenerAdapter(FixmlAllocationMessageReceiver receiver) {
         return new MessageListenerAdapter(receiver, new SimpleMessageConverter());
+    }
+
+    @Bean
+    public Docket allocationMessageReceiverApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("allocation")
+                .apiInfo(apiInfo())
+                .select()
+                .paths(regex("(/api/allocation.*)"))
+                .build();
+    }
+
+    private static ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("Allocation Message Receiver REST Service")
+                .description("Allocation Message Receiver REST Service")
+                .contact("Jacek Spólnik")
+                .license("Apache License Version 2.0")
+                .version("1.0")
+                .build();
     }
 }

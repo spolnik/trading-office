@@ -2,12 +2,8 @@ apply plugin: 'groovy'
 
 dependencies {
     testCompile 'org.codehaus.groovy:groovy-all:2.4.5',
-            'org.springframework.boot:spring-boot-starter-amqp:1.3.3.RELEASE',
             'org.spockframework:spock-core:1.0-groovy-2.4',
             'org.codehaus.groovy.modules.http-builder:http-builder:0.7.2',
             libs.slf4j_api,
-            'ch.qos.logback:logback-classic:1.1.5',
-            libs.jackson,
-            libs.jackson_databind,
-            libs.jackson_annotations
+            'ch.qos.logback:logback-classic:1.1.5'
 }
