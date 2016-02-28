@@ -3,6 +3,7 @@ apply plugin: 'spring-boot'
 dependencies {
     compile libs.spring.boot_web,
             libs.spring.boot_actuator,
+            libs.spring.boot_amqp,
             libs.spring.jms,
             libs.activemq,
             libs.activemq_http,
