@@ -11,7 +11,7 @@ public class AllocationMessageReceiverListenerSpec {
 
 
     private static final String DUMMY = "DUMMY";
-    private AllocationMessageReceiverListener listener;
+    private AllocationMessageReceiver listener;
     private FixmlMessageParser parser;
 
     @Before
@@ -23,7 +23,7 @@ public class AllocationMessageReceiverListenerSpec {
 
         when(parser.parse(DUMMY)).thenReturn(allocation);
 
-        listener = new AllocationMessageReceiverListener(parser);
+        listener = new AllocationMessageReceiver(parser);
     }
 
     @Test

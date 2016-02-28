@@ -3,6 +3,7 @@ apply plugin: 'spring-boot'
 dependencies {
     compile libs.spring.boot_web,
             libs.spring.boot_actuator,
+            libs.spring.boot_amqp,
             libs.spring.jms,
             libs.activemq,
             libs.jaxen,
@@ -11,8 +12,7 @@ dependencies {
             libs.jackson,
             libs.jackson_databind,
             libs.jackson_annotations,
-            libs.springfox.swagger_ui,
-            libs.springfox.swagger2
+            libs.guava
 
     testCompile libs.test.junit,
             libs.test.assertj,

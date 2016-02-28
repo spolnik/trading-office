@@ -10,16 +10,16 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
 
 @Component
-class AllocationMessageReceiverListener {
+class AllocationMessageReceiver {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AllocationMessageReceiverListener.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AllocationMessageReceiver.class);
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private final FixmlMessageParser parser;
 
     @Autowired
-    public AllocationMessageReceiverListener(FixmlMessageParser parser) {
+    public AllocationMessageReceiver(FixmlMessageParser parser) {
         this.parser = parser;
     }
 
