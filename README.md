@@ -22,9 +22,9 @@ Trading Office is reference implementation of microservices architecture, based 
 
 ## Allocation Message Receiver
 - spring boot application
-- subscribes to jms looking for new allocation report messages (fixml)
-- after receiving message it parses it to AllocationReport POJO
-- finally, it sends the POJO as json into ActiveMQ
+- subscribes to messaging queue looking for new fixml allocation report messages
+- after receiving message it parses it to Allocation
+- finally, it sends the Allocation as json into destination message queue
 
 Heroku: http://allocation-message-receiver.herokuapp.com/swagger-ui.html
 
@@ -32,9 +32,9 @@ Heroku: http://allocation-message-receiver.herokuapp.com/swagger-ui.html
 
 ## Allocation Enricher
 - spring boot application
-- subscribes to jms looking for translated allocation report messages (json)
-- after receiving message, it enriches it with instrument data and then with counterparty data
-- finally, it sends enriched allocation as json into ActiveMQ
+- subscribes to messaging queue looking for allocation messages (json)
+- after receiving allocation, it enriches it with instrument and counterparty data
+- finally, it sends enriched allocation as json into destination message queue
 
 Heroku: http://allocation-enricher.herokuapp.com/health
 
@@ -42,9 +42,9 @@ Heroku: http://allocation-enricher.herokuapp.com/health
 
 ## Confirmation Sender
 - spring boot application
-- subscribes to jms looking for enriched allocation report messages (json)
-- after receiving message, it generates PDF confirmation using JasperReports template
-- finally, it sends the Confirmation POJO with attached PDF (as byte[]) to confirmation service (REST Service)
+- subscribes to messaging queue looking for enriched allocation messages (json)
+- after receiving message, it generates PDF confirmation using JasperReports template or SWIFT confirmation
+- finally, it sends the Confirmation with attached PDF or SWIFT (as byte[]) to confirmation service
 
 Heroku: http://confirmation-sender.herokuapp.com/health
 
@@ -64,7 +64,7 @@ Heroku: http://market-data-service.herokuapp.com/swagger-ui.html
 ## Confirmation Service
 - spring boot web application (rest service)
 - exposes REST endpoint api to store and retrieve confirmations
-- data stored as files
+- confirmations stored as files
 
 Heroku: http://confirmation-service.herokuapp.com/swagger-ui.html
 
@@ -81,14 +81,14 @@ Heroku: http://counterparty-service.herokuapp.com/swagger-ui.html
 
 ## E2E Test
 - end to end tests written in spock
-- it runs against deployed applications (Heroku, all above + OpenShift, ActiveMq)
+- it runs against deployed applications (Heroku)
 
 =========
 
 ## Infrastructure
 - Heroku (hosting microservices)
 - Heroku Add-ons (logging - papertrial, monitoring - new relic)
-- ActiveMQ (hosted on OpenShift)
+- RabbitMQ (CloudAMQP hosted on heroku)
 - SonarQube (hosted on OpenShift) - https://sonar-nprogramming.rhcloud.com
 - TravisCI - https://travis-ci.org/spolnik/trading-office
 - Coverity (Static code analysis) - https://scan.coverity.com/projects/spolnik-trading-office
@@ -102,5 +102,6 @@ Heroku: http://counterparty-service.herokuapp.com/swagger-ui.html
 ![Trade Lifecycle](https://raw.githubusercontent.com/spolnik/trading-office/master/design/trade_lifecycle.jpg)
 
 ## Notes
-- to have access to OpenShift activemq web console - run rhc port-forward activemq (only if you have admin access)
 - checking if [dependencies are up to date](https://www.versioneye.com/user/projects/56ad39427e03c7003ba41427)
+- installing RabbitMQ locally (to run end to end test locally) - [instructions](https://www.rabbitmq.com/download.html)
+- to run on Mac OS X - /usr/local/sbin/rabbitmq-server 

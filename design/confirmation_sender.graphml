@@ -20,8 +20,7 @@
           <y:Geometry height="58.0" width="238.0" x="329.0" y="205.05799865722656"/>
           <y:Fill color="#FF9900" transparent="false"/>
           <y:BorderStyle hasColor="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="16" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="41.6875" modelName="custom" textColor="#000000" visible="true" width="164.078125" x="36.9609375" y="8.15625">Confirmation Sender
-Jms Listener<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="16" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="22.84375" modelName="custom" textColor="#000000" visible="true" width="223.03125" x="7.484375" y="17.578125">Enriched Allocation Receiver<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
