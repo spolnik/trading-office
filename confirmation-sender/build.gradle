@@ -6,9 +6,6 @@ dependencies {
             libs.spring.boot_amqp,
             libs.jasperreports,
             libs.itext,
-            libs.spring.jms,
-            libs.activemq,
-            libs.activemq_http,
             libs.jackson,
             libs.jackson_databind,
             libs.jackson_annotations,
@@ -18,8 +15,7 @@ dependencies {
 
     testCompile libs.test.assertj,
             libs.test.mockito,
-            libs.test.junit,
-            libs.activemq_kahadb
+            libs.test.junit
 }
 
 jar {

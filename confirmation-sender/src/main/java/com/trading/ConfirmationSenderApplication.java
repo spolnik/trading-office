@@ -1,11 +1,12 @@
 package com.trading;
 
 import net.sf.jasperreports.engine.JRException;
-import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
@@ -16,21 +17,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.jms.annotation.EnableJms;
-import org.springframework.jms.config.JmsListenerContainerFactory;
-import org.springframework.jms.config.SimpleJmsListenerContainerFactory;
 
-import javax.jms.ConnectionFactory;
+import java.net.URISyntaxException;
 
 @SpringBootApplication
-@EnableJms
 @PropertySource("classpath:app.properties")
 public class ConfirmationSenderApplication {
 
     private static final String INCOMING_QUEUE = "enriched.json.allocation.report";
-
-    @Value("${activemqUrl}")
-    private String activemqUrl;
 
     @Value("${confirmationServiceUrl}")
     private String confirmationServiceUrl;
@@ -40,27 +34,17 @@ public class ConfirmationSenderApplication {
     }
 
     @Bean
-    ConnectionFactory connectionFactory() {
-        return new ActiveMQConnectionFactory(activemqUrl);
-    }
+    public ConnectionFactory connectionFactory() throws URISyntaxException {
 
-    @Bean
-    JmsListenerContainerFactory jmsListenerContainerFactory(ConnectionFactory connectionFactory) {
-        SimpleJmsListenerContainerFactory factory = new SimpleJmsListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory);
+        String uri = System.getenv("CLOUDAMQP_URL");
+        if (uri == null) uri = "amqp://guest:guest@localhost";
+
+        final CachingConnectionFactory factory = new CachingConnectionFactory();
+        factory.setUri(uri);
+        factory.setRequestedHeartBeat(30);
+        factory.setConnectionTimeout(30);
 
         return factory;
-    }
-
-    @Bean
-    ConfirmationMessageListener confirmationMessageListener(
-            ConfirmationSender confirmationSender) throws JRException {
-
-        return new ConfirmationMessageListener(
-                confirmationSender,
-                new EmailConfirmationParser(),
-                new SwiftConfirmationParser()
-        );
     }
 
     @Bean
