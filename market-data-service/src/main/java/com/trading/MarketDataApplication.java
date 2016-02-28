@@ -24,7 +24,7 @@ public class MarketDataApplication {
     }
 
     @Bean
-    Converter<Stock, Instrument>stockInstrumentConverter() {
+    Converter<Stock, Instrument> stockInstrumentConverter() {
         return new StockToInstrumentConverter();
     }
 
