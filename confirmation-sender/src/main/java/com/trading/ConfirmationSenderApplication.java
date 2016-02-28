@@ -26,6 +26,9 @@ public class ConfirmationSenderApplication {
 
     private static final String INCOMING_QUEUE = "enriched.json.allocation.report";
 
+    @Autowired
+    RabbitTemplate rabbitTemplate;
+
     @Value("${confirmationServiceUrl}")
     private String confirmationServiceUrl;
 
@@ -34,10 +37,13 @@ public class ConfirmationSenderApplication {
     }
 
     @Bean
-    public ConnectionFactory connectionFactory() throws URISyntaxException {
+    ConnectionFactory connectionFactory() throws URISyntaxException {
 
         String uri = System.getenv("CLOUDAMQP_URL");
-        if (uri == null) uri = "amqp://guest:guest@localhost";
+
+        if (uri == null) {
+            uri = "amqp://guest:guest@localhost";
+        }
 
         final CachingConnectionFactory factory = new CachingConnectionFactory();
         factory.setUri(uri);
@@ -51,9 +57,6 @@ public class ConfirmationSenderApplication {
     ConfirmationSender confirmationSender() {
         return new ConfirmationServiceClient(confirmationServiceUrl);
     }
-
-    @Autowired
-    RabbitTemplate rabbitTemplate;
 
     @Bean
     Queue queue() {
@@ -74,15 +77,18 @@ public class ConfirmationSenderApplication {
     SimpleMessageListenerContainer container(
             org.springframework.amqp.rabbit.connection.ConnectionFactory connectionFactory,
             MessageListenerAdapter listenerAdapter) {
+
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
         container.setQueueNames(INCOMING_QUEUE);
         container.setMessageListener(listenerAdapter);
+
         return container;
     }
 
     @Bean
     EnrichedAllocationReceiver receiver(ConfirmationSender confirmationSender) throws JRException {
+
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
 
         return new EnrichedAllocationReceiver(
