@@ -4,8 +4,6 @@ dependencies {
     compile libs.spring.boot_web,
             libs.spring.boot_actuator,
             libs.spring.boot_amqp,
-            libs.spring.jms,
-            libs.activemq,
             libs.jaxen,
             libs.jdom,
             libs.activemq_http,
@@ -16,7 +14,6 @@ dependencies {
 
     testCompile libs.test.junit,
             libs.test.assertj,
-            libs.activemq_kahadb,
             libs.test.mockito
 }
 
