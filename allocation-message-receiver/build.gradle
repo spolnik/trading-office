@@ -6,11 +6,12 @@ dependencies {
             libs.spring.boot_amqp,
             libs.jaxen,
             libs.jdom,
-            libs.activemq_http,
             libs.jackson,
             libs.jackson_databind,
             libs.jackson_annotations,
-            libs.guava
+            libs.guava,
+            libs.springfox.swagger_ui,
+            libs.springfox.swagger2
 
     testCompile libs.test.junit,
             libs.test.assertj,

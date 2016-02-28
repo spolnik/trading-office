@@ -1,15 +1,11 @@
 package com.trading
 
+import groovyx.net.http.ContentType
 import groovyx.net.http.RESTClient
 import org.slf4j.LoggerFactory
-import org.springframework.amqp.core.Message
-import org.springframework.amqp.core.MessageProperties
-import org.springframework.amqp.rabbit.connection.CachingConnectionFactory
-import org.springframework.amqp.rabbit.core.RabbitTemplate
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import java.nio.charset.StandardCharsets
 import java.util.concurrent.TimeUnit
 
 class TradingOfficeSpecification extends Specification {
@@ -19,8 +15,7 @@ class TradingOfficeSpecification extends Specification {
     def allocationReportId = UUID.randomUUID().toString()
 
     def confirmationServiceClient = new RESTClient("http://confirmation-service.herokuapp.com/")
-
-    def rabbitTemplate = new RabbitTemplate(connectionFactory())
+    def allocationMessageReceiverClient = new RESTClient("http://allocation-message-receiver.herokuapp.com/")
 
     def setup() {
         healthCheck(herokuApp("allocation-message-receiver"))
@@ -53,47 +48,24 @@ class TradingOfficeSpecification extends Specification {
 
         when: "We receive FIXML message describing allocation for a trade"
 
-        MessageProperties messageProperties = new MessageProperties()
-        messageProperties.contentType = "text/plain"
-        Message message = new Message(fixmlAllocationMessage.getBytes(StandardCharsets.UTF_8), messageProperties)
-        rabbitTemplate.send(
-                "trading-office-exchange",
-                "incoming.fixml.allocation.report",
-                message,
+        allocationMessageReceiverClient.post(
+                path: "api/allocation",
+                body: fixmlAllocationMessage,
+                requestContentType: ContentType.TEXT
         )
 
-        TimeUnit.SECONDS.sleep(3)
+        TimeUnit.SECONDS.sleep(5)
 
         then: "New confirmation is generated as PDF"
 
-        assertConfirmation(confirmationType)
+        def confirmation = confirmationServiceClient.get(path: "api/confirmation/" + allocationReportId).responseData
+        confirmation.content.size() > 100
+        confirmation.allocationId == allocationReportId
 
         where:
         micCode | confirmationType
         "XNAS"  | "EMAIL"
         "XLON"  | "SWIFT"
-    }
-
-    def assertConfirmation(String confirmationType) {
-
-        def confirmation = confirmationServiceClient.get(path: "api/confirmation/" + allocationReportId).responseData
-
-        confirmation.content.size() > 100
-        confirmation.allocationId == allocationReportId
-        confirmation.confirmationType == confirmationType
-    }
-
-    def connectionFactory() throws URISyntaxException {
-
-        def uri = System.getenv("CLOUDAMQP_URL");
-        if (uri == null) uri = "amqp://guest:guest@localhost";
-
-        final CachingConnectionFactory factory = new CachingConnectionFactory();
-        factory.setUri(uri);
-        factory.setRequestedHeartBeat(30);
-        factory.setConnectionTimeout(30);
-
-        return factory;
     }
 
     def fixmlAllocationMessage() {
