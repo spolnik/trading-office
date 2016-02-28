@@ -57,8 +57,8 @@ Jms Listener<y:LabelModel>
           <y:Geometry height="73.75" width="202.0" x="72.14049911499023" y="471.99520111083984"/>
           <y:Fill color="#99CC00" transparent="false"/>
           <y:BorderStyle hasColor="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="16" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="41.6875" modelName="custom" textColor="#000000" visible="true" width="165.1796875" x="18.41015625" y="16.03125">Confirmation Service
-Rest Service<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="16" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="22.84375" modelName="custom" textColor="#000000" visible="true" width="165.1796875" x="18.41015625" y="25.453125">Confirmation Service
+<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -133,7 +133,6 @@ Rest Service<y:LabelModel>
       </data>
     </node>
     <edge id="e0" source="n1" target="n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -152,7 +151,6 @@ Rest Service<y:LabelModel>
       </data>
     </edge>
     <edge id="e1" source="n4" target="n2">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -171,7 +169,6 @@ Rest Service<y:LabelModel>
       </data>
     </edge>
     <edge id="e2" source="n0" target="n5">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-71.0" sy="-0.0579986572265625" tx="64.0" ty="-1.0579986572265625"/>
@@ -190,7 +187,6 @@ Rest Service<y:LabelModel>
       </data>
     </edge>
     <edge id="e3" source="n0" target="n6">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="84.0" sy="3.9420013427734375" tx="-66.0" ty="-1.0579986572265625"/>
@@ -209,7 +205,6 @@ Rest Service<y:LabelModel>
       </data>
     </edge>
     <edge id="e4" source="n5" target="n3">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -222,7 +217,6 @@ Rest Service<y:LabelModel>
       </data>
     </edge>
     <edge id="e5" source="n6" target="n3">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="13.0" sy="-2.0579986572265625" tx="0.0" ty="0.0">
@@ -235,7 +229,6 @@ Rest Service<y:LabelModel>
       </data>
     </edge>
     <edge id="e6" source="n3" target="n4">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>

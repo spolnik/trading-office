@@ -18,6 +18,9 @@ ext {
                 boot: 'org.springframework.boot:spring-boot-starter',
                 boot_actuator: 'org.springframework.boot:spring-boot-starter-actuator',
                 boot_web: 'org.springframework.boot:spring-boot-starter-web',
+                boot_amqp: 'org.springframework.boot:spring-boot-starter-amqp',
+                eureka_server: 'org.springframework.cloud:spring-cloud-starter-eureka-server:1.0.6.RELEASE',
+                eureka_client: 'org.springframework.cloud:spring-cloud-starter-eureka:1.0.6.RELEASE',
                 jms: 'org.springframework:spring-jms',
                 test: 'org.springframework:spring-test'
             ],

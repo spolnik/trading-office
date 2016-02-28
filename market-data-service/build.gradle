@@ -1,0 +1,20 @@
+apply plugin: 'spring-boot'
+
+dependencies {
+    compile libs.spring.boot_web,
+            libs.spring.boot_actuator,
+            libs.spring.eureka_client,
+            libs.okhttp,
+            libs.finance_yahoo,
+            libs.springfox.swagger_ui,
+            libs.springfox.swagger2
+
+    testCompile libs.test.junit,
+            libs.test.mockito,
+            libs.test.assertj
+}
+
+jar {
+    baseName = 'trading-office-market-data-service'
+    version = '1.0.0'
+}

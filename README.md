@@ -6,8 +6,7 @@ Trading Office is reference implementation of microservices architecture, based 
 - [Allocation Message Receiver](#allocation-message-receiver)
 - [Allocation Enricher](#allocation-enricher)
 - [Confirmation Sender](#confirmation-sender)
-- [Instruments Service](#instruments-service)
-- [Financial Data Service](#financial-data-service)
+- [Market Data Service](#market-data-service)
 - [Confirmation Service](#confirmation-service)
 - [Counterparty Service](#counterparty-service)
 - [E2E Test](#e2e-test)
@@ -33,8 +32,8 @@ Heroku: http://allocation-message-receiver.herokuapp.com/swagger-ui.html
 
 ## Allocation Enricher
 - spring boot application
-- subscribes to jms looking for tranlated allocation report messages (json)
-- after receiving message, it enriches it with instrument data (using Intrument Service, and Finance Data Service)
+- subscribes to jms looking for translated allocation report messages (json)
+- after receiving message, it enriches it with instrument data and then with counterparty data
 - finally, it sends enriched allocation as json into ActiveMQ
 
 Heroku: http://allocation-enricher.herokuapp.com/health
@@ -51,25 +50,16 @@ Heroku: http://confirmation-sender.herokuapp.com/health
 
 ![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/confirmation_sender.png)
 
-## Instruments Service
+## Market Data Service
 - spring boot web application
-- exposes REST endpoints for instrument data
-- works in readonly mode
-- data consumed from [OpenFigi Api](https://openfigi.com/api)
-
-Heroku: http://instruments-service.herokuapp.com/swagger-ui.html
-
-![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/instruments_service.png)
-
-## Financial Data Service
-- spring boot web application
-- exposes REST endpoint for financial data (using Yahoo Finance Api)
+- exposes REST endpoint for market data (using Yahoo Finance Api)
+- exposes REST endpoints for instrument data (data consumed from [OpenFigi Api](https://openfigi.com/api))
 - based on a given symbol, downloads instrument data with actual price
 - works in readonly mode
 
-Heroku: http://financial-data-service.herokuapp.com/swagger-ui.html
+Heroku: http://market-data-service.herokuapp.com/swagger-ui.html
 
-![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/financial_data_service.png)
+![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/market_data_service.png)
 
 ## Confirmation Service
 - spring boot web application (rest service)
@@ -102,6 +92,14 @@ Heroku: http://counterparty-service.herokuapp.com/swagger-ui.html
 - SonarQube (hosted on OpenShift) - https://sonar-nprogramming.rhcloud.com
 - TravisCI - https://travis-ci.org/spolnik/trading-office
 - Coverity (Static code analysis) - https://scan.coverity.com/projects/spolnik-trading-office
+
+## Domain
+
+- Swift - http://www.iso15022.org/uhb/uhb/finmt518.htm
+- FIXML - http://btobits.com/fixopaedia/fixdic50-sp2-ep/index.html (Allocation Report message)
+- Trade Lifecycle - http://thisweekfinance.blogspot.com/2011/10/trade-life-cycle.html
+
+![Trade Lifecycle](https://raw.githubusercontent.com/spolnik/trading-office/master/design/trade_lifecycle.jpg)
 
 ## Notes
 - to have access to OpenShift activemq web console - run rhc port-forward activemq (only if you have admin access)

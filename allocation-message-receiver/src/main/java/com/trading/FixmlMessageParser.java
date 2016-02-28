@@ -40,59 +40,59 @@ class FixmlMessageParser {
     private static final String FIX_TRADE_SIDE_SELL = "2";
     private static final String FIX_TRADE_SIDE_BUY = "1";
 
-    public AllocationReport parse(String message) throws FixmlParserException {
+    public Allocation parse(String message) throws FixmlParserException {
 
         StringReader stringReader = new StringReader(message);
 
         try {
             Document fixmlMessage = SAX_BUILDER.build(stringReader);
-            AllocationReport allocationReport = new AllocationReport();
+            Allocation allocation = new Allocation();
 
-            setId(fixmlMessage, allocationReport);
+            setId(fixmlMessage, allocation);
             checkTransactionType(fixmlMessage);
-            setSecurityId(fixmlMessage, allocationReport);
+            setSecurityId(fixmlMessage, allocation);
             checkSecurityIdSource(fixmlMessage);
-            setTradeSide(fixmlMessage, allocationReport);
-            setQuantity(fixmlMessage, allocationReport);
+            setTradeSide(fixmlMessage, allocation);
+            setQuantity(fixmlMessage, allocation);
             checkStatus(fixmlMessage);
-            setPrice(fixmlMessage, allocationReport);
-            setTradeDate(fixmlMessage, allocationReport);
-            setExchange(fixmlMessage, allocationReport);
-            setCounterparty(fixmlMessage, allocationReport);
-            setExecutingParty(fixmlMessage, allocationReport);
+            setPrice(fixmlMessage, allocation);
+            setTradeDate(fixmlMessage, allocation);
+            setExchange(fixmlMessage, allocation);
+            setCounterparty(fixmlMessage, allocation);
+            setExecutingParty(fixmlMessage, allocation);
 
-            LOG.info("Parsed: " + allocationReport);
+            LOG.info("Parsed: " + allocation);
 
-            return allocationReport;
+            return allocation;
         } catch (JDOMException | IOException | JaxenException e) {
             LOG.error(e.getMessage(), e);
             throw new FixmlParserException(e);
         }
     }
 
-    private static void setExecutingParty(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+    private static void setExecutingParty(Document fixmlMessage, Allocation allocation) throws JaxenException {
         Optional<Attribute> executingPartyId = getAttribute(fixmlMessage, EXECUTING_PARTY_ID_XPATH);
-        allocationReport.setExecutingPartyId(executingPartyId.get().getValue());
+        allocation.setExecutingPartyId(executingPartyId.get().getValue());
     }
 
-    private static void setCounterparty(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+    private static void setCounterparty(Document fixmlMessage, Allocation allocation) throws JaxenException {
         Optional<Attribute> counterpartyId = getAttribute(fixmlMessage, COUNTERPARTY_ID_XPATH);
-        allocationReport.setCounterpartyId(counterpartyId.get().getValue());
+        allocation.setCounterpartyId(counterpartyId.get().getValue());
     }
 
-    private static void setExchange(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+    private static void setExchange(Document fixmlMessage, Allocation allocation) throws JaxenException {
         Optional<Attribute> exchangeMicCode = getAttribute(fixmlMessage, EXCHANGE_MIC_CODE_XPATH);
-        allocationReport.setMicCode(exchangeMicCode.get().getValue());
+        allocation.setMicCode(exchangeMicCode.get().getValue());
     }
 
-    private static void setTradeDate(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+    private static void setTradeDate(Document fixmlMessage, Allocation allocation) throws JaxenException {
         Optional<Attribute> tradeDate = getAttribute(fixmlMessage, TRADE_DATE_XPATH);
-        allocationReport.setTradeDate(tradeDate.get().getValue());
+        allocation.setTradeDate(tradeDate.get().getValue());
     }
 
-    private static void setPrice(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+    private static void setPrice(Document fixmlMessage, Allocation allocation) throws JaxenException {
         Optional<Attribute> price = getAttribute(fixmlMessage, PRICE_XPATH);
-        allocationReport.setPrice(new BigDecimal(price.get().getValue()));
+        allocation.setPrice(new BigDecimal(price.get().getValue()));
     }
 
     private static void checkStatus(Document fixmlMessage) throws JaxenException, FixmlParserException {
@@ -105,14 +105,14 @@ class FixmlMessageParser {
         }
     }
 
-    private static void setQuantity(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException, DataConversionException {
+    private static void setQuantity(Document fixmlMessage, Allocation allocation) throws JaxenException, DataConversionException {
         Optional<Attribute> quantity = getAttribute(fixmlMessage, QUANTITY_XPATH);
-        allocationReport.setQuantity(quantity.get().getIntValue());
+        allocation.setQuantity(quantity.get().getIntValue());
     }
 
-    private static void setTradeSide(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+    private static void setTradeSide(Document fixmlMessage, Allocation allocation) throws JaxenException {
         Optional<Attribute> side = getAttribute(fixmlMessage, TRADE_SIDE_XPATH);
-        allocationReport.setTradeSide(deriveTradeSide(side));
+        allocation.setTradeSide(deriveTradeSide(side));
     }
 
     private static void checkSecurityIdSource(Document fixmlMessage) throws JaxenException, FixmlParserException {
@@ -125,14 +125,14 @@ class FixmlMessageParser {
         }
     }
 
-    private static void setSecurityId(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+    private static void setSecurityId(Document fixmlMessage, Allocation allocation) throws JaxenException {
         Optional<Attribute> instrumentId = getAttribute(fixmlMessage, INSTRUMENT_ID_XPATH);
-        allocationReport.setSecurityId(instrumentId.get().getValue());
+        allocation.setSecurityId(instrumentId.get().getValue());
     }
 
-    private static void setId(Document fixmlMessage, AllocationReport allocationReport) throws JaxenException {
+    private static void setId(Document fixmlMessage, Allocation allocation) throws JaxenException {
         Optional<Attribute> id = getAttribute(fixmlMessage, ALLOCATION_ID_XPATH);
-        allocationReport.setAllocationId(id.get().getValue());
+        allocation.setAllocationId(id.get().getValue());
     }
 
     private static void checkTransactionType(Document fixmlMessage) throws JaxenException, FixmlParserException {
@@ -149,9 +149,9 @@ class FixmlMessageParser {
         String value = side.get().getValue();
 
         if (FIX_TRADE_SIDE_BUY.equals(value)) {
-            return AllocationReport.BUY;
+            return Allocation.BUY;
         } else if (FIX_TRADE_SIDE_SELL.equals(value)){
-            return AllocationReport.SELL;
+            return Allocation.SELL;
         }
 
         throw new UnsupportedOperationException("Trade Side is unsupported: " + value);

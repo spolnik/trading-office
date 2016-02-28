@@ -1,18 +1,15 @@
 package com.trading
 
 import groovyx.net.http.RESTClient
-import org.apache.activemq.ActiveMQConnectionFactory
-import org.apache.activemq.transport.InactivityIOException
 import org.slf4j.LoggerFactory
-import org.springframework.jms.connection.SingleConnectionFactory
-import org.springframework.jms.core.JmsTemplate
-import org.springframework.jms.core.MessageCreator
+import org.springframework.amqp.core.Message
+import org.springframework.amqp.core.MessageProperties
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory
+import org.springframework.amqp.rabbit.core.RabbitTemplate
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import javax.jms.JMSException
-import javax.jms.Message
-import javax.jms.Session
+import java.nio.charset.StandardCharsets
 import java.util.concurrent.TimeUnit
 
 class TradingOfficeSpecification extends Specification {
@@ -23,16 +20,16 @@ class TradingOfficeSpecification extends Specification {
 
     def confirmationServiceClient = new RESTClient("http://confirmation-service.herokuapp.com/")
 
-    def jmsTemplate = new JmsTemplate(connectionFactory())
+    def rabbitTemplate = new RabbitTemplate(connectionFactory())
 
     def setup() {
         healthCheck(herokuApp("allocation-message-receiver"))
         healthCheck(herokuApp("allocation-enricher"))
         healthCheck(herokuApp("confirmation-sender"))
         healthCheck(herokuApp("confirmation-service"))
-        healthCheck(herokuApp("financial-data-service"))
-        healthCheck(herokuApp("instruments-service"))
+        healthCheck(herokuApp("market-data-service"))
         healthCheck(herokuApp("counterparty-service"))
+        healthCheck(herokuApp("eureka-server"))
     }
 
     def herokuApp(String name) {
@@ -56,23 +53,20 @@ class TradingOfficeSpecification extends Specification {
 
         when: "We receive FIXML message describing allocation for a trade"
 
-        jmsTemplate.send(
+        MessageProperties messageProperties = new MessageProperties()
+        messageProperties.contentType = "text/plain"
+        Message message = new Message(fixmlAllocationMessage.getBytes(StandardCharsets.UTF_8), messageProperties)
+        rabbitTemplate.send(
+                "trading-office-exchange",
                 "incoming.fixml.allocation.report",
-                messageCreator(fixmlAllocationMessage)
+                message,
         )
 
-        TimeUnit.SECONDS.sleep(10)
+        TimeUnit.SECONDS.sleep(3)
 
         then: "New confirmation is generated as PDF"
 
-        try {
-            assertConfirmation(confirmationType)
-        } catch (InactivityIOException ex) {
-            log.error(ex.getMessage())
-            log.info("Retry")
-            TimeUnit.SECONDS.sleep(5)
-            assertConfirmation(confirmationType)
-        }
+        assertConfirmation(confirmationType)
 
         where:
         micCode | confirmationType
@@ -89,26 +83,17 @@ class TradingOfficeSpecification extends Specification {
         confirmation.confirmationType == confirmationType
     }
 
-    def messageCreator(String fixmlAllocationMessage) {
-        new MessageCreator() {
+    def connectionFactory() throws URISyntaxException {
 
-            @Override
-            Message createMessage(Session session) throws JMSException {
-                def message = session.createTextMessage(fixmlAllocationMessage)
-                log.info("Sending message: " + message)
-                message
-            }
-        }
-    }
+        def uri = System.getenv("CLOUDAMQP_URL");
+        if (uri == null) uri = "amqp://guest:guest@localhost";
 
-    def connectionFactory() {
+        final CachingConnectionFactory factory = new CachingConnectionFactory();
+        factory.setUri(uri);
+        factory.setRequestedHeartBeat(30);
+        factory.setConnectionTimeout(30);
 
-        def activeMQConnectionFactory = new ActiveMQConnectionFactory()
-        activeMQConnectionFactory.setBrokerURL("http://activemq-nprogramming.rhcloud.com")
-
-        def factory = new SingleConnectionFactory()
-        factory.setTargetConnectionFactory(activeMQConnectionFactory)
-        factory
+        return factory;
     }
 
     def fixmlAllocationMessage() {

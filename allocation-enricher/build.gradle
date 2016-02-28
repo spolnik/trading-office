@@ -3,16 +3,13 @@ apply plugin: 'spring-boot'
 dependencies {
     compile libs.spring.boot_web,
             libs.spring.boot_actuator,
-            libs.spring.jms,
-            libs.activemq,
-            libs.activemq_http,
+            libs.spring.boot_amqp,
             libs.jackson,
             libs.jackson_databind,
             libs.jackson_annotations
 
     testCompile libs.test.junit,
             libs.test.assertj,
-            libs.activemq_kahadb,
             libs.spring.test,
             libs.test.mockito
 }
