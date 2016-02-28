@@ -1,10 +1,11 @@
 package com.trading;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
@@ -15,44 +16,20 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.jms.annotation.EnableJms;
-import org.springframework.jms.config.JmsListenerContainerFactory;
-import org.springframework.jms.config.SimpleJmsListenerContainerFactory;
-import org.springframework.jms.connection.CachingConnectionFactory;
 
-import javax.jms.ConnectionFactory;
+import java.net.URISyntaxException;
 
 @SpringBootApplication
-@EnableJms
 @PropertySource("classpath:app.properties")
 public class AllocationEnricherApplication {
 
     private static final String INCOMING_QUEUE = "received.json.allocation.report";
-
-    @Value("${activemqUrl}")
-    private String activemqUrl;
 
     @Value("${counterpartyServiceUrl}")
     private String counterpartyServiceUrl;
 
     @Value("${marketDataServiceUrl}")
     private String marketDataServiceUrl;
-
-    @Bean
-    ConnectionFactory connectionFactory() {
-
-        return new CachingConnectionFactory(
-                new ActiveMQConnectionFactory(activemqUrl)
-        );
-    }
-
-    @Bean
-    JmsListenerContainerFactory jmsListenerContainerFactory(ConnectionFactory connectionFactory) {
-        SimpleJmsListenerContainerFactory factory = new SimpleJmsListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory);
-
-        return factory;
-    }
 
     @Bean
     CounterpartyApi counterpartyApi() {
@@ -71,6 +48,20 @@ public class AllocationEnricherApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(AllocationEnricherApplication.class, args);
+    }
+
+    @Bean
+    public ConnectionFactory connectionFactory() throws URISyntaxException {
+
+        String uri = System.getenv("CLOUDAMQP_URL");
+        if (uri == null) uri = "amqp://guest:guest@localhost";
+
+        final CachingConnectionFactory factory = new CachingConnectionFactory();
+        factory.setUri(uri);
+        factory.setRequestedHeartBeat(30);
+        factory.setConnectionTimeout(30);
+
+        return factory;
     }
 
     @Autowired
