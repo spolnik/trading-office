@@ -1,0 +1,21 @@
+server:
+  port: 9000
+endpoints:
+  jmx:
+    unique-names: true
+spring:
+  application:
+    name: allocation-enricher
+
+eureka:
+  client:
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: ${EUREKA_URL:http://localhost:5000/eureka/}
+---
+spring:
+  profiles: heroku
+eureka:
+  instance:
+    hostname: ${DOMAIN_NAME}
+    nonSecurePort: 80
