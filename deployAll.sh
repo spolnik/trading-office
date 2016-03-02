@@ -17,6 +17,7 @@ refresh heroku-market-data-service
 refresh heroku-allocation-message-receiver
 refresh heroku-allocation-enricher
 refresh heroku-confirmation-sender
+refresh heroku-eureka-server
 refresh coverity_scan
 
 git checkout master
