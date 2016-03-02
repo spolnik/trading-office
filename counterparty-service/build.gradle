@@ -3,6 +3,7 @@ apply plugin: 'spring-boot'
 dependencies {
     compile libs.spring.boot_web,
             libs.spring.boot_actuator,
+            libs.spring.eureka_client,
             libs.csveed,
             libs.springfox.swagger_ui,
             libs.springfox.swagger2

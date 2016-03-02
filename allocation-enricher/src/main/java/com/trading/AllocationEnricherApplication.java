@@ -11,34 +11,35 @@ import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.web.client.RestTemplate;
 
 import java.net.URISyntaxException;
 
 @SpringBootApplication
-@PropertySource("classpath:app.properties")
+@EnableEurekaClient
 public class AllocationEnricherApplication {
 
     private static final String INCOMING_QUEUE = "received.json.allocation.report";
 
-    @Value("${counterpartyServiceUrl}")
-    private String counterpartyServiceUrl;
+    @Autowired
+    RabbitTemplate rabbitTemplate;
 
-    @Value("${marketDataServiceUrl}")
-    private String marketDataServiceUrl;
-
-    @Bean
-    CounterpartyApi counterpartyApi() {
-        return new CounterpartyApiClient(counterpartyServiceUrl);
+    public static void main(String[] args) {
+        SpringApplication.run(AllocationEnricherApplication.class, args);
     }
 
     @Bean
-    InstrumentsApi instrumentsApi() {
-        return new InstrumentsApiClient(marketDataServiceUrl);
+    CounterpartyApi counterpartyApi(RestTemplate restTemplate) {
+        return new CounterpartyApiClient(restTemplate, "COUNTERPARTY-SERVICE");
+    }
+
+    @Bean
+    InstrumentsApi instrumentsApi(RestTemplate restTemplate) {
+        return new InstrumentsApiClient(restTemplate, "MARKET-DATA-SERVICE");
     }
 
     @Bean
@@ -46,15 +47,14 @@ public class AllocationEnricherApplication {
         return new AllocationEnricher(instrumentsApi, counterpartyApi);
     }
 
-    public static void main(String[] args) {
-        SpringApplication.run(AllocationEnricherApplication.class, args);
-    }
-
     @Bean
-    public ConnectionFactory connectionFactory() throws URISyntaxException {
+    ConnectionFactory connectionFactory() throws URISyntaxException {
 
         String uri = System.getenv("CLOUDAMQP_URL");
-        if (uri == null) uri = "amqp://guest:guest@localhost";
+
+        if (uri == null) {
+            uri = "amqp://guest:guest@localhost";
+        }
 
         final CachingConnectionFactory factory = new CachingConnectionFactory();
         factory.setUri(uri);
@@ -63,9 +63,6 @@ public class AllocationEnricherApplication {
 
         return factory;
     }
-
-    @Autowired
-    RabbitTemplate rabbitTemplate;
 
     @Bean
     Queue queue() {
@@ -86,15 +83,18 @@ public class AllocationEnricherApplication {
     SimpleMessageListenerContainer container(
             org.springframework.amqp.rabbit.connection.ConnectionFactory connectionFactory,
             MessageListenerAdapter listenerAdapter) {
+
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
         container.setQueueNames(INCOMING_QUEUE);
         container.setMessageListener(listenerAdapter);
+
         return container;
     }
 
     @Bean
     AllocationReceiver receiver(RabbitTemplate rabbitTemplate, AllocationEnricher allocationEnricher) {
+
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
         return new AllocationReceiver(rabbitTemplate, allocationEnricher);
     }

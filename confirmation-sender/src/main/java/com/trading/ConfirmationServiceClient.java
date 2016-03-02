@@ -8,18 +8,18 @@ class ConfirmationServiceClient implements ConfirmationSender {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConfirmationServiceClient.class);
 
-    private final String confirmationServiceUrl;
+    private final RestTemplate restTemplate;
+    private final String host;
 
-    private final RestTemplate restTemplate = new RestTemplate();
-
-    public ConfirmationServiceClient(String confirmationServiceUrl) {
-        this.confirmationServiceUrl = confirmationServiceUrl;
+    public ConfirmationServiceClient(RestTemplate restTemplate, String host) {
+        this.restTemplate = restTemplate;
+        this.host = host;
     }
 
     @Override
     public void send(Confirmation confirmation) {
 
-        String url = String.format("%s/api/confirmation", confirmationServiceUrl);
+        String url = String.format("http://%s/api/confirmation", host);
         restTemplate.postForObject(url, confirmation, Object.class);
 
         LOG.info("Confirmation sent: " + confirmation);

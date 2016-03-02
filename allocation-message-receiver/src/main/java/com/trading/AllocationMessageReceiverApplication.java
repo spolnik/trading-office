@@ -31,8 +31,21 @@ public class AllocationMessageReceiverApplication {
 
     private static final String INCOMING_QUEUE = "incoming.fixml.allocation.report";
 
+    @Autowired
+    RabbitTemplate rabbitTemplate;
+
     public static void main(String[] args) {
         SpringApplication.run(AllocationMessageReceiverApplication.class, args);
+    }
+
+    private static ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("Allocation Message Receiver REST Service")
+                .description("Allocation Message Receiver REST Service")
+                .contact("Jacek Spólnik")
+                .license("Apache License Version 2.0")
+                .version("1.0")
+                .build();
     }
 
     @Bean
@@ -41,21 +54,22 @@ public class AllocationMessageReceiverApplication {
     }
 
     @Bean
-    public ConnectionFactory connectionFactory() throws URISyntaxException {
+    ConnectionFactory connectionFactory() throws URISyntaxException {
 
         String uri = System.getenv("CLOUDAMQP_URL");
-        if (uri == null) uri = "amqp://guest:guest@localhost";
+
+        if (uri == null) {
+            uri = "amqp://guest:guest@localhost";
+        }
 
         final CachingConnectionFactory factory = new CachingConnectionFactory();
+
         factory.setUri(uri);
         factory.setRequestedHeartBeat(30);
         factory.setConnectionTimeout(30);
 
         return factory;
     }
-
-    @Autowired
-    RabbitTemplate rabbitTemplate;
 
     @Bean
     Queue queue() {
@@ -76,10 +90,12 @@ public class AllocationMessageReceiverApplication {
     SimpleMessageListenerContainer container(
             org.springframework.amqp.rabbit.connection.ConnectionFactory connectionFactory,
             MessageListenerAdapter listenerAdapter) {
+
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
         container.setQueueNames(INCOMING_QUEUE);
         container.setMessageListener(listenerAdapter);
+
         return container;
     }
 
@@ -101,16 +117,6 @@ public class AllocationMessageReceiverApplication {
                 .apiInfo(apiInfo())
                 .select()
                 .paths(regex("(/api/allocation.*)"))
-                .build();
-    }
-
-    private static ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("Allocation Message Receiver REST Service")
-                .description("Allocation Message Receiver REST Service")
-                .contact("Jacek Spólnik")
-                .license("Apache License Version 2.0")
-                .version("1.0")
                 .build();
     }
 }

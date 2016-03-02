@@ -4,7 +4,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +21,8 @@ public class AllocationReportController {
     private final RabbitTemplate rabbitTemplate;
 
     @Autowired
-    public AllocationReportController(ConnectionFactory connectionFactory) {
-        this.rabbitTemplate = new RabbitTemplate(connectionFactory);
+    public AllocationReportController(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
     }
 
     @ApiOperation(value = "processFixmlAllocationReport", nickname = "processFixmlAllocationReport", notes = "Process FIXML Allocation Report Message (text)")

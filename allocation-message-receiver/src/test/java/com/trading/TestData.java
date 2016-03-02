@@ -20,4 +20,8 @@ class TestData {
 
         return allocation;
     }
+
+    static String emptyAllocationAsJson() {
+        return "{\"allocationId\":null,\"securityId\":null,\"tradeSide\":null,\"tradeDate\":null,\"quantity\":0,\"price\":null,\"counterpartyId\":null,\"executingPartyId\":null,\"micCode\":null}";
+    }
 }

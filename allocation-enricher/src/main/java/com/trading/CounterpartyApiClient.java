@@ -8,17 +8,17 @@ class CounterpartyApiClient implements CounterpartyApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(CounterpartyApiClient.class);
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
+    private final String host;
 
-    private String counterpartyServiceUrl;
-
-    public CounterpartyApiClient(String counterpartyServiceUrl) {
-        this.counterpartyServiceUrl = counterpartyServiceUrl;
+    public CounterpartyApiClient(RestTemplate restTemplate, String host) {
+        this.restTemplate = restTemplate;
+        this.host = host;
     }
 
     @Override
     public Exchange getExchange(String micCode) {
-        String url = String.format("%s/api/exchange/mic/%s", counterpartyServiceUrl, micCode);
+        String url = String.format("http://%s/api/exchange/mic/%s", host, micCode);
         LOG.info("Getting exchange from: " + url);
 
         return restTemplate.getForObject(url, Exchange.class);
@@ -26,7 +26,7 @@ class CounterpartyApiClient implements CounterpartyApi {
 
     @Override
     public String getPartyName(String id) {
-        String url = String.format("%s/api/party/%s", counterpartyServiceUrl, id);
+        String url = String.format("http://%s/api/party/%s", host, id);
         LOG.info("Getting party from: " + url);
 
         return restTemplate.getForObject(url, String.class);
