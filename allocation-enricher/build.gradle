@@ -4,6 +4,8 @@ dependencies {
     compile libs.spring.boot_web,
             libs.spring.boot_actuator,
             libs.spring.boot_amqp,
+            libs.spring.eureka_client,
+            libs.spring.cloud_config,
             libs.jackson,
             libs.jackson_databind,
             libs.jackson_annotations

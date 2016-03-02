@@ -11,16 +11,16 @@ import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.web.client.RestTemplate;
 
 import java.net.URISyntaxException;
 
 @SpringBootApplication
-@PropertySource("classpath:app.properties")
+@EnableEurekaClient
 public class AllocationEnricherApplication {
 
     private static final String INCOMING_QUEUE = "received.json.allocation.report";
@@ -28,24 +28,18 @@ public class AllocationEnricherApplication {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
-    @Value("${counterpartyServiceUrl}")
-    private String counterpartyServiceUrl;
-
-    @Value("${marketDataServiceUrl}")
-    private String marketDataServiceUrl;
-
     public static void main(String[] args) {
         SpringApplication.run(AllocationEnricherApplication.class, args);
     }
 
     @Bean
-    CounterpartyApi counterpartyApi() {
-        return new CounterpartyApiClient(counterpartyServiceUrl);
+    CounterpartyApi counterpartyApi(RestTemplate restTemplate) {
+        return new CounterpartyApiClient(restTemplate, "COUNTERPARTY-SERVICE");
     }
 
     @Bean
-    InstrumentsApi instrumentsApi() {
-        return new InstrumentsApiClient(marketDataServiceUrl);
+    InstrumentsApi instrumentsApi(RestTemplate restTemplate) {
+        return new InstrumentsApiClient(restTemplate, "MARKET-DATA-SERVICE");
     }
 
     @Bean
