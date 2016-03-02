@@ -76,9 +76,16 @@ public class OpenFigiInstrumentsRepository implements InstrumentsRepository {
     }
 
     private String post(String json) throws IOException {
+        String apikey = System.getenv("OPENFIGI_APIKEY");
+
+        if (apikey == null) {
+            apikey = "";
+        }
+
         RequestBody requestBody = RequestBody.create(TEXT_JSON, wrapInArray(json));
         Request request = new Request.Builder()
                 .url(OPEN_FIGI_API_URL)
+                .header("X-OPENFIGI-APIKEY", apikey)
                 .post(requestBody)
                 .build();
 

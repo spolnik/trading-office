@@ -4,6 +4,10 @@ endpoints:
   jmx:
     unique-names: true
 
+feign:
+  hystrix:
+    enabled: false
+
 eureka:
   client:
     fetchRegistry: true
