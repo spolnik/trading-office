@@ -4,12 +4,12 @@ import java.io.IOException;
 
 public class AllocationEnricher {
 
-    private final InstrumentsApi instrumentsApi;
-    private final CounterpartyApi counterpartyApi;
+    private final MarketDataClient marketDataClient;
+    private final CounterpartyClient counterpartyClient;
 
-    public AllocationEnricher(InstrumentsApi instrumentsApi, CounterpartyApi counterpartyApi) {
-        this.instrumentsApi = instrumentsApi;
-        this.counterpartyApi = counterpartyApi;
+    public AllocationEnricher(MarketDataClient marketDataClient, CounterpartyClient counterpartyClient) {
+        this.marketDataClient = marketDataClient;
+        this.counterpartyClient = counterpartyClient;
     }
 
     public EnrichedAllocation process(EnrichedAllocation allocationReport) throws IOException {
@@ -27,7 +27,7 @@ public class AllocationEnricher {
                 allocationReport.getSecurityId()
         );
 
-        Instrument instrument = instrumentsApi.getInstrument(instrumentDetails.getTicker());
+        Instrument instrument = marketDataClient.getInstrument(instrumentDetails.getTicker());
         allocationReport.setInstrumentName(instrument.getName());
         allocationReport.setInstrumentCurrency(instrument.getCurrency());
         allocationReport.setInstrumentExchange(instrument.getExchange());
@@ -38,7 +38,7 @@ public class AllocationEnricher {
     private InstrumentDetails requestInstrumentDetails(
             String securityId) throws IOException {
 
-        InstrumentDetails instrumentDetails = instrumentsApi.getInstrumentDetails(securityId);
+        InstrumentDetails instrumentDetails = marketDataClient.getInstrumentDetails(securityId);
 
         if (instrumentDetails == null) {
             throw new IOException("Cannot read instrument details");
@@ -48,7 +48,7 @@ public class AllocationEnricher {
     }
 
     private void enrichWithExchange(EnrichedAllocation allocationReport) {
-        Exchange exchange = counterpartyApi.getExchange(
+        Exchange exchange = counterpartyClient.getExchange(
                 allocationReport.getMicCode()
         );
 
@@ -60,7 +60,7 @@ public class AllocationEnricher {
     }
 
     private void enrichWithCounterparty(EnrichedAllocation allocationReport) {
-        String counterparty = counterpartyApi.getPartyName(
+        String counterparty = counterpartyClient.getPartyName(
                 allocationReport.getCounterpartyId()
         );
 
@@ -68,7 +68,7 @@ public class AllocationEnricher {
     }
 
     private void enrichWithExecutingParty(EnrichedAllocation allocationReport) {
-        String executingParty = counterpartyApi.getPartyName(
+        String executingParty = counterpartyClient.getPartyName(
                 allocationReport.getExecutingPartyId()
         );
 
