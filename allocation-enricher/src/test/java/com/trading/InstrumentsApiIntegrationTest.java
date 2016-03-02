@@ -1,13 +1,15 @@
 package com.trading;
 
 import org.junit.Test;
+import org.springframework.web.client.RestTemplate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class InstrumentsApiIntegrationTest {
 
     private InstrumentsApiClient instrumentsApi = new InstrumentsApiClient(
-            "http://market-data-service.herokuapp.com"
+            new RestTemplate(),
+            "market-data-service.herokuapp.com"
     );
 
     @Test

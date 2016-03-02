@@ -1,12 +1,15 @@
 package com.trading;
 
 import org.junit.Test;
+import org.springframework.web.client.RestTemplate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CounterpartyApiIntegrationTest {
 
-    private CounterpartyApiClient counterpartyApi = new CounterpartyApiClient("http://counterparty-service.herokuapp.com");
+    private CounterpartyApiClient counterpartyApi = new CounterpartyApiClient(
+            new RestTemplate(), "counterparty-service.herokuapp.com"
+    );
 
     @Test
     public void returns_exchange_for_given_mic_code() throws Exception {

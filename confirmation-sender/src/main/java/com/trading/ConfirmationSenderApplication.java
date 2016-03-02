@@ -12,25 +12,22 @@ import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.web.client.RestTemplate;
 
 import java.net.URISyntaxException;
 
 @SpringBootApplication
-@PropertySource("classpath:app.properties")
+@EnableEurekaClient
 public class ConfirmationSenderApplication {
 
     private static final String INCOMING_QUEUE = "enriched.json.allocation.report";
 
     @Autowired
     RabbitTemplate rabbitTemplate;
-
-    @Value("${confirmationServiceUrl}")
-    private String confirmationServiceUrl;
 
     public static void main(String[] args) {
         SpringApplication.run(ConfirmationSenderApplication.class, args);
@@ -54,8 +51,8 @@ public class ConfirmationSenderApplication {
     }
 
     @Bean
-    ConfirmationSender confirmationSender() {
-        return new ConfirmationServiceClient(confirmationServiceUrl);
+    ConfirmationSender confirmationSender(RestTemplate restTemplate) {
+        return new ConfirmationServiceClient(restTemplate, "CONFIRMATION-SERVICE");
     }
 
     @Bean

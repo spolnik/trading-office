@@ -34,12 +34,12 @@ public class AllocationEnricherApplication {
 
     @Bean
     CounterpartyApi counterpartyApi(RestTemplate restTemplate) {
-        return new CounterpartyApiClient(restTemplate);
+        return new CounterpartyApiClient(restTemplate, "COUNTERPARTY-SERVICE");
     }
 
     @Bean
     InstrumentsApi instrumentsApi(RestTemplate restTemplate) {
-        return new InstrumentsApiClient(restTemplate);
+        return new InstrumentsApiClient(restTemplate, "MARKET-DATA-SERVICE");
     }
 
     @Bean
