@@ -1,3 +1,9 @@
+server:
+  port: 9003
+endpoints:
+  jmx:
+    unique-names: true
+
 eureka:
   client:
     serviceUrl:

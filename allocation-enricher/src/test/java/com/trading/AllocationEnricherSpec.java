@@ -14,32 +14,32 @@ import static org.mockito.Mockito.when;
 public class AllocationEnricherSpec {
 
     private static final String PARTY_NAME = "PARTY_NAME";
-    private InstrumentsApi instrumentsApi;
-    private CounterpartyApi counterpartyApi;
+    private MarketDataClient marketDataClient;
+    private CounterpartyClient counterpartyClient;
 
     private AllocationEnricher enricher;
 
     @Before
     public void setUp() throws Exception {
-        instrumentsApi = mock(InstrumentsApi.class);
-        counterpartyApi = mock(CounterpartyApi.class);
+        marketDataClient = mock(MarketDataClient.class);
+        counterpartyClient = mock(CounterpartyClient.class);
 
-        when(counterpartyApi.getPartyName(any())).thenReturn(PARTY_NAME);
-        when(counterpartyApi.getExchange(any())).thenReturn(TestData.exchange());
+        when(counterpartyClient.getPartyName(any())).thenReturn(PARTY_NAME);
+        when(counterpartyClient.getExchange(any())).thenReturn(TestData.exchange());
 
         InstrumentDetails instrumentDetails = mock(InstrumentDetails.class);
 
         when(instrumentDetails.getTicker()).thenReturn("AMZN");
 
-        when(instrumentsApi.getInstrumentDetails(any())).thenReturn(instrumentDetails);
-        when(instrumentsApi.getInstrument("AMZN")).thenReturn(TestData.instrument());
+        when(marketDataClient.getInstrumentDetails(any())).thenReturn(instrumentDetails);
+        when(marketDataClient.getInstrument("AMZN")).thenReturn(TestData.instrument());
 
-        enricher = new AllocationEnricher(instrumentsApi, counterpartyApi);
+        enricher = new AllocationEnricher(marketDataClient, counterpartyClient);
     }
 
     @Test(expected = IOException.class)
     public void throws_exception_if_cannot_return_instrument_details() throws Exception {
-        when(instrumentsApi.getInstrumentDetails(any())).thenReturn(null);
+        when(marketDataClient.getInstrumentDetails(any())).thenReturn(null);
         enricher.process(TestData.allocationReport());
     }
 
@@ -47,35 +47,35 @@ public class AllocationEnricherSpec {
     public void uses_instruments_api_to_get_instrument_details() throws Exception {
 
         enricher.process(TestData.allocationReport());
-        verify(instrumentsApi).getInstrumentDetails("2000019");
+        verify(marketDataClient).getInstrumentDetails("2000019");
     }
 
     @Test
     public void uses_instruments_api_to_get_instrument() throws Exception {
 
         enricher.process(TestData.allocationReport());
-        verify(instrumentsApi).getInstrument("AMZN");
+        verify(marketDataClient).getInstrument("AMZN");
     }
 
     @Test
     public void uses_counterparty_api_to_get_exchange() throws Exception {
 
         enricher.process(TestData.allocationReport());
-        verify(counterpartyApi).getExchange("XNAS");
+        verify(counterpartyClient).getExchange("XNAS");
     }
 
     @Test
     public void uses_counterparty_api_to_get_counterparty() throws Exception {
 
         enricher.process(TestData.allocationReport());
-        verify(counterpartyApi).getPartyName("CUSTUS");
+        verify(counterpartyClient).getPartyName("CUSTUS");
     }
 
     @Test
     public void uses_counterparty_api_to_get_executing_party() throws Exception {
 
         enricher.process(TestData.allocationReport());
-        verify(counterpartyApi).getPartyName("TROF");
+        verify(counterpartyClient).getPartyName("TROF");
     }
 
     @Test

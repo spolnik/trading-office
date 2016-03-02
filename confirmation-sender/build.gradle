@@ -6,6 +6,7 @@ dependencies {
             libs.spring.boot_amqp,
             libs.spring.eureka_client,
             libs.spring.cloud_config,
+            libs.spring.feign,
             libs.jasperreports,
             libs.itext,
             libs.jackson,

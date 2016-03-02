@@ -16,6 +16,7 @@ ext {
                 boot_amqp: 'org.springframework.boot:spring-boot-starter-amqp',
                 eureka_server: 'org.springframework.cloud:spring-cloud-starter-eureka-server',
                 eureka_client: 'org.springframework.cloud:spring-cloud-starter-eureka',
+                feign: 'org.springframework.cloud:spring-cloud-starter-feign',
                 cloud_config: 'org.springframework.cloud:spring-cloud-starter-config',
                 jms: 'org.springframework:spring-jms',
                 test: 'org.springframework:spring-test'

@@ -14,15 +14,15 @@ public class EnrichedAllocationReceiver {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final String LONDON_STOCK_EXCHANGE_MIC_CODE = "XLON";
 
-    private final ConfirmationSender confirmationSender;
+    private final ConfirmationClient confirmationClient;
     private final ConfirmationParser emailConfirmationParser;
     private final ConfirmationParser swiftConfirmationParser;
 
-    public EnrichedAllocationReceiver(ConfirmationSender confirmationSender,
+    public EnrichedAllocationReceiver(ConfirmationClient confirmationClient,
                                       ConfirmationParser emailConfirmationParser,
                                       ConfirmationParser swiftConfirmationParser) {
 
-        this.confirmationSender = confirmationSender;
+        this.confirmationClient = confirmationClient;
         this.emailConfirmationParser = emailConfirmationParser;
         this.swiftConfirmationParser = swiftConfirmationParser;
     }
@@ -32,7 +32,7 @@ public class EnrichedAllocationReceiver {
         LOG.info("Received: " + allocationReport);
         Optional<Confirmation> confirmation = confirmationParserFor(allocationReport.getMicCode()).parse(allocationReport);
 
-        confirmationSender.send(confirmation.get());
+        confirmationClient.send(confirmation.get());
     }
 
     private ConfirmationParser confirmationParserFor(String micCode) {
