@@ -1,0 +1,13 @@
+{
+  "name": "market-data-service-node",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "eureka-js-client": "^2.2.1",
+    "nedb": "^1.8.0",
+    "restify": "^4.0.4"
+  }
+}
