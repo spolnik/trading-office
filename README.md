@@ -42,22 +42,10 @@ Heroku: http://market-data-service.herokuapp.com/swagger-ui.html
 ![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/market_data_service.png)
 
 ## Confirmation Service
-- spring boot web application (rest service)
-- exposes REST endpoint api to store and retrieve confirmations
-- confirmations stored as files
-
-Heroku: http://confirmation-service.herokuapp.com/swagger-ui.html
-
-![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/confirmation_service.png)
+- [Confirmation Service](https://github.com/spolnik/trading-office-confirmation-service)
 
 ## Counterparty Service
-- spring boot web application (rest service)
-- exposes REST endpoint to query Exchange data based on mic code
-- exposes REST endpoint to query Party data based on custom id
-
-Heroku: http://counterparty-service.herokuapp.com/swagger-ui.html
-
-![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/counterparty_service.png)
+- [Counterparty Service](https://github.com/spolnik/trading-office-counterparty-service)
 
 ## Eureka Server
 - [Eureka Server](https://github.com/spolnik/trading-office-eureka-server)
