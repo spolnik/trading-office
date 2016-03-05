@@ -1,15 +1,9 @@
-# Trading Office [![Build Status](https://travis-ci.org/spolnik/trading-office.svg?branch=master)](https://travis-ci.org/spolnik/trading-office) [![codecov.io](https://codecov.io/github/spolnik/trading-office/coverage.svg?branch=master)](https://codecov.io/github/spolnik/trading-office?branch=master) [![Sonar Coverage](https://img.shields.io/sonar/https/sonar-nprogramming.rhcloud.com/trading-office/coverage.svg)](https://sonar-nprogramming.rhcloud.com/dashboard/index/1) [![Sonar Tech Debt](https://img.shields.io/sonar/https/sonar-nprogramming.rhcloud.com/trading-office/tech_debt.svg)](https://sonar-nprogramming.rhcloud.com/dashboard/index/1) [![Coverity Scan Build Status](https://scan.coverity.com/projects/7604/badge.svg)](https://scan.coverity.com/projects/spolnik-trading-office)
+# Trading Office [![Build Status](https://travis-ci.org/spolnik/trading-office.svg?branch=master)](https://travis-ci.org/spolnik/trading-office)
 
 Trading Office is reference implementation of microservices architecture, based on Spring Boot. It's modeling part of post trade processing, mainly focused on receiving Fixml message and preparing confirmation for it.
 
 - [Introduction](#introduction)
-- [Allocation Message Receiver](#allocation-message-receiver)
-- [Allocation Enricher](#allocation-enricher)
-- [Confirmation Sender](#confirmation-sender)
-- [Market Data Service](#market-data-service)
-- [Confirmation Service](#confirmation-service)
-- [Counterparty Service](#counterparty-service)
-- [Eureka Server](#eureka-server)
+- [Components](#components)
 - [E2E Test](#e2e-test)
 - [Infrastructure](#infrastructure)
 - [Notes](#notes)
@@ -21,33 +15,13 @@ Trading Office is reference implementation of microservices architecture, based 
 
 ![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/component_diagram.png)
 
-## Allocation Message Receiver
+## Components
 - [Allocation Message Receiver](https://github.com/spolnik/trading-office-allocation-message-receiver)
-
-## Allocation Enricher
 - [Allocation Enricher](https://github.com/spolnik/trading-office-allocation-enricher)
-
-## Confirmation Sender
 - [Confirmation Sender](https://github.com/spolnik/trading-office-confirmation-sender)
-
-## Market Data Service
-- spring boot web application
-- exposes REST endpoint for market data (using Yahoo Finance Api)
-- exposes REST endpoints for instrument data (data consumed from [OpenFigi Api](https://openfigi.com/api))
-- based on a given symbol, downloads instrument data with actual price
-- works in readonly mode
-
-Heroku: http://market-data-service.herokuapp.com/swagger-ui.html
-
-![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/market_data_service.png)
-
-## Confirmation Service
+- [Market Data Service](https://github.com/spolnik/trading-office-market-data-service)
 - [Confirmation Service](https://github.com/spolnik/trading-office-confirmation-service)
-
-## Counterparty Service
 - [Counterparty Service](https://github.com/spolnik/trading-office-counterparty-service)
-
-## Eureka Server
 - [Eureka Server](https://github.com/spolnik/trading-office-eureka-server)
 
 ## E2E Test
@@ -58,7 +32,7 @@ Heroku: http://market-data-service.herokuapp.com/swagger-ui.html
 
 ## Infrastructure
 - Heroku (hosting microservices)
-- Heroku Add-ons (logging - papertrial, monitoring - new relic)
+- Heroku Add-ons (monitoring - new relic)
 - RabbitMQ (CloudAMQP hosted on heroku)
 - SonarQube (hosted on OpenShift) - https://sonar-nprogramming.rhcloud.com
 - TravisCI - https://travis-ci.org/spolnik/trading-office

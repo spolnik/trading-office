@@ -1,4 +1,0 @@
-rootProject.name = 'trading-office'
-
-include 'e2e-test'
-
