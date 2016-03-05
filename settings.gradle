@@ -1,5 +1,4 @@
 rootProject.name = 'trading-office'
 
 include 'e2e-test'
-include 'market-data-service'
 
