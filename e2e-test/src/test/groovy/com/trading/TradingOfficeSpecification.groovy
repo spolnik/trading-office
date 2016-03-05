@@ -54,7 +54,7 @@ class TradingOfficeSpecification extends Specification {
                 requestContentType: ContentType.TEXT
         )
 
-        TimeUnit.SECONDS.sleep(5)
+        TimeUnit.SECONDS.sleep(10)
 
         then: "New confirmation is generated as PDF"
 

@@ -24,14 +24,7 @@ Trading Office is reference implementation of microservices architecture, based 
 - [Allocation Message Receiver](https://github.com/spolnik/trading-office-allocation-message-receiver)
 
 ## Allocation Enricher
-- spring boot application
-- subscribes to messaging queue looking for allocation messages (json)
-- after receiving allocation, it enriches it with instrument and counterparty data
-- finally, it sends enriched allocation as json into destination message queue
-
-Heroku: http://allocation-enricher.herokuapp.com/health
-
-![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/allocation_enricher.png)
+- [Allocation Enricher](https://github.com/spolnik/trading-office-allocation-enricher)
 
 ## Confirmation Sender
 - [Confirmation Sender](https://github.com/spolnik/trading-office-confirmation-sender)
