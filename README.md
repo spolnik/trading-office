@@ -34,14 +34,7 @@ Heroku: http://allocation-enricher.herokuapp.com/health
 ![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/allocation_enricher.png)
 
 ## Confirmation Sender
-- spring boot application
-- subscribes to messaging queue looking for enriched allocation messages (json)
-- after receiving message, it generates PDF confirmation using JasperReports template or SWIFT confirmation
-- finally, it sends the Confirmation with attached PDF or SWIFT (as byte[]) to confirmation service
-
-Heroku: http://confirmation-sender.herokuapp.com/health
-
-![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/confirmation_sender.png)
+- [Confirmation Sender](https://github.com/spolnik/trading-office-confirmation-sender)
 
 ## Market Data Service
 - spring boot web application
