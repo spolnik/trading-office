@@ -1,8 +1,6 @@
 rootProject.name = 'trading-office'
 
 include 'e2e-test'
-include 'confirmation-service'
 include 'market-data-service'
 include 'counterparty-service'
-include 'eureka-server'
 

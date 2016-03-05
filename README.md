@@ -9,6 +9,7 @@ Trading Office is reference implementation of microservices architecture, based 
 - [Market Data Service](#market-data-service)
 - [Confirmation Service](#confirmation-service)
 - [Counterparty Service](#counterparty-service)
+- [Eureka Server](#eureka-server)
 - [E2E Test](#e2e-test)
 - [Infrastructure](#infrastructure)
 - [Notes](#notes)
@@ -57,6 +58,9 @@ Heroku: http://confirmation-service.herokuapp.com/swagger-ui.html
 Heroku: http://counterparty-service.herokuapp.com/swagger-ui.html
 
 ![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/counterparty_service.png)
+
+## Eureka Server
+- [Eureka Server](https://github.com/spolnik/trading-office-eureka-server)
 
 ## E2E Test
 - end to end tests written in spock
