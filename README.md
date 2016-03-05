@@ -5,6 +5,7 @@ Trading Office is reference implementation of microservices architecture, based 
 - [Introduction](#introduction)
 - [Components](#components)
 - [E2E Test](#e2e-test)
+- [Continuous Delivery](#continuous-delivery)
 - [Infrastructure](#infrastructure)
 - [Notes](#notes)
 
@@ -27,6 +28,18 @@ Trading Office is reference implementation of microservices architecture, based 
 ## E2E Test
 - end to end tests written in spock
 - it runs against deployed applications (Heroku)
+
+## Continuous Delivery
+
+- initially, developer push his changes to GitHub
+- in next stage, GitHub notifies Travis CI about changes
+- Travis CI runs whole continuous integration flow, running compilation, tests and generating reports
+- static code analysis report is sent to SonarQube
+- coverage report is sent to Codecov
+- application is deployed into Heroku Staging machine
+- administrator once he is happy with quality of staging application, he promotes it to production
+
+![Continuous Delivery Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/continuous_delivery.png)
 
 =========
 
