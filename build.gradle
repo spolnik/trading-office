@@ -16,9 +16,9 @@ test {
 }
 
 dependencies {
-    testCompile 'org.codehaus.groovy:groovy-all:2.4.6',
-            'org.spockframework:spock-core:1.0-groovy-2.4',
-            'org.codehaus.groovy.modules.http-builder:http-builder:0.7.2',
+    testCompile libs.groovy_all,
+            libs.groovy,
+            libs.http_builder,
             libs.slf4j_api,
-            'ch.qos.logback:logback-classic:1.1.5'
+            libs.logback
 }

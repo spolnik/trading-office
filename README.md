@@ -36,7 +36,6 @@ Trading Office is reference implementation of microservices architecture, based 
 - RabbitMQ (CloudAMQP hosted on heroku)
 - SonarQube (hosted on OpenShift) - https://sonar-nprogramming.rhcloud.com
 - TravisCI - https://travis-ci.org/spolnik/trading-office
-- Coverity (Static code analysis) - https://scan.coverity.com/projects/spolnik-trading-office
 
 ## Domain
 
