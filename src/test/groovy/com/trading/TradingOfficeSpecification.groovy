@@ -14,8 +14,7 @@ class TradingOfficeSpecification extends Specification {
 
     def allocationReportId = UUID.randomUUID().toString()
 
-    def confirmationServiceClient = new RESTClient("http://confirmation-service.herokuapp.com/")
-    def allocationMessageReceiverClient = new RESTClient("http://allocation-message-receiver.herokuapp.com/")
+    def tradingOfficeApiClient = new RESTClient("http://trading-office-api.herokuapp.com/")
 
     def setup() {
         healthCheck(herokuApp("allocation-message-receiver"))
@@ -25,6 +24,7 @@ class TradingOfficeSpecification extends Specification {
         healthCheck(herokuApp("market-data-service"))
         healthCheck(herokuApp("counterparty-service"))
         healthCheck(herokuApp("eureka-server"))
+        healthCheck(herokuApp("trading-office-api"))
     }
 
     def herokuApp(String name) {
@@ -48,8 +48,8 @@ class TradingOfficeSpecification extends Specification {
 
         when: "We receive FIXML message describing allocation for a trade"
 
-        allocationMessageReceiverClient.post(
-                path: "api/allocation",
+        tradingOfficeApiClient.post(
+                path: "allocation-message-receiver/api/allocation",
                 body: fixmlAllocationMessage,
                 requestContentType: ContentType.TEXT
         )
@@ -58,7 +58,7 @@ class TradingOfficeSpecification extends Specification {
 
         then: "New confirmation is generated as PDF"
 
-        def confirmation = confirmationServiceClient.get(path: "api/confirmation/" + allocationReportId).responseData
+        def confirmation = tradingOfficeApiClient.get(path: "confirmation-service/api/confirmation/" + allocationReportId).responseData
         confirmation.content.size() > 100
         confirmation.allocationId == allocationReportId
 
