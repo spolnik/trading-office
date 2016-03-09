@@ -14,25 +14,40 @@ class TradingOfficeSpecification extends Specification {
 
     def allocationReportId = UUID.randomUUID().toString()
 
-    def tradingOfficeApiClient = new RESTClient("http://trading-office-api.herokuapp.com/")
+    static def tradingOfficeApiClient = new RESTClient("http://trading-office-api.herokuapp.com/")
+    static def tradingOfficeApiStagingClient = new RESTClient("http://trading-office-api-staging.herokuapp.com/")
 
     def setup() {
-        healthCheck(herokuApp("allocation-message-receiver"))
-        healthCheck(herokuApp("allocation-enricher"))
-        healthCheck(herokuApp("confirmation-sender"))
+        healthCheck(herokuApp("eureka-server"))
         healthCheck(herokuApp("confirmation-service"))
         healthCheck(herokuApp("market-data-service"))
         healthCheck(herokuApp("counterparty-service"))
-        healthCheck(herokuApp("eureka-server"))
         healthCheck(herokuApp("trading-office-api"))
+        healthCheck(herokuApp("allocation-message-receiver"))
+        healthCheck(herokuApp("allocation-enricher"))
+        healthCheck(herokuApp("confirmation-sender"))
+
+        healthCheck(herokuStagingApp("eureka-server"))
+        healthCheck(herokuStagingApp("confirmation-service"))
+        healthCheck(herokuStagingApp("market-data-service"))
+        healthCheck(herokuStagingApp("counterparty-service"))
+        healthCheck(herokuStagingApp("trading-office-api"))
+        healthCheck(herokuStagingApp("allocation-receiver"))
+        healthCheck(herokuStagingApp("allocation-enricher"))
+        healthCheck(herokuStagingApp("confirmation-sender"))
     }
 
     def herokuApp(String name) {
         "http://${name}.herokuapp.com/"
     }
 
+    def herokuStagingApp(String name) {
+        "http://${name}-staging.herokuapp.com/"
+    }
+
     def healthCheck(String url) {
 
+        log.info("$url - checking...")
         def status = new RESTClient(url)
                 .get(path: "health")
                 .responseData.diskSpace.status.toString()
@@ -41,14 +56,14 @@ class TradingOfficeSpecification extends Specification {
     }
 
     @Unroll
-    def "For new trade with exchange mic as #micCode, we generate confirmation as #confirmationType"(String micCode, String confirmationType) {
+    def "[#env] Trade with exchange mic as #micCode generates #confirmationType confirmation"(String micCode, String confirmationType, client, String env) {
         given: "A new trade with FIXML representation"
         def fixmlAllocationMessage = String.format(fixmlAllocationMessage(), allocationReportId, micCode)
         log.info("Processing: " + allocationReportId)
 
         when: "We receive FIXML message describing allocation for a trade"
 
-        tradingOfficeApiClient.post(
+        client.post(
                 path: "allocation-message-receiver/api/allocation",
                 body: fixmlAllocationMessage,
                 requestContentType: ContentType.TEXT
@@ -58,14 +73,16 @@ class TradingOfficeSpecification extends Specification {
 
         then: "New confirmation is generated as PDF"
 
-        def confirmation = tradingOfficeApiClient.get(path: "confirmation-service/api/confirmation/" + allocationReportId).responseData
+        def confirmation = client.get(path: "confirmation-service/api/confirmation/" + allocationReportId).responseData
         confirmation.content.size() > 100
         confirmation.allocationId == allocationReportId
 
         where:
-        micCode | confirmationType
-        "XNAS"  | "EMAIL"
-        "XLON"  | "SWIFT"
+        micCode | confirmationType  | client                        | env
+        "XNAS"  | "EMAIL"           | tradingOfficeApiClient        | "PROD"
+        "XLON"  | "SWIFT"           | tradingOfficeApiClient        | "PROD"
+        "XNAS"  | "EMAIL"           | tradingOfficeApiStagingClient | "STAGING"
+        "XLON"  | "SWIFT"           | tradingOfficeApiStagingClient | "STAGING"
     }
 
     def fixmlAllocationMessage() {
