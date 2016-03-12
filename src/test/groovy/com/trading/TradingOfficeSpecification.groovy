@@ -10,14 +10,14 @@ import java.util.concurrent.TimeUnit
 
 class TradingOfficeSpecification extends Specification {
 
-    def log = LoggerFactory.getLogger(TradingOfficeSpecification.class)
+    static def log = LoggerFactory.getLogger(TradingOfficeSpecification.class)
 
     def allocationReportId = UUID.randomUUID().toString()
 
     static def tradingOfficeApiClient = new RESTClient("http://trading-office-api.herokuapp.com/")
     static def tradingOfficeApiStagingClient = new RESTClient("http://trading-office-api-staging.herokuapp.com/")
 
-    def setup() {
+    def setupSpec() {
         healthCheck(herokuApp("eureka-server"))
         healthCheck(herokuApp("confirmation-service"))
         healthCheck(herokuApp("market-data-service"))
