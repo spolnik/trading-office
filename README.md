@@ -13,6 +13,7 @@ Trading Office is reference implementation of microservices architecture, based 
 
 - set of applications simulating simple flow in post trade part of trade lifecycle
 - it's focused on generating confirmation based on received allocation report
+- [Running locally](https://github.com/spolnik/trading-office/wiki)
 
 ![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/component_diagram.png)
 
