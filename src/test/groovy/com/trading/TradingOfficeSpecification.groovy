@@ -21,35 +21,21 @@ class TradingOfficeSpecification extends Specification {
     def setupSpec() {
         GParsPool.withPool 2, {
             def services = [
-                    'eureka-server',
-                    'confirmation-service',
-                    'market-data-service',
-                    'counterparty-service',
-                    'trading-office-api',
-                    'allocation-message-receiver',
-                    'allocation-enricher',
-                    'confirmation-sender'
+                    new Tuple2<String, String>('eureka-server-staging', 'eureka-server'),
+                    new Tuple2<String, String>('confirmation-service-staging', 'confirmation-service'),
+                    new Tuple2<String, String>('market-data-service-staging', 'market-data-service'),
+                    new Tuple2<String, String>('counterparty-service-staging', 'counterparty-service'),
+                    new Tuple2<String, String>('trading-office-api-staging', 'trading-office-api'),
+                    new Tuple2<String, String>('allocation-receiver-staging', 'allocation-message-receiver'),
+                    new Tuple2<String, String>('allocation-enricher-staging', 'allocation-enricher'),
+                    new Tuple2<String, String>('confirmation-sender-staging', 'confirmation-sender')
             ];
 
             services.each {
-                if (it.equals('allocation-message-receiver')) {
-                    this.&healthCheck.callAsync(herokuStagingApp('allocation-receiver'));
-                } else {
-                    this.&healthCheck.callAsync(herokuStagingApp(it));
-                }
-
-                this.&healthCheck.callAsync(herokuApp(it));
+                this.&healthCheck.callAsync("http://${it.getFirst()}.herokuapp.com/" );
+                this.&healthCheck.callAsync("http://${it.getSecond()}.herokuapp.com/" );
             }
         }
-
-    }
-
-    def herokuApp(String name) {
-        "http://${name}.herokuapp.com/"
-    }
-
-    def herokuStagingApp(String name) {
-        "http://${name}-staging.herokuapp.com/"
     }
 
     def healthCheck(String url) {
@@ -66,6 +52,7 @@ class TradingOfficeSpecification extends Specification {
     def "[#env] Trade with exchange mic as #micCode generates #confirmationType confirmation"(String micCode, String confirmationType, client, String env) {
         given: "A new trade with FIXML representation"
         def fixmlAllocationMessage = String.format(fixmlAllocationMessage(), allocationReportId, micCode)
+        log.info("[" + env + "] Testing trade for " + micCode + ", expected to have " + confirmationType + " confirmation type.")
         log.info("Processing: " + allocationReportId)
 
         when: "We receive FIXML message describing allocation for a trade"
@@ -81,8 +68,9 @@ class TradingOfficeSpecification extends Specification {
         then: "New confirmation is generated as PDF"
 
         def confirmation = client.get(path: "confirmation-service/api/confirmation/" + allocationReportId).responseData
-        confirmation.content.size() > 100
+        confirmation.content.size() > 250
         confirmation.allocationId == allocationReportId
+        confirmation.confirmationType == confirmationType
 
         where:
         micCode | confirmationType  | client                        | env
