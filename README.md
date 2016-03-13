@@ -13,6 +13,7 @@ Trading Office is reference implementation of microservices architecture, based 
 
 - set of applications simulating simple flow in post trade part of trade lifecycle
 - it's focused on generating confirmation based on received allocation report
+- [Running locally](https://github.com/spolnik/trading-office/wiki)
 
 ![Component Diagram](https://raw.githubusercontent.com/spolnik/trading-office/master/design/component_diagram.png)
 
@@ -61,7 +62,5 @@ Trading Office is reference implementation of microservices architecture, based 
 
 ## Notes
 - to run integration tests, you have to have both tools up and running - rabbitmq & mongodb
-- [installing RabbitMQ locally](https://www.rabbitmq.com/download.html) (to run end to end test locally) - 
-- to run on Mac OS X - /usr/local/sbin/rabbitmq-server 
-- [installing Mongodb locally](https://docs.mongodb.org/manual/administration/install-community/)
-- mongod (or mongod --dbpath ~/data/db for custom dir)
+- [Running locally](https://github.com/spolnik/trading-office/wiki)
+- [Travis Builds](https://travis-ci.org/spolnik)
