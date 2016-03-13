@@ -63,3 +63,4 @@ Trading Office is reference implementation of microservices architecture, based 
 ## Notes
 - to run integration tests, you have to have both tools up and running - rabbitmq & mongodb
 - [Running locally](https://github.com/spolnik/trading-office/wiki)
+- [Travis Builds](https://travis-ci.org/spolnik)
