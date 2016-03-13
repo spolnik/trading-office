@@ -24,6 +24,7 @@ Trading Office is reference implementation of microservices architecture, based 
 - [Confirmation Service](https://github.com/spolnik/trading-office-confirmation-service)
 - [Counterparty Service](https://github.com/spolnik/trading-office-counterparty-service)
 - [Eureka Server](https://github.com/spolnik/trading-office-eureka-server)
+- [API Gateway](https://github.com/spolnik/trading-office-api-gateway)
 
 ## E2E Test
 - end to end tests written in spock
