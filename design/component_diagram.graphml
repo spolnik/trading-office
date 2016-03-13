@@ -86,7 +86,7 @@
               <y:Geometry height="675.4051246643066" width="1116.93505859375" x="267.6298828125" y="-169.916015625"/>
               <y:Fill color="#F5F5F5" transparent="false"/>
               <y:BorderStyle color="#000000" type="dashed" width="1.0"/>
-              <y:NodeLabel alignment="right" autoSizePolicy="content" backgroundColor="#EBEBEB" borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasLineColor="false" height="21.666015625" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="335.5234375" x="390.705810546875" y="0.0">Trading Office v2.2 (Heroku + Eureka + Zuul)</y:NodeLabel>
+              <y:NodeLabel alignment="right" autoSizePolicy="content" backgroundColor="#EBEBEB" borderDistance="0.0" fontFamily="Dialog" fontSize="15" fontStyle="plain" hasLineColor="false" height="21.666015625" modelName="internal" modelPosition="t" textColor="#000000" visible="true" width="519.39794921875" x="298.7685546875" y="0.0">Trading Office v2.3 (Heroku + Eureka + Zuul + RabbitMQ + MongoDB)</y:NodeLabel>
               <y:Shape type="roundrectangle"/>
               <y:State closed="false" closedHeight="50.0" closedWidth="50.0" innerGraphDisplayEnabled="false"/>
               <y:Insets bottom="15" bottomF="15.0" left="15" leftF="15.0" right="15" rightF="15.0" top="15" topF="15.0"/>
@@ -433,7 +433,6 @@
           </data>
         </node>
         <node id="n3::n15">
-          <data key="d5"/>
           <data key="d6">
             <y:SVGNode>
               <y:Geometry height="46.887996673583984" width="39.527000427246094" x="881.366382598877" y="418.35629653930664"/>
@@ -784,7 +783,6 @@
       </data>
     </edge>
     <edge id="n3::e16" source="n3::n3" target="n3::n15">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
