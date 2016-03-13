@@ -1,5 +1,6 @@
 package com.trading
 
+import groovyx.gpars.GParsPool
 import groovyx.net.http.ContentType
 import groovyx.net.http.RESTClient
 import org.slf4j.LoggerFactory
@@ -18,23 +19,29 @@ class TradingOfficeSpecification extends Specification {
     static def tradingOfficeApiStagingClient = new RESTClient("http://trading-office-api-staging.herokuapp.com/")
 
     def setupSpec() {
-        healthCheck(herokuApp("eureka-server"))
-        healthCheck(herokuApp("confirmation-service"))
-        healthCheck(herokuApp("market-data-service"))
-        healthCheck(herokuApp("counterparty-service"))
-        healthCheck(herokuApp("trading-office-api"))
-        healthCheck(herokuApp("allocation-message-receiver"))
-        healthCheck(herokuApp("allocation-enricher"))
-        healthCheck(herokuApp("confirmation-sender"))
+        GParsPool.withPool 2, {
+            def services = [
+                    'eureka-server',
+                    'confirmation-service',
+                    'market-data-service',
+                    'counterparty-service',
+                    'trading-office-api',
+                    'allocation-message-receiver',
+                    'allocation-enricher',
+                    'confirmation-sender'
+            ];
 
-        healthCheck(herokuStagingApp("eureka-server"))
-        healthCheck(herokuStagingApp("confirmation-service"))
-        healthCheck(herokuStagingApp("market-data-service"))
-        healthCheck(herokuStagingApp("counterparty-service"))
-        healthCheck(herokuStagingApp("trading-office-api"))
-        healthCheck(herokuStagingApp("allocation-receiver"))
-        healthCheck(herokuStagingApp("allocation-enricher"))
-        healthCheck(herokuStagingApp("confirmation-sender"))
+            services.each {
+                if (it.equals('allocation-message-receiver')) {
+                    this.&healthCheck.callAsync(herokuStagingApp('allocation-receiver'));
+                } else {
+                    this.&healthCheck.callAsync(herokuStagingApp(it));
+                }
+
+                this.&healthCheck.callAsync(herokuApp(it));
+            }
+        }
+
     }
 
     def herokuApp(String name) {
