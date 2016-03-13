@@ -1,6 +1,5 @@
 package com.trading
 
-import groovyx.gpars.GParsPool
 import groovyx.net.http.ContentType
 import groovyx.net.http.RESTClient
 import org.slf4j.LoggerFactory
