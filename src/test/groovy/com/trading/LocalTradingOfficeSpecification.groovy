@@ -19,10 +19,10 @@ class LocalTradingOfficeSpecification extends Specification {
     static def tradingOfficeApiClient = new RESTClient("http://localhost:5001/")
 
     @Unroll
-    def "[#env] Trade with exchange mic as #micCode generates #confirmationType confirmation"(String micCode, String confirmationType) {
+    def "Trade with exchange mic as #micCode generates #confirmationType confirmation"(String micCode, String confirmationType) {
         given: "A new trade with FIXML representation"
         def fixmlAllocationMessage = String.format(fixmlAllocationMessage(), allocationReportId, micCode)
-        log.info("[" + env + "] Testing trade for " + micCode + ", expected to have " + confirmationType + " confirmation type.")
+        log.info("Testing trade for " + micCode + ", expected to have " + confirmationType + " confirmation type.")
         log.info("Processing: " + allocationReportId)
 
         when: "We receive FIXML message describing allocation for a trade"
