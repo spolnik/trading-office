@@ -59,6 +59,8 @@ Trading Office is reference implementation of microservices architecture, based 
 ![Trade Lifecycle](https://raw.githubusercontent.com/spolnik/trading-office/master/design/trade_lifecycle.jpg)
 
 ## Notes
-- checking if [dependencies are up to date](https://www.versioneye.com/user/projects/56ad39427e03c7003ba41427)
-- installing RabbitMQ locally (to run end to end test locally) - [instructions](https://www.rabbitmq.com/download.html)
+- to run integration tests, you have to have both tools up and running - rabbitmq & mongodb
+- [installing RabbitMQ locally](https://www.rabbitmq.com/download.html) (to run end to end test locally) - 
 - to run on Mac OS X - /usr/local/sbin/rabbitmq-server 
+- [installing Mongodb locally](https://docs.mongodb.org/manual/administration/install-community/)
+- mongod (or mongod --dbpath ~/data/db for custom dir)
