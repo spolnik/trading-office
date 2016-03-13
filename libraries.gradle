@@ -4,8 +4,7 @@ ext {
             groovy_all: 'org.codehaus.groovy:groovy-all:2.4.6',
             groovy: 'org.spockframework:spock-core:1.0-groovy-2.4',
             http_builder: 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.2',
-            logback: 'ch.qos.logback:logback-classic:1.1.5',
-            gpars: "org.codehaus.gpars:gpars:1.2.1"
+            logback: 'ch.qos.logback:logback-classic:1.1.5'
     )
 }
 

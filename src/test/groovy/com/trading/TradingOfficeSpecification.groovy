@@ -19,23 +19,23 @@ class TradingOfficeSpecification extends Specification {
     static def tradingOfficeApiStagingClient = new RESTClient("http://trading-office-api-staging.herokuapp.com/")
 
     def setupSpec() {
-        GParsPool.withPool 2, {
-            def services = [
-                    new Tuple2<String, String>('eureka-server-staging', 'eureka-server'),
-                    new Tuple2<String, String>('confirmation-service-staging', 'confirmation-service'),
-                    new Tuple2<String, String>('market-data-service-staging', 'market-data-service'),
-                    new Tuple2<String, String>('counterparty-service-staging', 'counterparty-service'),
-                    new Tuple2<String, String>('trading-office-api-staging', 'trading-office-api'),
-                    new Tuple2<String, String>('allocation-receiver-staging', 'allocation-message-receiver'),
-                    new Tuple2<String, String>('allocation-enricher-staging', 'allocation-enricher'),
-                    new Tuple2<String, String>('confirmation-sender-staging', 'confirmation-sender')
-            ];
 
-            services.each {
-                this.&healthCheck.callAsync("http://${it.getFirst()}.herokuapp.com/" );
-                this.&healthCheck.callAsync("http://${it.getSecond()}.herokuapp.com/" );
-            }
+        def services = [
+                new Tuple2<String, String>('eureka-server-staging', 'eureka-server'),
+                new Tuple2<String, String>('confirmation-service-staging', 'confirmation-service'),
+                new Tuple2<String, String>('market-data-service-staging', 'market-data-service'),
+                new Tuple2<String, String>('counterparty-service-staging', 'counterparty-service'),
+                new Tuple2<String, String>('trading-office-api-staging', 'trading-office-api'),
+                new Tuple2<String, String>('allocation-receiver-staging', 'allocation-message-receiver'),
+                new Tuple2<String, String>('allocation-enricher-staging', 'allocation-enricher'),
+                new Tuple2<String, String>('confirmation-sender-staging', 'confirmation-sender')
+        ];
+
+        services.each {
+            healthCheck("http://${it.getFirst()}.herokuapp.com/" );
+            healthCheck("http://${it.getSecond()}.herokuapp.com/" );
         }
+
     }
 
     def healthCheck(String url) {
