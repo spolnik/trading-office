@@ -1,6 +1,8 @@
 # Trading Office [![Build Status](https://travis-ci.org/spolnik/trading-office.svg?branch=master)](https://travis-ci.org/spolnik/trading-office)
 
-Trading Office is reference implementation of microservices architecture, based on Spring Boot. It's modeling part of post trade processing, mainly focused on receiving Fixml message and preparing confirmation for it.
+Trading Office is reference implementation of microservices architecture, based on Spring Boot, Heroku, RabbitMQ, MongoDB and Spring Cloud Netflix components. 
+
+It's modeling part of post trade processing, mainly focused on receiving Fixml message and preparing confirmation for it.
 
 - [Introduction](#introduction)
 - [Components](#components)
