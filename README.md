@@ -32,6 +32,7 @@ It's modeling part of post trade processing, mainly focused on receiving Fixml m
 ## E2E Test
 - end to end tests written in spock
 - it runs against deployed applications (Heroku)
+- it covers 4 cases, 2 for PROD and 2 for STAGING. Those 2 cases are: SWIFT and EMAIL confirmations
 
 ## Continuous Delivery
 
