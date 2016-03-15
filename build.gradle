@@ -20,5 +20,6 @@ dependencies {
             libs.groovy,
             libs.http_builder,
             libs.slf4j_api,
-            libs.logback
+            libs.logback,
+            libs.gpars
 }
