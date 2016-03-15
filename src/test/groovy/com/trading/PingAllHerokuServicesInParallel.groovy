@@ -10,7 +10,7 @@ class PingAllHerokuServicesInParallel {
 
     def static void main(String[] args) {
 
-        GParsPool.withPool 2, {
+        GParsPool.withPool 16, {
             def services = [
                     new Tuple2<String, String>('eureka-server-staging', 'eureka-server'),
                     new Tuple2<String, String>('confirmation-service-staging', 'confirmation-service'),
