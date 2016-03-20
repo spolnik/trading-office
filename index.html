@@ -29,20 +29,18 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h1>
-<a id="trading-office-----" class="anchor" href="#trading-office-----" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Trading Office <a href="https://travis-ci.org/spolnik/trading-office"><img src="https://travis-ci.org/spolnik/trading-office.svg?branch=master" alt="Build Status"></a> <a href="https://codecov.io/github/spolnik/trading-office?branch=master"><img src="https://codecov.io/github/spolnik/trading-office/coverage.svg?branch=master" alt="codecov.io"></a> <a href="https://sonar-nprogramming.rhcloud.com/dashboard/index/1"><img src="https://img.shields.io/sonar/https/sonar-nprogramming.rhcloud.com/trading-office/coverage.svg" alt="Sonar Coverage"></a> <a href="https://sonar-nprogramming.rhcloud.com/dashboard/index/1"><img src="https://img.shields.io/sonar/https/sonar-nprogramming.rhcloud.com/trading-office/tech_debt.svg" alt="Sonar Tech Debt"></a> <a href="https://scan.coverity.com/projects/spolnik-trading-office"><img src="https://scan.coverity.com/projects/7604/badge.svg" alt="Coverity Scan Build Status"></a>
+<a id="trading-office-" class="anchor" href="#trading-office-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Trading Office <a href="https://travis-ci.org/spolnik/trading-office"><img src="https://travis-ci.org/spolnik/trading-office.svg?branch=master" alt="Build Status"></a>
 </h1>
 
-<p>Trading Office is reference implementation of microservices architecture, based on Spring Boot. It's modeling part of post trade processing, mainly focused on receiving Fixml message and preparing confirmation for it.</p>
+<p>Trading Office is reference implementation of microservices architecture, based on Spring Boot, Heroku, RabbitMQ, MongoDB and Spring Cloud Netflix components. </p>
+
+<p>It's modeling part of post trade processing, mainly focused on receiving Fixml message and preparing confirmation for it.</p>
 
 <ul>
 <li><a href="#introduction">Introduction</a></li>
-<li><a href="#allocation-message-receiver">Allocation Message Receiver</a></li>
-<li><a href="#allocation-enricher">Allocation Enricher</a></li>
-<li><a href="#confirmation-sender">Confirmation Sender</a></li>
-<li><a href="#market-data-service">Market Data Service</a></li>
-<li><a href="#confirmation-service">Confirmation Service</a></li>
-<li><a href="#counterparty-service">Counterparty Service</a></li>
+<li><a href="#components">Components</a></li>
 <li><a href="#e2e-test">E2E Test</a></li>
+<li><a href="#continuous-delivery">Continuous Delivery</a></li>
 <li><a href="#infrastructure">Infrastructure</a></li>
 <li><a href="#notes">Notes</a></li>
 </ul>
@@ -53,100 +51,48 @@
 <ul>
 <li>set of applications simulating simple flow in post trade part of trade lifecycle</li>
 <li>it's focused on generating confirmation based on received allocation report</li>
+<li><a href="https://github.com/spolnik/trading-office/wiki">Running locally</a></li>
 </ul>
 
 <p><img src="https://raw.githubusercontent.com/spolnik/trading-office/master/design/component_diagram.png" alt="Component Diagram"></p>
 
 <h2>
-<a id="allocation-message-receiver" class="anchor" href="#allocation-message-receiver" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Allocation Message Receiver</h2>
+<a id="components" class="anchor" href="#components" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Components</h2>
 
 <ul>
-<li>spring boot application</li>
-<li>subscribes to jms looking for new allocation report messages (fixml)</li>
-<li>after receiving message it parses it to AllocationReport POJO</li>
-<li>finally, it sends the POJO as json into ActiveMQ</li>
+<li><a href="https://github.com/spolnik/trading-office-allocation-message-receiver">Allocation Message Receiver</a></li>
+<li><a href="https://github.com/spolnik/trading-office-allocation-enricher">Allocation Enricher</a></li>
+<li><a href="https://github.com/spolnik/trading-office-confirmation-sender">Confirmation Sender</a></li>
+<li><a href="https://github.com/spolnik/trading-office-market-data-service">Market Data Service</a></li>
+<li><a href="https://github.com/spolnik/trading-office-confirmation-service">Confirmation Service</a></li>
+<li><a href="https://github.com/spolnik/trading-office-counterparty-service">Counterparty Service</a></li>
+<li><a href="https://github.com/spolnik/trading-office-eureka-server">Eureka Server</a></li>
+<li><a href="https://github.com/spolnik/trading-office-api-gateway">API Gateway</a></li>
 </ul>
-
-<p>Heroku: <a href="http://allocation-message-receiver.herokuapp.com/swagger-ui.html">http://allocation-message-receiver.herokuapp.com/swagger-ui.html</a></p>
-
-<p><img src="https://raw.githubusercontent.com/spolnik/trading-office/master/design/allocation_message_receiver.png" alt="Component Diagram"></p>
-
-<h2>
-<a id="allocation-enricher" class="anchor" href="#allocation-enricher" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Allocation Enricher</h2>
-
-<ul>
-<li>spring boot application</li>
-<li>subscribes to jms looking for translated allocation report messages (json)</li>
-<li>after receiving message, it enriches it with instrument data and then with counterparty data</li>
-<li>finally, it sends enriched allocation as json into ActiveMQ</li>
-</ul>
-
-<p>Heroku: <a href="http://allocation-enricher.herokuapp.com/health">http://allocation-enricher.herokuapp.com/health</a></p>
-
-<p><img src="https://raw.githubusercontent.com/spolnik/trading-office/master/design/allocation_enricher.png" alt="Component Diagram"></p>
-
-<h2>
-<a id="confirmation-sender" class="anchor" href="#confirmation-sender" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Confirmation Sender</h2>
-
-<ul>
-<li>spring boot application</li>
-<li>subscribes to jms looking for enriched allocation report messages (json)</li>
-<li>after receiving message, it generates PDF confirmation using JasperReports template</li>
-<li>finally, it sends the Confirmation POJO with attached PDF (as byte[]) to confirmation service (REST Service)</li>
-</ul>
-
-<p>Heroku: <a href="http://confirmation-sender.herokuapp.com/health">http://confirmation-sender.herokuapp.com/health</a></p>
-
-<p><img src="https://raw.githubusercontent.com/spolnik/trading-office/master/design/confirmation_sender.png" alt="Component Diagram"></p>
-
-<h2>
-<a id="market-data-service" class="anchor" href="#market-data-service" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Market Data Service</h2>
-
-<ul>
-<li>spring boot web application</li>
-<li>exposes REST endpoint for market data (using Yahoo Finance Api)</li>
-<li>exposes REST endpoints for instrument data (data consumed from <a href="https://openfigi.com/api">OpenFigi Api</a>)</li>
-<li>based on a given symbol, downloads instrument data with actual price</li>
-<li>works in readonly mode</li>
-</ul>
-
-<p>Heroku: <a href="http://market-data-service.herokuapp.com/swagger-ui.html">http://market-data-service.herokuapp.com/swagger-ui.html</a></p>
-
-<p><img src="https://raw.githubusercontent.com/spolnik/trading-office/master/design/market_data_service.png" alt="Component Diagram"></p>
-
-<h2>
-<a id="confirmation-service" class="anchor" href="#confirmation-service" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Confirmation Service</h2>
-
-<ul>
-<li>spring boot web application (rest service)</li>
-<li>exposes REST endpoint api to store and retrieve confirmations</li>
-<li>data stored as files</li>
-</ul>
-
-<p>Heroku: <a href="http://confirmation-service.herokuapp.com/swagger-ui.html">http://confirmation-service.herokuapp.com/swagger-ui.html</a></p>
-
-<p><img src="https://raw.githubusercontent.com/spolnik/trading-office/master/design/confirmation_service.png" alt="Component Diagram"></p>
-
-<h2>
-<a id="counterparty-service" class="anchor" href="#counterparty-service" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Counterparty Service</h2>
-
-<ul>
-<li>spring boot web application (rest service)</li>
-<li>exposes REST endpoint to query Exchange data based on mic code</li>
-<li>exposes REST endpoint to query Party data based on custom id</li>
-</ul>
-
-<p>Heroku: <a href="http://counterparty-service.herokuapp.com/swagger-ui.html">http://counterparty-service.herokuapp.com/swagger-ui.html</a></p>
-
-<p><img src="https://raw.githubusercontent.com/spolnik/trading-office/master/design/counterparty_service.png" alt="Component Diagram"></p>
 
 <h2>
 <a id="e2e-test" class="anchor" href="#e2e-test" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>E2E Test</h2>
 
 <ul>
 <li>end to end tests written in spock</li>
-<li>it runs against deployed applications (Heroku, all above + OpenShift, ActiveMq)</li>
+<li>it runs against deployed applications (Heroku)</li>
+<li>it covers 4 cases, 2 for PROD and 2 for STAGING. Those 2 cases are: SWIFT and EMAIL confirmations</li>
 </ul>
+
+<h2>
+<a id="continuous-delivery" class="anchor" href="#continuous-delivery" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Continuous Delivery</h2>
+
+<ul>
+<li>initially, developer push his changes to GitHub</li>
+<li>in next stage, GitHub notifies Travis CI about changes</li>
+<li>Travis CI runs whole continuous integration flow, running compilation, tests and generating reports</li>
+<li>static code analysis report is sent to SonarQube</li>
+<li>coverage report is sent to Codecov</li>
+<li>application is deployed into Heroku Staging machine</li>
+<li>administrator once he is happy with quality of staging application, he promotes it to production</li>
+</ul>
+
+<p><img src="https://raw.githubusercontent.com/spolnik/trading-office/master/design/continuous_delivery.png" alt="Continuous Delivery Diagram"></p>
 
 <h1></h1>
 
@@ -155,13 +101,11 @@
 
 <ul>
 <li>Heroku (hosting microservices)</li>
-<li>Heroku Add-ons (logging - papertrial, monitoring - new relic)</li>
-<li>ActiveMQ (hosted on OpenShift)</li>
+<li>Heroku Add-ons (monitoring - new relic)</li>
+<li>RabbitMQ (CloudAMQP hosted on heroku)</li>
 <li>SonarQube (hosted on OpenShift) - <a href="https://sonar-nprogramming.rhcloud.com">https://sonar-nprogramming.rhcloud.com</a>
 </li>
 <li>TravisCI - <a href="https://travis-ci.org/spolnik/trading-office">https://travis-ci.org/spolnik/trading-office</a>
-</li>
-<li>Coverity (Static code analysis) - <a href="https://scan.coverity.com/projects/spolnik-trading-office">https://scan.coverity.com/projects/spolnik-trading-office</a>
 </li>
 </ul>
 
@@ -182,8 +126,10 @@
 <a id="notes" class="anchor" href="#notes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Notes</h2>
 
 <ul>
-<li>to have access to OpenShift activemq web console - run rhc port-forward activemq (only if you have admin access)</li>
-<li>checking if <a href="https://www.versioneye.com/user/projects/56ad39427e03c7003ba41427">dependencies are up to date</a>
+<li>to run integration tests, you have to have both tools up and running - rabbitmq &amp; mongodb</li>
+<li><a href="https://github.com/spolnik/trading-office/wiki">Running locally</a></li>
+<li><a href="https://travis-ci.org/spolnik">Travis Builds</a></li>
+<li>central log management - <a href="https://apps.sematext.com/users-web/index.do">managed ELK on sematext</a>
 </li>
 </ul>
         </section>
