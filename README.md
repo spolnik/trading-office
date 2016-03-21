@@ -49,7 +49,7 @@ It's modeling part of post trade processing, mainly focused on receiving Fixml m
 =========
 
 ## Infrastructure
-- Heroku (hosting microservices)
+- Heroku (PaaS)
 - Heroku Add-ons (monitoring - new relic)
 - RabbitMQ (CloudAMQP hosted on heroku)
 - SonarQube (hosted on OpenShift) - https://sonar-nprogramming.rhcloud.com
