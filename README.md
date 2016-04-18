@@ -13,7 +13,7 @@ It's modeling part of post trade processing, mainly focused on receiving Fixml m
 
 ## Introduction
 
-- set of applications simulating simple flow in post trade part of trade lifecycle
+- set of applications simulating simple flow in post trade part of trade lifecycle.
 - it's focused on generating confirmation based on received allocation report (FIXML)
 - [Running locally](https://github.com/spolnik/trading-office/wiki)
 
